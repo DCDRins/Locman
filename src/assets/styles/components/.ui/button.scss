@@ -1,0 +1,78 @@
+
+.Button {
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+  border-radius: $border-radius-small;
+  border: 1px solid transparent;
+  transition: $fast;
+
+  & * {
+    display: inline-block;
+    vertical-align: middle;
+    transition: font-size $fast;
+  }
+  // Button:active
+  &:active {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: scale(.98);
+    transition: $slow;
+  }
+  // Button__content
+  &__content {
+
+  }
+  // Button__before
+  &__before {
+    position: relative;
+    margin-right: 10px;
+    .Icon {
+      @include themify($themes) {
+        fill: themed('light')
+      }
+    }
+  }
+  &--size {
+    &-s {
+      padding: 5px 10px;
+      font-size: 10pt;
+    }
+    &-m {
+
+    }
+    &-l {
+
+    }
+  }
+  // Button--level
+  &--level {
+    &-outline {
+      @include themify($themes) {
+        border-color: themed('light');
+        color: themed('light');
+        &:hover {
+          background: themed('light');
+          color: themed('accent');
+          .Icon {
+            fill: themed('accent');
+          }
+        } 
+      }
+    }
+    &-simple {
+      @include themify($themes) {
+        color: themed('light');
+        &:hover {
+          background: themed('light');
+          color: themed('accent');
+          .Icon {
+            fill: themed('accent');
+          }
+        } 
+      }
+    }
+  }
+}

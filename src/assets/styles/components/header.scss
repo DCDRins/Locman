@@ -1,0 +1,51 @@
+.Header {
+  &__nav {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    z-index: z('overlay');
+    @include themify($themes) {
+      background-color: transparent;
+      // background-color: themed('accent');
+      transition: background-color $fast;
+    }
+  }
+  &__logo {
+    width: 50px;
+  }
+  &__links {
+    width: $minScreen;
+    transition: width $fast;
+    @include mobile {
+      width: 200px;
+    }
+    .Button {
+      transition: $fast;
+      @include mobile {
+        &__content {
+          font-size: 0;
+        }
+        &__before {
+          display: inline-block!important;
+          margin: 0;
+        } 
+      }
+    }
+  }
+  &__button .Button {
+    &__before {
+      display: none;
+    }
+  }
+  &__user {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    @include themify($themes) {
+      background-color: themed('light');
+      transition: background-color $fast;
+    }
+  }
+}

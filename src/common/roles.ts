@@ -1,28 +1,28 @@
 
-interface Roles {
-  name: string;
+interface RoleDictionary {
+  [id: string]: Role;
+}
+
+export interface Role {
   credentials: string;
 }
 
-export const roles: Array<Roles> = [
-  {
-    name: 'Administrator',
-    credentials: 'administrator'
+const Roles: RoleDictionary = {
+  Administrator: {
+    credentials: 'administrator',
   },
-  {
-    name: 'Organization',
-    credentials: 'organization'
+  Organization: {
+    credentials: 'organization',
   },
-  {
-    name: 'Teacher',
-    credentials: 'teacher'
+  Teacher: {
+    credentials: 'teacher',
   },
-  {
-    name: 'Student',
-    credentials: 'student'
+  Student: {
+    credentials: 'student',
   },
-  {
-    name: 'Parent',
-    credentials: 'parent'
+  Parent: {
+    credentials: 'parent',
   },
-];
+}
+
+export default Roles

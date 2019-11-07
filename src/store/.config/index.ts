@@ -14,7 +14,7 @@ export const history = createBrowserHistory();
 export default function configureStore(history: History, initialState: ApplicationState): Store<ApplicationState> {
   const sagaMiddleware = createSagaMiddleware()
   const middlewares = [
-    loggerMiddleware,
+    // loggerMiddleware,
     sagaMiddleware,
     routerMiddleware(history),
   ];
@@ -22,7 +22,7 @@ export default function configureStore(history: History, initialState: Applicati
   const middlewareEnhancer = applyMiddleware(...middlewares)
   const enhancers = [
     middlewareEnhancer,
-    monitorReducerEnhancer,
+    // monitorReducerEnhancer,
   ]
 
   if (process.env.NODE_ENV === 'development') {

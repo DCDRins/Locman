@@ -1,5 +1,5 @@
 // ./src/store/chat/reducer.ts
-import { BaseAction, newsActions } from '../../common';
+import { BaseAction, newsActions } from '../../common/actions';
 import { Reducer } from 'redux';
 import { NewsState, NewsActions, NewsTemplate } from './types';
 

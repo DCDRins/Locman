@@ -1,0 +1,8 @@
+.Div {
+  padding: 10px 20px;
+  user-select: text;
+  transition: padding $fast;
+  @include mobile {
+    padding: 5px 10px;
+  }
+}

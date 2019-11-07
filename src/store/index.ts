@@ -28,9 +28,11 @@ import newsReducer from '../store/news/reducer';
 export interface ApplicationState {
   router: RouterState;
   news: NewsState;
+  // userData: string;
 }
 
 export default (history: History): Reducer<ApplicationState> => combineReducers({
   router: connectRouter(history),
   news: newsReducer,
+  // userData: {};
 });
