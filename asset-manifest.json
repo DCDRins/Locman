@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/Locman/static/css/main.cf4fd7e8.chunk.css",
+    "main.js": "/Locman/static/js/main.79650c65.chunk.js",
+    "main.js.map": "/Locman/static/js/main.79650c65.chunk.js.map",
+    "runtime-main.js": "/Locman/static/js/runtime-main.76ecb1bb.js",
+    "runtime-main.js.map": "/Locman/static/js/runtime-main.76ecb1bb.js.map",
+    "static/js/2.ac8a0248.chunk.js": "/Locman/static/js/2.ac8a0248.chunk.js",
+    "static/js/2.ac8a0248.chunk.js.map": "/Locman/static/js/2.ac8a0248.chunk.js.map",
+    "index.html": "/Locman/index.html",
+    "precache-manifest.efcdc8b77a8408561b8fa4340670c524.js": "/Locman/precache-manifest.efcdc8b77a8408561b8fa4340670c524.js",
+    "service-worker.js": "/Locman/service-worker.js",
+    "static/css/main.cf4fd7e8.chunk.css.map": "/Locman/static/css/main.cf4fd7e8.chunk.css.map",
+    "static/media/about.0bdaf9a5.svg": "/Locman/static/media/about.0bdaf9a5.svg",
+    "static/media/hermitage.jpg": "/Locman/static/media/hermitage.8ec1e71d.jpg",
+    "static/media/home.14cc3cf2.svg": "/Locman/static/media/home.14cc3cf2.svg",
+    "static/media/museum.c1d2d6d5.svg": "/Locman/static/media/museum.c1d2d6d5.svg",
+    "static/media/places.ef49c3f8.svg": "/Locman/static/media/places.ef49c3f8.svg",
+    "static/media/search.c7095689.svg": "/Locman/static/media/search.c7095689.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.76ecb1bb.js",
+    "static/js/2.ac8a0248.chunk.js",
+    "static/css/main.cf4fd7e8.chunk.css",
+    "static/js/main.79650c65.chunk.js"
+  ]
+}
