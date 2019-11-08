@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Locman/static/css/main.cf4fd7e8.chunk.css",
-    "main.js": "/Locman/static/js/main.6f93d6f9.chunk.js",
-    "main.js.map": "/Locman/static/js/main.6f93d6f9.chunk.js.map",
+    "main.js": "/Locman/static/js/main.7dd3eb30.chunk.js",
+    "main.js.map": "/Locman/static/js/main.7dd3eb30.chunk.js.map",
     "runtime-main.js": "/Locman/static/js/runtime-main.76ecb1bb.js",
     "runtime-main.js.map": "/Locman/static/js/runtime-main.76ecb1bb.js.map",
     "static/js/2.ac8a0248.chunk.js": "/Locman/static/js/2.ac8a0248.chunk.js",
     "static/js/2.ac8a0248.chunk.js.map": "/Locman/static/js/2.ac8a0248.chunk.js.map",
     "index.html": "/Locman/index.html",
-    "precache-manifest.92a48685e1aa91a9c7c689eb1a5758bc.js": "/Locman/precache-manifest.92a48685e1aa91a9c7c689eb1a5758bc.js",
+    "precache-manifest.1330367cbe4da5da21b92aa231ad8605.js": "/Locman/precache-manifest.1330367cbe4da5da21b92aa231ad8605.js",
     "service-worker.js": "/Locman/service-worker.js",
     "static/css/main.cf4fd7e8.chunk.css.map": "/Locman/static/css/main.cf4fd7e8.chunk.css.map",
     "static/media/about.0bdaf9a5.svg": "/Locman/static/media/about.0bdaf9a5.svg",
@@ -22,6 +22,6 @@
     "static/js/runtime-main.76ecb1bb.js",
     "static/js/2.ac8a0248.chunk.js",
     "static/css/main.cf4fd7e8.chunk.css",
-    "static/js/main.6f93d6f9.chunk.js"
+    "static/js/main.7dd3eb30.chunk.js"
   ]
 }
