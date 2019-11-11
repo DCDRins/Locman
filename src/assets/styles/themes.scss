@@ -3,18 +3,20 @@ $themes: (
   light: (
     main: #fff,
     primary: #2E16B1,
-    accent: #604BD8,
     light: #fff,
+    accent: #604BD8,
+    tint: rgba(0, 0, 0, .2),
     highlight: #F20C8B,
-    // contrast: #7506BF,
+    mainTextColor: #161616,
   ),
   dark: (
     main: #0B0326,
     primary: #fff,
-    accent: #460273,
     light: #fff,
+    accent: #460273,
+    tint: rgba(255, 255, 255, .3),
     highlight: #27F2DE,
-    // contrast: #F20C8B,
+    mainTextColor: #fff,
   ),
 );
 // $tint: 

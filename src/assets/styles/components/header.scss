@@ -1,12 +1,16 @@
 .Header {
+  position: relative;
   &__nav {
     position: fixed;
     width: 100%;
-    height: 50px;
+    height: $headerHeight;
     z-index: z('overlay');
     @include themify($themes) {
-      background-color: transparent;
-      // background-color: themed('accent');
+      background-color: themed('accent');
+      transition: background-color $average;
+    }
+    &--transparency {
+      background-color: transparent!important;
       transition: background-color $fast;
     }
   }

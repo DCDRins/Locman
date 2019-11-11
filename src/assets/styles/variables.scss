@@ -1,6 +1,10 @@
 $fontFamily: "Gilroy";
 
-// size
+// colors
+$transparent-dark: rgba(0, 0, 0, .4);
+// header
+$headerHeight: 50px;
+// screen
 $screen: 1920px;
 $lowScreen: 1280px;
 $tabScreen: 1024px;
@@ -11,11 +15,32 @@ $minScreen: 500px;
 $border-radius-small: 5px;
 $border-radius: 10px;
 
-// default containers
+// mask
+$mask: linear-gradient(rgba(0, 0, 0, 1), transparent);
+$opacity-mask: linear-gradient(rgba(0, 0, 0, .9) 100%, transparent);
+
+// font-size
+%header-1 {
+  font-size: 20pt;
+  font-weight: 600;
+}
+%header-2 {
+  font-size: 16pt;
+  font-weight: 600;
+}
+%simple-text {
+  font-size: 12pt;
+  font-weight: 300;
+}
+%small-text {
+  font-size: 10pt;
+  font-weight: 300;
+}
 
 $fast: .1s;
 $average: .2s;
 $slow: .3s;
+$slowly: .5s;
 $fast-easing: ease-in-out .1s;
 $average-easing: ease-in-out .2s;
 $slow-easing: ease-in-out .3s;

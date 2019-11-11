@@ -21,10 +21,15 @@
     transform: scale(.98);
     transition: $slow;
   }
+  // &__in {
+  //   // display: flex;
+  //   // align-items: center;
+  //   // justify-content: space-between;
+  // }
   // Button__content
-  &__content {
+  // &__content {
 
-  }
+  // }
   // Button__before
   &__before {
     position: relative;
@@ -38,17 +43,30 @@
   &--size {
     &-s {
       padding: 5px 10px;
-      font-size: 10pt;
+      @extend %small-text;
     }
     &-m {
-
+      padding: 10px 20px;
+      @extend %simple-text;
     }
-    &-l {
+    // &-l {
 
-    }
+    // }
   }
   // Button--level
   &--level {
+    &-primary {
+      font-weight: 600;
+      @include themify($themes) {
+        background-color: themed('primary');
+        color: themed('main');
+        transition: background-color $fast, color $fast;
+        &:hover {
+          background-color: themed('light');
+          color: themed('accent');
+        } 
+      }
+    }
     &-outline {
       @include themify($themes) {
         border-color: themed('light');
@@ -64,14 +82,24 @@
     }
     &-simple {
       @include themify($themes) {
-        color: themed('light');
-        &:hover {
-          background: themed('light');
-          color: themed('accent');
-          .Icon {
-            fill: themed('accent');
+        // color: themed('light');
+        // &:hover {
+        //   background: themed('light');
+        //   color: themed('accent');
+        //   .Icon {
+        //     fill: themed('accent');
+        //   }
+        // } 
+        &--permanent {
+          color: themed('light');
+          &:hover {
+            background: themed('light');
+            color: themed('accent');
+            .Icon {
+              fill: themed('accent');
+            }
           }
-        } 
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, DOMAttributes } from 'react';
+import React, { HTMLAttributes, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from '../../../lib/classNames';
 import { HasChildren, HasRootRef } from '../../../common/types/props';
@@ -15,6 +15,7 @@ type ButtonProps = HTMLAttributes<HTMLElement> & HasChildren & {
   before?: ReactNode;
   after?: ReactNode;
   stopPropagation?: boolean;
+  permanent?: boolean;
   /**
    * @ignore
    */
@@ -26,12 +27,14 @@ const Button = ({
   size = 'm',
   align = 'center',
   stretched = false,
+  permanent = false,
   stopPropagation = true,
   route, before, after, disabled, className, children, ...restProps }: ButtonProps) => {
     const button = (
       <div {...restProps} role="button" className={classNames('Button', className!, {
         [`Button--size-${size}`]: true,
         [`Button--level-${level}`]: true,
+        [`Button--level-${level}--permanent`]: permanent,
         [`Button--align-${align}`]: true,
         [`Button--stretched`]: stretched
       })} 

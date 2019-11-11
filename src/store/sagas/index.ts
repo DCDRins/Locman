@@ -1,4 +1,4 @@
-import { all, fork } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 // import { watchNewGeneratedNumberRequestStart } from './number-collection.sagas';
 
 export default function* root() {

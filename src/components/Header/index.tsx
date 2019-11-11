@@ -14,12 +14,10 @@ import lang, { Lang, withLanguage } from '../../common/lang'
 import terms from '../../common/terms'
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg'
 // import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
-import { getHasCode } from '../../lib/getHashCode';
+import getHashCode from '../../lib/getHashCode';
 
 // Header state type
-type State = typeof initialState & {
-
-}
+type State = typeof initialState & {}
 // Header properties types
 type Props = typeof defaultProps & HasChildren & RouteComponentProps<PathParamsType> & {
   userData?: any // userData interface must be here
@@ -28,7 +26,7 @@ type PathParamsType = {
   location: string,
 }
 const initialState = Object.freeze({
-  currentPage: 0, // or maybe bind any names for pages
+  transparency: true,
 })
 const defaultProps = Object.freeze({
   isLoading: true,
@@ -36,7 +34,17 @@ const defaultProps = Object.freeze({
 
 class Header extends Component<Props, State> {
   static readonly defaultProps: Props = defaultProps
-  static state: State = initialState
+  readonly state: State = initialState
+
+  componentDidMount() {
+    document.addEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll = () => {
+    const scroll = window.scrollY
+    if (scroll > 0) this.setState({ transparency: false });
+    else if (scroll === 0) this.setState({ transparency: true });
+  }
 
   setHeaderLinks = (_routes: RouteDictionary = routes, { location: { pathname } } = this.props): JSX.Element => (
     <LangContext.Consumer>
@@ -46,16 +54,16 @@ class Header extends Component<Props, State> {
           .filter((route: Route) => route.visibleInHeader)
           .map((route: Route) => (
             pathname === route.absolutePath ? (
-              <Button key={getHasCode(route.absolutePath)} className="Header__button" level="outline" size="s" {...{ route }}>
+              <Button key={getHashCode(route.absolutePath)} className="Header__button" permanent level="outline" size="s" {...{ route }}>
                 {getActual && getActual<Route>(route)}
               </Button>
             ) : (
-              <Button key={getHasCode(route.absolutePath)} className="Header__button" level="simple" size="s" {...{ route }}>
+              <Button key={getHashCode(route.absolutePath)} className="Header__button" permanent level="simple" size="s" {...{ route }}>
                 {getActual && getActual<Route>(route)}
               </Button>
             )
           ))}
-          <Button level="simple" size="s" before={<Icon svg={SearchIcon} />}>
+          <Button permanent level="simple" size="s" before={<Icon svg={SearchIcon} />}>
             {getActual && getActual<withLanguage>(terms.STOCK_SEARCH)}
           </Button>
         </Group>
@@ -66,30 +74,35 @@ class Header extends Component<Props, State> {
   render() {
     const { setHeaderLinks } = this
     const { children } = this.props
+    const { transparency } = this.state
+
     return (
       <section className="Header">
-        <Group className="Header__nav">
-          {/* <Div><Icon svg={SearchIcon} /></Div> */}
+        <Group className={`Header__nav ${transparency ? 'Header__nav--transparency' : ''}`} content="center">
           <Div>Logo</Div>
           <Div>{setHeaderLinks()}</Div>
           <Div><img src="user" alt="user" className="Header__user" /></Div>
         </Group>
         {children}
         <ThemeContext.Consumer>
-          {({ toggleMode }) => <Button level="primary" onClick={toggleMode}>toggle Theme</Button>}
+          {({ toggleMode }) => <Div>
+            <Button level="primary" onClick={toggleMode}>toggle Theme</Button>
+          </Div>}
         </ThemeContext.Consumer>
         <LangContext.Consumer>
           {({ changeLang, lang: currentLang }) => (
-            <select
-              name="lang"
-              id="lang"
-              value={currentLang.notation}
-              onChange={(e: FormEvent<HTMLSelectElement>) => changeLang && changeLang(e.currentTarget.value)}
-            >
-              {Object.values(lang).map((ln: Lang) => (
-                <option key={uid()} value={ln.notation}>{ln.name}</option>
-              ))}
-            </select>
+            <Div>
+              <select
+                name="lang"
+                id="lang"
+                value={currentLang.notation}
+                onChange={(e: FormEvent<HTMLSelectElement>) => changeLang && changeLang(e.currentTarget.value)}
+              >
+                {Object.values(lang).map((ln: Lang) => (
+                  <option key={uid()} value={ln.notation}>{ln.name}</option>
+                ))}
+              </select>
+            </Div>
           )}
         </LangContext.Consumer>
       </section>

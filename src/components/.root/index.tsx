@@ -9,7 +9,7 @@ import {
 } from 'react-transition-group';
 import ThemeContext from '../../common/context/theme/theme.context'
 import routes, { Route as CustomRouteType } from '../../common/routes';
-import { getHasCode } from '../../lib/getHashCode';
+import getHashCode from '../../lib/getHashCode';
 
 const Root: FunctionComponent = () => {
   return (
@@ -25,7 +25,7 @@ const Root: FunctionComponent = () => {
             >
               <Switch location={location}>
                 {Object.values(routes).map(({ page, absolutePath }: CustomRouteType) => (
-                  <Route key={getHasCode(absolutePath)} exact path={absolutePath} component={page} />
+                  <Route key={getHashCode(absolutePath)} exact path={absolutePath} component={page} />
                 ))}
               </Switch>
             </CSSTransition>

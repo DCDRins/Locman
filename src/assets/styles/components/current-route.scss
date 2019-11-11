@@ -1,0 +1,21 @@
+.Current-Route {
+  &__content {
+    position: relative;
+    height: 300px;
+    @include mobile {
+      flex-direction: column-reverse;
+      overflow-y: auto;
+    }
+    @extend %custom-scroll;
+  }
+  &__wrapper {
+    position: relative;
+    height: 100%;
+    width: 350px;
+    margin-right: 20px;
+    overflow-y: auto;
+  }
+  &__closest {
+    // flex-sh-rink: 0;
+  }
+}

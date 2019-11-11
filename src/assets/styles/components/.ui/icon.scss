@@ -2,6 +2,7 @@
   transition: fill $fast;
   &--size {
     &-s {
+      margin-top: -2px;
       width: 14px;
       height: 14px;
     }

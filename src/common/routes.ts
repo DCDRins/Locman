@@ -1,4 +1,4 @@
-import React, { ComponentType, SVGProps } from 'react'
+import { ComponentType, SVGProps } from 'react'
 import { withLanguage } from './lang'
 // pages
 import * as pages from '../components/.pages';

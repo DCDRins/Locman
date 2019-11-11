@@ -1,48 +1,34 @@
 .Ground {
-  display: block;
+  display: flex;
   position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   min-height: 500px;
-  &::after {
-    content: '';
-    display: block;
+  overflow: hidden;
+  @include mobile {
+    min-height: 400px;
+  }
+
+  &__image {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: z('in-between');
-    // @include themify($themes) {
-    //   background: themed('main');
-    // }
-    transition: $fast;
-  }
-  // &--layout {
-  //   @include themify($themes) {
-  //     &-top {
-  //       &::after {
-  //         background: linear-gradient(to bottom, themed('main'), transparent)
-  //       }
-  //     }
-  //     &-bottom {
-  //       &::after {
-  //         background: linear-gradient(to top, themed('main'), transparent)
-  //       }
-  //     }
-  //     &-both {
-  //       &::after {
-  //         background: linear-gradient(to top, themed('main'), transparent)
-  //       }
-  //     }
-  //   }
-  // }
-  &__image {
-    position: absolute;
-    width: 105%;
-    height: 105%;
-    top: -2.5%;
-    left: -2.5%;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center center;
+    mask-image: $mask;
+    opacity: .8;
     z-index: z('background');
-    mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent); // to variable
-    filter: blur(5px);
+    backface-visibility: hidden;
+    will-change: filter;
+    filter: blur(5px) contrast(1.2);
+    transition: all 0s;
+  }
+
+  &__in {
+    position: relative;
+    margin-top: $headerHeight;
+    z-index: z('main');
   }
 }
