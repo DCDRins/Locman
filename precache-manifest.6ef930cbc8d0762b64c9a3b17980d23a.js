@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "613f0c760840395c821a5e9852e4e4f5",
+    "revision": "bb14bd5c446151052d9b2aa966a10116",
     "url": "/Locman/index.html"
   },
   {
-    "revision": "25d37cbda89b5f8f6765",
-    "url": "/Locman/static/css/main.cf4fd7e8.chunk.css"
+    "revision": "0a30e224b3cfa6e1a03b",
+    "url": "/Locman/static/css/main.4b310d55.chunk.css"
   },
   {
-    "revision": "a41520a29cbb4c13b0ea",
-    "url": "/Locman/static/js/2.ac8a0248.chunk.js"
+    "revision": "1eba5f681dc46b3edb58",
+    "url": "/Locman/static/js/2.ae67ead4.chunk.js"
   },
   {
-    "revision": "25d37cbda89b5f8f6765",
-    "url": "/Locman/static/js/main.7dd3eb30.chunk.js"
+    "revision": "0a30e224b3cfa6e1a03b",
+    "url": "/Locman/static/js/main.bb419ae3.chunk.js"
   },
   {
     "revision": "5e786a85369c6e844b0d",
