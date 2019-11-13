@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "17e33f7bd614bb03a600a8aba0682579",
+    "revision": "c11a578c4b260a2f95b834015218bec4",
     "url": "/Locman/index.html"
   },
   {
-    "revision": "c787eb54cc61eb6604aa",
+    "revision": "d49cf42cd7c53bfd04c2",
     "url": "/Locman/static/css/main.4b310d55.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Locman/static/js/2.ae67ead4.chunk.js"
   },
   {
-    "revision": "c787eb54cc61eb6604aa",
-    "url": "/Locman/static/js/main.6156aa4f.chunk.js"
+    "revision": "d49cf42cd7c53bfd04c2",
+    "url": "/Locman/static/js/main.023ff660.chunk.js"
   },
   {
     "revision": "5e786a85369c6e844b0d",
