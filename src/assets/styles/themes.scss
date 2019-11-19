@@ -7,6 +7,7 @@ $themes: (
     accent: #604BD8,
     tint: rgba(0, 0, 0, .2),
     highlight: #F20C8B,
+    highlight-transparently: rgba(242, 12, 139, 0.1),
     mainTextColor: #161616,
   ),
   dark: (
@@ -16,6 +17,7 @@ $themes: (
     accent: #460273,
     tint: rgba(255, 255, 255, .2),
     highlight: #27F2DE,
+    highlight-transparently: rgba(39, 242, 222, 0.1),
     mainTextColor: #fff,
   ),
 );

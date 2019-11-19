@@ -88,27 +88,6 @@ class Header extends Component<Props, State> {
           <Div><img src="user" alt="user" className="Header__user" /></Div>
         </Group>
         {children}
-        <ThemeContext.Consumer>
-          {({ toggleMode }) => <Div>
-            <Button level="primary" onClick={toggleMode}>toggle Theme</Button>
-          </Div>}
-        </ThemeContext.Consumer>
-        <LangContext.Consumer>
-          {({ changeLang, lang: currentLang }) => (
-            <Div>
-              <select
-                name="lang"
-                id="lang"
-                value={currentLang.notation}
-                onChange={(e: FormEvent<HTMLSelectElement>) => changeLang && changeLang(e.currentTarget.value)}
-              >
-                {Object.values(lang).map((ln: Lang) => (
-                  <option key={uid()} value={ln.notation}>{ln.name}</option>
-                ))}
-              </select>
-            </Div>
-          )}
-        </LangContext.Consumer>
       </section>
     )
   }

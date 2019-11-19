@@ -30,7 +30,7 @@ const Side = ({
         <LangContext.Consumer>
           {({ getActual }) => (
             <Group className={`${base}__buttons`}>
-              <Button level="outline">{getActual && getActual<withLanguage>(terms.SHARE)}</Button>
+              <Button level="secondary">{getActual && getActual<withLanguage>(terms.SHARE)}</Button>
               <Button level="primary">{getActual && getActual<withLanguage>(terms.VIEW)}</Button>
             </Group>
           )}

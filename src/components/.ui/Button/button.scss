@@ -55,11 +55,22 @@
     &-primary {
       font-weight: 600;
       @include themify($themes) {
-        background-color: themed('accent');
-        color: themed('light');
+        background-color: themed('primary');
+        color: themed('main');
         &:hover {
-          background-color: themed('accent');
-          color: themed('light');
+          background-color: themed('primary');
+          color: themed('main');
+        } 
+      }
+    }
+    &-secondary {
+      font-weight: 600;
+      @include themify($themes) {
+        background-color: themed('highlight-transparently');
+        color: themed('highlight');
+        &:hover {
+          background-color: themed('highlight');
+          color: themed('main');
         } 
       }
     }
