@@ -19,9 +19,7 @@ export default class Ground extends Component<Props, State> {
     const { blur } = this.state
     const base = 'Ground';
     return (
-      <div {...restProps} className={classNames(base, className!, 
-          // {[`${base}--layout-${layout}`]: layout !== undefined,}
-        )}
+      <div {...restProps} className={classNames(base, className!)}
       >
         {src && <div style={{ backgroundImage: `url('https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg')` }} className={`${base}__image`} />}
         <div className={`${base}__in`}>

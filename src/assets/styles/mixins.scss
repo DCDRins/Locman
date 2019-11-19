@@ -3,12 +3,17 @@ $tabletWidth: 768px;
 $desktopWidth: 1920px;
 
 @mixin mobile {
-  @media  only screen and (max-width: #{$tabletWidth + 1px}) {
+  @media  only screen and (max-width: #{$tabletWidth - 1px}) {
     @content;
   }
 }
 @mixin lowscreen {
-  @media  only screen and (min-width: #{$tabletWidth + 2px}) and (max-width: #{$desktopWidth - 1px}) {
+  @media  only screen and (min-width: #{$tabletWidth}) and (max-width: #{$desktopWidth - 1px}) {
+    @content;
+  }
+}
+@mixin both {
+  @media  only screen and (max-width: #{$desktopWidth - 1px}) {
     @content;
   }
 }
@@ -23,6 +28,20 @@ $desktopWidth: 1920px;
       }
       @content;
       $theme-map: null !global;
+    }
+  }
+}
+
+@mixin toned($pseudo, $amount: .2) {
+  &#{$pseudo} {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: #{$amount};
+    transition: $fast;
+    @include themify($themes) {
+      background-color: themed('accent');
     }
   }
 }

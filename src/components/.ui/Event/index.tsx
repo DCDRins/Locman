@@ -1,25 +1,18 @@
 import React, { HTMLAttributes, ReactNode, DOMAttributes } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import classNames from '../../../lib/classNames';
-import Button from '../Button';
-import LangContext from '../../../common/context/lang/lang.context';
-import { withLanguage } from '../../../common/lang';
-import terms from '../../../common/terms';
 import Icon from '../Icon';
-import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg'
+import { ReactComponent as Hand } from '../../../assets/icons/hand.svg'
+import { ReactComponent as Forward } from '../../../assets/icons/forward.svg'
 import Group from '../Group';
-
-// import { Route } from '../../../common/routes';
-// import Icon from '../Icon';
+import Side, { SideProps } from './Side'
 
 
-type EventProps = HTMLAttributes<HTMLElement> & {
+type EventProps = HTMLAttributes<HTMLElement> & Partial<SideProps> & {
   size?: 's' | 'm' | 'l';
   title: string;
   address?: string;
-  // image?: string;
-  visitDate: string;
-  description?: string;
+  image?: string;
   isClosest?: boolean;
   stretched?: boolean;
   // tagList?: Array<Tag>
@@ -28,8 +21,8 @@ type EventProps = HTMLAttributes<HTMLElement> & {
 const Event = ({
   size = 'm',
   stretched = false,
-  title = "test", isClosest = false, address = "Test test 10010101", visitDate = "27.10.2019",
-  description = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit distinctio qui quam doloremque ad recusandae numquam, atque soluta excepturi repellendus officia ducimus fugiat voluptatem iusto repudiandae! Repudiandae perferendis quod cumque.', className, ...restProps }: EventProps) => {
+  title = "test", isClosest = false, address = "Дворцовая набережная 26, 192491",
+  visitDate, image, description, className, ...restProps }: EventProps) => {
     const base = 'Event';
     return (
       <div {...restProps} className={classNames(base, className!, {
@@ -38,32 +31,25 @@ const Event = ({
         })} 
       >
         <Group>
-          <div className={`${base}__in`}>
+          <div className={`${base}__content`}>
             <div className={`${base}__image`}>
-              <Icon svg={SearchIcon} className={`${base}__share`} />
-              <Icon svg={SearchIcon} size="l" className={`${base}__tap`} />
+              <div className={`${base}__image__inner`} style={{ backgroundImage: `url('${image}')` }} />
+              <Icon svg={Forward} className={`${base}__share`} />
+              <Icon svg={Hand} size="l" className={`${base}__tap`} />
+              {size !== 's' ? (
+                <div className={`${base}__text`}>
+                  <div className={`${base}__text__title`}>{title}</div>
+                  <div className={`${base}__text__address`}>{address}</div>
+                </div>
+              ) : (
+                <div className={`${base}__text`}>
+                  <div className={`${base}__text__title`}>{title}</div>
+                </div>
+              )}
             </div>
-            {size !== 's' && (
-              <>
-                <div className={`${base}__title`}>{title}</div>
-                <div className={`${base}__address`}>{address}</div>
-              </>
-            )}
           </div>
-          {size === 'l' && (
-            <div className={`${base}__content`}>
-              {/* tagList */}
-              <div className={`${base}__date`}>{visitDate}</div>
-              {description && <div className={`${base}__description`}>{description}</div>}
-              <LangContext.Consumer>
-                {({ getActual }) => (
-                  <Group className={`${base}__buttons`}>
-                    <Button level="simple">{getActual && getActual<withLanguage>(terms.SHARE)}</Button>
-                    <Button level="primary">{getActual && getActual<withLanguage>(terms.VIEW)}</Button>
-                  </Group>
-                )}
-              </LangContext.Consumer>
-            </div>
+          {visitDate && description && size === 'l' && (
+            <Side {...{ visitDate, description }} />
           )}
         </Group>
       </div>

@@ -1,0 +1,129 @@
+.Event {
+  $parent: &;
+  position: relative;
+  user-select: text;
+  flex-grow: 1;
+  flex-basis: auto;
+  &--size {
+    &-s {
+      max-width: $eventSize;
+      #{$parent}__image {
+        width: 100%;
+        height: $eventSize-small;
+      }
+      #{$parent}__text__title {
+        @extend %simple-text;
+      }
+    }
+    &-m {
+      @include both {
+        width: 100%;
+        #{$parent}__image {
+          width: 100%;
+        }
+      }
+    }
+    &-l {
+      width: 100%;
+    }
+  }
+  &__content {
+    width: 100%;
+    &:hover > * {
+      filter: blur($smooth-blur);
+      backface-visibility: hidden;
+      transition: filter $average;
+    }
+  }
+  &__image {
+    $self: &;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: $eventSize;
+    height: $eventSize;
+    border-radius: $border-radius-small;
+    overflow: hidden;
+    filter: blur(0)!important;
+    mask-image: -webkit-radial-gradient(white, black);
+    &:hover {
+      #{$self}__inner {
+        backface-visibility: hidden;
+        transform: scale(1.01);
+        transition: $fast;
+      }
+    }
+    &:hover > * {
+      filter: blur($smooth-blur);
+      backface-visibility: hidden;
+      transition: filter $average;
+      #{$parent}__inner {
+        @extend %increase-scale;
+      }
+    }
+    &__inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      transition: all $fast, filter $slow;
+      @include toned('::before');
+    }
+    .Icon {
+      cursor: pointer;
+      filter: blur(0px);
+      border-radius: 50%;
+      z-index: z('main');
+      transition: $fast;
+      @include themify($themes) {
+        fill: themed('light');
+        background-color: themed('tint');
+      }
+      &:hover {
+        @extend %increase-scale;
+      }
+    }
+  }
+  &__tap {
+    padding: 20px;
+  }
+  &__share {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+  }
+  &__text {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    filter: blur(0)!important;
+    transition: filter $average;
+    width: 100%;
+    & > * {
+      width: fit-content;
+      max-width: 75%;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: $border-radius-small;
+      transition: $fast;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      @include themify($themes) {
+        background-color: themed('tint');
+        color: themed('light');
+      }
+    }
+    &__title {
+      @extend %header-1;
+    }
+    &__address {
+      @extend %simple-text;
+    }
+  }
+}

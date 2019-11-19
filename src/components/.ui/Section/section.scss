@@ -1,0 +1,49 @@
+.Section {
+  $self: &;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn $slowly forwards;
+  &__header {
+    max-width: $lowScreen;
+    margin: 0 auto;
+    margin-bottom: $margin-default;
+    user-select: text;
+    @extend %header-1;
+  }
+  &__subtitle {
+    margin-left: 10px;
+    @extend %small-text;
+    @include themify($themes) {
+      color: themed('highlight');
+    }
+  }
+  &__in {
+    display: flex;
+    max-width: $lowScreen;
+    margin: 0 auto;
+    &--media-column {
+      @include mobile {
+        flex-direction: column;
+        #{$self}__content {
+          width: 100%;
+        }
+        #{$self}__side {
+          display: none;
+        }
+      }
+    }
+  }
+  &__content {
+    width: 50%;
+  }
+  &__side {
+    width: 50%;
+    padding-left: $margin-large;
+    box-sizing: border-box;
+  }
+  &__after {
+    max-width: $lowScreen;
+    margin: 0 auto;
+  }
+}

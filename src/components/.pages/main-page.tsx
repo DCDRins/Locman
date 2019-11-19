@@ -2,12 +2,9 @@ import React from 'react'
 import Ground from '../.ui/Ground'
 import Header from '../Header'
 import Slider from '../Slider'
-import Event from '../.ui/Event'
-import Section from '../.ui/Section'
 import CurrentRoute from '../CurrentRoute'
+import NewsViewer from '../NewsViewer'
 import GroundImage from '../../assets/fake_content/ground_images/hermitage.jpg'
-import terms from '../../common/terms'
-import Group from '../.ui/Group'
 
 export type MainPageProps = typeof defaultProps
 
@@ -25,8 +22,9 @@ export class MainPage extends React.Component<Partial<MainPageProps>, {}> {
           <Ground src={GroundImage}>
             <Slider />
           </Ground>
-          <CurrentRoute />
         </Header>
+        <CurrentRoute />
+        <NewsViewer />
       </main>
     )
   }

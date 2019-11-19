@@ -84,40 +84,32 @@ a:focus {
   }
 }
 ::-webkit-scrollbar {
-  height: 0;
+  height: 5px;
   width: 5px;
 }
+
 ::-webkit-scrollbar-track {
-  background: white;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: grey;
+  background-color: grey;
+  @include themify($themes) {
+    background-color: themed('tint');
+    transition: background-color $fast;
+  }
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: black;
+  background: darkgrey;
+  @include themify($themes) {
+    background-color: themed('primary');
+    transition: background-color $fast;
+  }
 }
 ::selection {
-  background-color: black;
-  color: white;
-}
-
-%custom-scroll {
   @include themify($themes) {
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: themed('tint');
-      transition: background-color $fast;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: black;
-    }
-    ::selection {
-      background-color: black;
-      color: white;
-    }
+    background-color: themed('primary');
+    color: white;
+    transition: $fast;
   }
 }

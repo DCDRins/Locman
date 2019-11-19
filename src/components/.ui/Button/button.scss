@@ -16,10 +16,7 @@
   }
   // Button:active
   &:active {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: scale(.98);
-    transition: $slow;
+   @extend %decrease-scale;
   }
   // &__in {
   //   // display: flex;
@@ -58,16 +55,16 @@
     &-primary {
       font-weight: 600;
       @include themify($themes) {
-        background-color: themed('primary');
-        color: themed('main');
-        transition: background-color $fast, color $fast;
+        background-color: themed('accent');
+        color: themed('light');
         &:hover {
-          background-color: themed('light');
-          color: themed('accent');
+          background-color: themed('accent');
+          color: themed('light');
         } 
       }
     }
     &-outline {
+      font-weight: 500;
       @include themify($themes) {
         border-color: themed('light');
         color: themed('light');
@@ -81,6 +78,7 @@
       }
     }
     &-simple {
+      font-weight: 500;
       @include themify($themes) {
         // color: themed('light');
         // &:hover {
@@ -89,7 +87,7 @@
         //   .Icon {
         //     fill: themed('accent');
         //   }
-        // } 
+        // }
         &--permanent {
           color: themed('light');
           &:hover {

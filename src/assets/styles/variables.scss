@@ -1,5 +1,9 @@
 $fontFamily: "Gilroy";
 
+// sizes
+$slider-height: 230px;
+$eventSize: 330px;
+$eventSize-small: 155px;
 // colors
 $transparent-dark: rgba(0, 0, 0, .4);
 // header
@@ -10,33 +14,13 @@ $lowScreen: 1280px;
 $tabScreen: 1024px;
 $mobileScreen: 768px;
 $minScreen: 500px;
-
+// margings
+$margin-default: 20px;
+$margin-large: 50px;
 // border
 $border-radius-small: 5px;
 $border-radius: 10px;
-
-// mask
-$mask: linear-gradient(rgba(0, 0, 0, 1), transparent);
-$opacity-mask: linear-gradient(rgba(0, 0, 0, .9) 100%, transparent);
-
-// font-size
-%header-1 {
-  font-size: 20pt;
-  font-weight: 600;
-}
-%header-2 {
-  font-size: 16pt;
-  font-weight: 600;
-}
-%simple-text {
-  font-size: 12pt;
-  font-weight: 300;
-}
-%small-text {
-  font-size: 10pt;
-  font-weight: 300;
-}
-
+// transitions
 $fast: .1s;
 $average: .2s;
 $slow: .3s;
@@ -44,7 +28,50 @@ $slowly: .5s;
 $fast-easing: ease-in-out .1s;
 $average-easing: ease-in-out .2s;
 $slow-easing: ease-in-out .3s;
-
+// mask
+$mask: linear-gradient(rgba(0, 0, 0, 1), transparent);
+$opacity-mask: linear-gradient(rgba(0, 0, 0, .9) 100%, transparent);
+$magic-mask: radial-gradient(white, black);
+// fonts
+%header-1 {
+  font-size: 22pt;
+  font-weight: 600;
+  @include mobile {
+    font-size: 16pt;
+    font-weight: 600;
+  }
+}
+%header-2 {
+  font-size: 16pt;
+  font-weight: 600;
+}
+%header-oversize {
+  font-size: 32pt;
+  font-weight: 600;
+  @include mobile {
+    font-size: 22pt;
+    font-weight: 600;
+  }
+}
+%simple-text {
+  font-size: 10pt;
+}
+%small-text {
+  font-size: 10pt;
+}
+// effects
+$smooth-blur: 3px;
+$large-blur: 5px;
+%decrease-scale {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: scale(.98);
+}
+%increase-scale {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: scale(1.1);
+}
 $z-indexes: (
     "overlay",
     "foreground",

@@ -40,6 +40,10 @@ class Header extends Component<Props, State> {
     document.addEventListener('scroll', this.handleScroll)
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.handleScroll)
+  }
+
   handleScroll = () => {
     const scroll = window.scrollY
     if (scroll > 0) this.setState({ transparency: false });

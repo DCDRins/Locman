@@ -9,9 +9,7 @@ type Props = HTMLAttributes<HTMLElement> & HasChildren & {
 const ScrolledContent = ({ orientation = 'vertical', className, children }: Props) => {
   const base = 'Scrolled';
   return (
-    <div className={classNames(base, className!, {
-      [`${base}--orientation-${orientation}`]: true,
-    })}>
+    <div className={classNames(base, className!, `${base}--orientation-${orientation}`,)}>
       {children}
     </div>
   )

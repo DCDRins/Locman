@@ -1,0 +1,26 @@
+.Event {
+  &__side {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    &-content {
+      flex: 1;
+      mask-image: $mask;
+    }
+  }
+  &__date {
+    @extend %header-1;
+  }
+  &__description {
+    position: absolute;
+    @extend %simple-text;
+  }
+  &__buttons {
+    justify-content: flex-start;
+    & > :first-child {
+      margin-right: $margin-large;
+    }
+  }
+}

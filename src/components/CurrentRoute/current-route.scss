@@ -1,0 +1,15 @@
+.Current-Route {
+  &__content {
+    position: relative;
+    @include both {
+      flex-direction: column-reverse;
+    }
+  }
+  &__wrapper {
+    margin-right: $margin-default;
+    height: calc(#{$eventSize-small} * 2 + #{$margin-default});
+    @include both {
+      height: auto;
+    }
+  }
+}

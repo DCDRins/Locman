@@ -6,28 +6,31 @@
   width: 100%;
   min-height: 500px;
   overflow: hidden;
+  mask-image: $magic-mask;
   @include mobile {
-    min-height: 400px;
+    min-height: 0;
   }
 
   &__image {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 104%;
+    height: 104%;
+    top: -2%;
+    left: -2%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     mask-image: $mask;
-    opacity: .8;
+    opacity: 1;
     z-index: z('background');
-    backface-visibility: hidden;
-    will-change: filter;
-    filter: blur(5px) contrast(1.2);
-    transition: all 0s;
+    animation: fadeIn $slowly forwards;
+    filter: blur($large-blur) contrast(1.2);
+    @include toned('::before', .1);
   }
 
   &__in {
     position: relative;
+    width: 100vw;
     margin-top: $headerHeight;
     z-index: z('main');
   }

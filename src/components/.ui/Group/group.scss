@@ -11,6 +11,17 @@
       flex-direction: column;
     }
   }
+  &--justify {
+    &-start {
+      justify-content: flex-start;
+    }
+    &-center {
+      justify-content: center;
+    }
+    &-right {
+      justify-content: flex-end;
+    }
+  }
   &--content {
     &-start {
       align-items: flex-start;

@@ -35,6 +35,24 @@ const terms: TermDictionary = {
       en: 'Current route',
     }
   },
+  NEWS_VIEWER: {
+    lang: {
+      ru: 'Новости',
+      en: 'News',
+    }
+  },
+  NEXT: {
+    lang: {
+      ru: 'Дальше',
+      en: 'Next',
+    }
+  },
+  DETAILS: {
+    lang: {
+      ru: 'Подробнее',
+      en: 'Details',
+    }
+  },
 }
 
 export default terms

@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { HasChildren } from '../../common/types/props';
 import Div from '../.ui/Div';
-import { Slide } from './types';
 import classNames from '../../lib/classNames';
 import getHashCode from '../../lib/getHashCode';
+import Section from '../.ui/Section';
 
 type State = {
   currentSlideId: number;
 }
 type Props = typeof defaultProps & HasChildren & {
-  slideList?: Array<Slide>;
+  slideList: Array<Slide>;
+}
+interface Slide {
+  id: number;
+  title: string;
+  description: string;
+  image?: string;
 }
 const defaultProps = Object.freeze({
   isLoading: true,
@@ -43,85 +49,95 @@ const defaultProps = Object.freeze({
 })
 
 // const getInitialSlide = ({ slideList }: Props) => slideList.slice().shift()
-declare function clearInterval(intervalId: NodeJS.Timeout): void;
+// declare function clearInterval(intervalId: NodeJS.Timeout): void;
+
 
 export default class Slider extends Component<Props, State> {
   static readonly defaultProps: Props = defaultProps
   readonly state: State = {
-    currentSlideId: -1
+    currentSlideId: 0
   }
-  intervalId: NodeJS.Timeout | undefined;
+  _intervalId: NodeJS.Timeout | undefined
+  _isMounted: boolean = true
 
   componentDidMount() {
     const { slideList } = this.props
-    const { startInterval, nextSlide } = this
+    const { startInterval } = this
     if (slideList && slideList.length > 1) {
-      nextSlide()
       startInterval()
     }
   }
 
   componentWillUnmount() {
-    const { intervalId } = this;
-    if (intervalId) clearInterval(intervalId)
+    const { _intervalId } = this
+    this._isMounted = false
+    if (_intervalId) clearInterval(_intervalId)
   }
 
   startInterval = () => {
     const { timeDuration } = this.props
-    this.intervalId = setInterval(() => {
-      this.nextSlide()
+    const { nextSlide } = this
+    this._intervalId = setInterval(() => {
+      nextSlide()
     }, timeDuration)
   }
 
   nextSlide = () => {
     const { currentSlideId } = this.state
-    const { slideList } = this.props
-    let nextSlide = slideList[currentSlideId + 1]
-    this.setState({ currentSlideId: nextSlide ? currentSlideId + 1 : 0 });
+    const { slideList: { length } } = this.props
+    const { _isMounted } = this
+    _isMounted && this.setState({ currentSlideId: (currentSlideId + 1) % length });
+  }
+
+  handleClick = () => {
+    const { nextSlide, startInterval, _intervalId } = this
+    if (_intervalId) clearInterval(_intervalId)
+    nextSlide()
+    startInterval()
   }
 
   render() {
     const { currentSlideId } = this.state
     const { slideList, timeDuration } = this.props
-    const { intervalId, startInterval, nextSlide } = this
-
-    const SlideContent = ({ image, title, description }: Slide) => {
-      const handleClick = () => {
-        if (intervalId) clearInterval(intervalId)
-        nextSlide()
-        startInterval()
-      }
-      return (
-        <Div className="slide">
-          <div className="slide__in" onClick={handleClick}>
-            {image && <div className="slide__in-image" style={{ backgroundImage: `url('${image}')` }} />}
-            <div className="slide__in-text-content">
-              {title && <div className="slide__in-title">{title}</div>}
-              {description && <div className="slide__in-description">{description}</div>}
-            </div>
-          </div>
-        </Div>
-      )
-    }
+    const { handleClick } = this
+    const base = "Slider";
     return (
-      <section className="Slider">
-        {slideList && (
-          <div className="Slider__wrapper">
-            <SlideContent {...slideList[currentSlideId]} />
-            <Div className="Slider__pointers">
-              {slideList.map(({ id }: Slide) => (
-                <div key={getHashCode(`s-${id}`)}
-                  className={classNames("Slider__pointers__in", {
-                    'Slider__pointers__in--active': id === currentSlideId
-                  })}
-                >
-                  <div className="Slider__pointers__in--progress" style={{ transition: id === currentSlideId ? `width ${timeDuration * 0.001}s linear` : 'all 0s' }} />
-                </div>
-              ))}
-            </Div>
+      <Section className={base}
+        side={slideList.map(({ id, title, description }: Slide, index: number) => (
+          <div
+            key={getHashCode(id + title)}
+            className={classNames(`${base}__in-text-content`, {
+              [`${base}__in-text-content--active`]: id === currentSlideId,
+            })}
+          >
+            {title && <div className={`${base}__in-title`}>{title}</div>}
+            {description && <div className={`${base}__in-description`}>{description}</div>}
           </div>
-        )}
-      </section>
+        ))}
+      >
+        <div className={`${base}__in`} onClick={handleClick}>
+          {slideList.map(({ id, image }: Slide) => (
+            <div
+              key={getHashCode(`${id}`)}
+              className={classNames(`${base}__in-image`, {
+                [`${`${base}__in-image--active`}`]: id === currentSlideId,
+              })}
+              style={{ backgroundImage: `url('${image}')` }}
+            />
+          ))}
+        </div>
+        <Div className={`${base}__pointers`}>
+          {slideList.map(({ id }: Slide) => (
+            <div key={getHashCode(`s-${id}`)}
+              className={classNames(`${base}__pointers__in`, {
+                [`${base}__pointers__in--active`]: id === currentSlideId
+              })}
+            >
+              <div className={`${base}__pointers__in--progress`} style={{ transition: id === currentSlideId ? `width ${timeDuration * 0.001}s linear` : 'all 0s' }} />
+            </div>
+          ))}
+        </Div>
+      </Section>
     )
   }
 }

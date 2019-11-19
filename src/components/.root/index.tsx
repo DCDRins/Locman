@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import {
   Route,
   Switch,
+  HashRouter,
 } from 'react-router-dom';
 import {
   CSSTransition,

@@ -18,7 +18,7 @@ export interface Route extends withLanguage {
   absolutePath: string;
   accessLevel: number;
   visibleInHeader?: boolean;
-  page?: ComponentType;
+  page: ComponentType;
   icon?: ComponentType<SVGProps<SVGSVGElement>>
 }
 
@@ -40,6 +40,7 @@ const routes: RouteDictionary = {
     absolutePath: '/event',
     accessLevel: 0,
     visibleInHeader: true,
+    page: pages.MainPage,
     icon: EventsIcon,
     lang: {
       ru: 'Мероприятия',
@@ -51,6 +52,7 @@ const routes: RouteDictionary = {
     absolutePath: '/museums',
     accessLevel: 0,
     visibleInHeader: true,
+    page: pages.MainPage,
     icon: MuseumIcon,
     lang: {
       ru: 'Музеи',
@@ -62,6 +64,7 @@ const routes: RouteDictionary = {
     absolutePath: '/about',
     accessLevel: 0,
     visibleInHeader: true,
+    page: pages.MainPage,
     icon: AboutIcon,
     lang: { // maybe drop out all lang dependencies like android does
       ru: 'О сервисе',
@@ -72,6 +75,7 @@ const routes: RouteDictionary = {
     relativePath: 'account',
     absolutePath: '/account',
     accessLevel: 1,
+    page: pages.MainPage,
     lang: {
       ru: 'Личный кабинет',
       en: 'Account',
