@@ -1,0 +1,38 @@
+.Context {
+  display: block;
+  position: absolute;
+
+  // width: 300px;
+  user-select: none;
+  right: 0;
+  box-sizing: border-box;
+  margin-right: $margin-default;
+  border-radius: $border-radius-small;
+  overflow: hidden;
+  @include themify($themes) {
+    background-color: themed('main')
+  }
+
+  &__main {
+    & > * {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      transition: background-color $fast;
+      @extend %small-text;
+      .Icon {
+        @include themify($themes) {
+          fill: themed('mainTextColor');
+          transition: fill $fast;
+        }
+        padding-right: 10px;
+      }
+      &:hover {
+        transition: none;
+        @include themify($themes) {
+          background-color: themed('tint');
+        }
+      }
+    }
+  }
+}

@@ -41,16 +41,28 @@ const terms: TermDictionary = {
       en: 'News',
     }
   },
+  NEWS_DETAILS: {
+    lang: {
+      ru: 'Перейти к новости',
+      en: 'View details',
+    }
+  },
   NEXT: {
     lang: {
       ru: 'Дальше',
       en: 'Next',
     }
   },
-  DETAILS: {
+  SIGN_IN: {
     lang: {
-      ru: 'Подробнее',
-      en: 'Details',
+      ru: 'Войти',
+      en: 'Sign in',
+    }
+  },
+  SIGN_UP: {
+    lang: {
+      ru: 'Зарегистрироваться',
+      en: 'Sign up',
     }
   },
 }

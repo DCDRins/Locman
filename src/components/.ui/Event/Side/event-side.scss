@@ -19,8 +19,8 @@
   }
   &__buttons {
     justify-content: flex-start;
-    & > :first-child {
-      margin-right: $margin-large;
+    & > :last-child {
+      margin-left: $margin-default;
     }
   }
 }

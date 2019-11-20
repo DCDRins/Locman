@@ -52,4 +52,9 @@
       transition: background-color $fast;
     }
   }
+  &__sign-in {
+    @include mobile {
+      padding: 6px 12px;
+    }
+  }
 }

@@ -1,9 +1,9 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
-import classNames from '../../../lib/classNames';
-import { HasChildren, HasRootRef } from '../../../common/types/props';
-import { Route } from '../../../common/routes';
-import Icon from '../Icon';
+import React, { HTMLAttributes, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
+import classNames from '../../../lib/classNames'
+import { HasChildren, HasRootRef } from '../../../common/types/props'
+import { Route } from '../../../common/routes'
+import Icon from '../Icon'
 
 
 type ButtonProps = HTMLAttributes<HTMLElement> & HasChildren & {

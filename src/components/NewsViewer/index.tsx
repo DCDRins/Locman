@@ -84,7 +84,7 @@ export default class Slider extends Component<Props, State> {
               getActual && (
                 <div className={`${base}__buttons`}>
                   <Button level="secondary" onClick={nextNew}>{getActual(terms.NEXT)}</Button>
-                  <Button level="primary">{getActual(terms.DETAILS)}</Button>
+                  <Button level="primary">{getActual(terms.NEWS_DETAILS)}</Button>
                 </div>
               )
             )}
