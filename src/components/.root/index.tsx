@@ -1,41 +1,39 @@
-import React, { FunctionComponent } from 'react';
+import React, { Component } from 'react';
 import {
   Route,
   Switch,
-  HashRouter,
 } from 'react-router-dom';
 import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
-import ThemeContext from '../../common/context/theme/theme.context'
 import routes, { Route as CustomRouteType } from '../../common/routes';
 import getHashCode from '../../lib/getHashCode';
 
-const Root: FunctionComponent = () => {
-  return (
-    <Route render={({ location }) => (
-      <ThemeContext.Consumer>
-        {({ darkMode }) => (
-          <TransitionGroup className={darkMode ? 'theme-dark' : 'theme-light'}>
-            <CSSTransition
-              key={location.key}
-              timeout={0}
-              // timeout={450}
-              classNames="css-transition"
-            >
-              <Switch location={location}>
-                {Object.values(routes).map(({ page, absolutePath }: CustomRouteType) => (
-                  <Route key={getHashCode(absolutePath)} exact path={absolutePath} component={page} />
-                ))}
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
+export default class Root extends Component {
+  render() {
+    return (
+      <Route render={({ location }) => ( 
+        <TransitionGroup>
+          <CSSTransition
+            key={location.key}
+            timeout={300}
+            classNames="fade"
+          >
+            <Switch location={location}>
+              {Object.values(routes).map(({ page, absolutePath, param = '' }: CustomRouteType) => (
+                <Route
+                  key={getHashCode(absolutePath)}
+                  exact={param.length === 0}
+                  path={`${absolutePath}/${param}`}
+                  component={page}
+                />
+              ))}
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         )}
-      </ThemeContext.Consumer>
-      )}
-    />
-  );
+      />
+    );
+  }
 }
-
-export default Root

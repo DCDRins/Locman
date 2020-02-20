@@ -18,30 +18,15 @@ $desktopWidth: 1920px;
   }
 }
 
-@mixin themify($themes) {
-  @each $theme, $map in $themes {
-    .theme-#{$theme} & {
-      $theme-map: () !global;
-      @each $key, $submap in $map {
-        $value: map-get(map-get($themes, $theme), '#{$key}');
-        $theme-map: map-merge($theme-map, ($key: $value)) !global;
-      }
-      @content;
-      $theme-map: null !global;
-    }
-  }
-}
-
-@mixin toned($pseudo, $amount: .2) {
+@mixin toned($pseudo, $amount: .1) {
   &#{$pseudo} {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: #{$amount};
-    transition: $fast;
-    @include themify($themes) {
-      background-color: themed('accent');
-    }
+    background-color: $main;
+    transition: $average;
+    mask-image: $mask;
   }
 }

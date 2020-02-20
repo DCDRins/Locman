@@ -2,37 +2,67 @@
   $parent: &;
   position: relative;
   user-select: text;
-  flex-grow: 1;
-  flex-basis: auto;
+  @include mobile {
+    width: 100%;
+  }
+  .Side {
+    margin-left: $margin-default;
+  }
   &--size {
-    &-s {
-      max-width: $eventSize;
-      #{$parent}__image {
-        width: 100%;
-        height: $eventSize-small;
-      }
-      #{$parent}__text__title {
-        @extend %simple-text;
-      }
-    }
-    &-m {
-      @include both {
-        width: 100%;
-        #{$parent}__image {
-          width: 100%;
-        }
-      }
-    }
+    // &-m {
+    // }
     &-l {
       width: 100%;
     }
   }
+
+  &--media-lowscreen {
+    @include both {
+      width: 100%;
+      #{$parent}__content {
+        max-width: unset;
+      }
+      #{$parent}__image {
+        border-radius: 0;
+        width: 100%;
+      }
+    }
+  }
   &__content {
+    $self: &;
+    position: relative;
     width: 100%;
-    &:hover > * {
-      filter: blur($smooth-blur);
-      backface-visibility: hidden;
-      transition: filter $average;
+    // flex-shrink: 3;
+    @include mobile {
+      max-width: unset!important;
+      width: 100%!important;
+    }
+    &--type {
+      &-event {
+        max-width: $defaultSize;
+        // @include mobile {
+        //   max-width: $minSize;
+        // }
+        #{$parent}__image {
+          width: $defaultSize;
+          min-width: $defaultSize;
+          height: $defaultSize;
+          // @include mobile {
+          //   width: $minSize;
+          //   min-width: $minSize;
+          //   height: $minSize;
+          // }
+        }
+      }
+      &-museum {
+        max-width: $overSize;
+        #{$parent}__image {
+          width: $overSize;
+          min-width: $overSize;
+          height: $minSize;
+          height: $defaultSize;
+        }
+      }
     }
   }
   &__image {
@@ -41,89 +71,78 @@
     position: relative;
     align-items: center;
     justify-content: center;
-    width: $eventSize;
-    height: $eventSize;
-    border-radius: $border-radius-small;
     overflow: hidden;
-    filter: blur(0)!important;
+    border-radius: $border-radius-small;
     mask-image: -webkit-radial-gradient(white, black);
-    &:hover {
-      #{$self}__inner {
-        backface-visibility: hidden;
-        transform: scale(1.01);
-        transition: $fast;
-      }
+    filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
+    @include mobile {
+      width: 100%!important;
     }
-    &:hover > * {
-      filter: blur($smooth-blur);
-      backface-visibility: hidden;
-      transition: filter $average;
-      #{$parent}__inner {
-        @extend %increase-scale;
+    &:hover {
+      cursor: pointer;
+      #{$parent}__context {
+        visibility: visible;
+        opacity: 1;
+      }
+      #{$self}__inner {
+        @include toned('::before', .75);
       }
     }
     &__inner {
       position: absolute;
+      border-radius: $border-radius-small;
       width: 100%;
       height: 100%;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      transition: all $fast, filter $slow;
-      @include toned('::before');
-    }
-    .Icon {
-      cursor: pointer;
-      filter: blur(0px);
-      border-radius: 50%;
-      z-index: z('main');
       transition: $fast;
-      @include themify($themes) {
-        fill: themed('light');
-        background-color: themed('tint');
-      }
-      &:hover {
-        @extend %increase-scale;
-      }
+      @include toned('::before', 0);
     }
   }
-  &__tap {
-    padding: 20px;
-  }
-  &__share {
+  &__context {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    padding: 10px;
+    z-index: z('main');
+    transition: $average;
+    right: 0;
+    top: 0;
+    @extend .hidden;
   }
   &__text {
-    position: absolute;
     bottom: 0;
-    padding: 10px;
     box-sizing: border-box;
     filter: blur(0)!important;
     transition: filter $average;
+    z-index: z("main");
     width: 100%;
+
     & > * {
+      cursor: pointer;
+      display: block;
       width: fit-content;
       max-width: 75%;
-      margin-top: 5px;
-      padding: 5px 10px;
       border-radius: $border-radius-small;
-      transition: $fast;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      @include themify($themes) {
-        background-color: themed('tint');
-        color: themed('light');
+      color: $primary;
+      transition: $fast;
+      &:active {
+        opacity: .8;
+        transition: $fast;
       }
     }
     &__title {
-      @extend %header-1;
+      @extend %header-3;
+      padding-top: 3px;
+      // font-weight: 600;
+
     }
-    &__address {
+    &__subtitle {
       @extend %simple-text;
+      &:hover {
+        max-width: 100%;
+      }
     }
   }
 }

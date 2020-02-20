@@ -7,6 +7,7 @@ import Section from '../.ui/Section';
 import terms from '../../common/terms';
 import Button from '../.ui/Button';
 import LangContext from '../../common/context/lang/lang.context';
+import Group from '../.ui/Group';
 
 type State = {
   currentId: number;
@@ -82,10 +83,10 @@ export default class Slider extends Component<Props, State> {
           <LangContext.Consumer>
             {({ getActual }) => (
               getActual && (
-                <div className={`${base}__buttons`}>
-                  <Button level="secondary" onClick={nextNew}>{getActual(terms.NEXT)}</Button>
-                  <Button level="primary">{getActual(terms.NEWS_DETAILS)}</Button>
-                </div>
+                <Group className={`${base}__buttons`} content="center" justify="center">
+                  <Button angular level="secondary" onClick={nextNew}>{getActual(terms.NEXT)}</Button>
+                  <Button angular level="primary">{getActual(terms.NEWS_DETAILS)}</Button>
+                </Group>
               )
             )}
           </LangContext.Consumer>

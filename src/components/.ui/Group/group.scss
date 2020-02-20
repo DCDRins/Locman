@@ -18,7 +18,10 @@
     &-center {
       justify-content: center;
     }
-    &-right {
+    &-space-between {
+      justify-content: space-between;
+    }
+    &-end {
       justify-content: flex-end;
     }
   }
@@ -29,9 +32,13 @@
     &-center {
       align-items: center;
     }
+    &-end {
+      align-items: flex-end;
+    }
   }
   &--stretched {
     width: 100%;
     height: 100%;
+    // align-items: stretch;
   }
 }

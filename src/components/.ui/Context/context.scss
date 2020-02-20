@@ -1,38 +1,36 @@
 .Context {
-  display: block;
-  position: absolute;
-
-  // width: 300px;
-  user-select: none;
-  right: 0;
+  position: relative;
   box-sizing: border-box;
-  margin-right: $margin-default;
-  border-radius: $border-radius-small;
-  overflow: hidden;
-  @include themify($themes) {
-    background-color: themed('main')
+  
+  &__content {
+    display: block;
+    position: fixed;
+    user-select: none;
+    border-radius: $border-radius-small;
+    background-color: $dark;
+    transition: $fast;
+    overflow: hidden;
+    .Icon {
+      fill: $primary;
+      margin-right: 20px;
+    }
   }
-
   &__main {
-    & > * {
-      display: flex;
-      align-items: center;
-      padding: 10px 14px;
-      transition: background-color $fast;
-      @extend %small-text;
-      .Icon {
-        @include themify($themes) {
-          fill: themed('mainTextColor');
-          transition: fill $fast;
-        }
-        padding-right: 10px;
-      }
-      &:hover {
-        transition: none;
-        @include themify($themes) {
-          background-color: themed('tint');
-        }
-      }
+    padding: 10px 0;
+  }
+  &__field {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 12px;
+
+    @extend %small-text;
+    font-weight: 400;
+
+    &:hover {
+      background-color: $tint-light;
+    }
+    &:active {
+      @extend %simple-active-effect;
     }
   }
 }

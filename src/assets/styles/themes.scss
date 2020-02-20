@@ -1,23 +1,56 @@
 
-$themes: (
-  light: (
-    main: #fff,
-    primary: #604BD8,
-    light: #fff,
-    accent: #2E16B1,
-    tint: rgba(0, 0, 0, .2),
-    highlight: #F20C8B,
-    highlight-transparently: rgba(242, 12, 139, 0.1),
-    mainTextColor: #161616,
-  ),
-  dark: (
-    main: #0B0326,
-    primary: #fff,
-    light: #fff,
-    accent: #460273,
-    tint: rgba(255, 255, 255, .2),
-    highlight: #27F2DE,
-    highlight-transparently: rgba(39, 242, 222, 0.1),
-    mainTextColor: #fff,
-  ),
-);
+// $themes: (
+//   light: (
+//     main: #fff,
+//     primary: #604BD8,
+//     accent: #2E16B1,
+//     tint: rgba(64, 64, 64, .2),
+//     highlight: #F20C8B,
+//     highlight-tint: rgba(242, 12, 139, 0.1),
+//     mainTextColor: #161616,
+//     // ---
+//     tag-bg: #fff,
+//     tag-fg: rgb(46, 22, 177),
+//   ),
+//   dark: (
+//     main: #001,
+//     primary: #FFF,
+//     accent: #222228,
+//     tint: rgba(255, 255, 255, .05),
+//     highlight: #0ff,
+//     highlight-tint: rgba(39, 242, 222, 0.1),
+//     mainTextColor: #fff,
+//     // ---
+//     tag-bg: rgba(255, 255, 255, .2),
+//     tag-fg: rgb(255, 255, 255),
+//   ),
+// );
+
+// $themes: (
+//   light: (
+//     main: #fff,
+//     primary: #604BD8,
+//     light: #fff,
+//     accent: #2E16B1,
+//     tint: rgba(64, 64, 64, .2),
+//     highlight: #F20C8B,
+//     highlight-tint: rgba(242, 12, 139, 0.1),
+//     mainTextColor: #161616,
+//     // ---
+//     tag-bg: #fff,
+//     tag-fg: rgb(46, 22, 177),
+//   ),
+//   dark: (
+//     main: #0B0326,
+//     primary: #fff,
+//     light: #fff,
+//     accent: #460273,
+//     tint: rgba(255, 255, 255, .05),
+//     highlight: #7506BF,
+//     highlight-tint: rgba(39, 242, 222, 0.1),
+//     mainTextColor: #fff,
+//     // ---
+//     tag-bg: rgba(255, 255, 255, .2),
+//     tag-fg: rgb(255, 255, 255),
+//   ),
+// );

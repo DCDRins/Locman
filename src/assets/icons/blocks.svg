@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<svg version="1.1" viewBox="0 0 16 16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+<rect stroke="transparent" height="4" width="4"/>
+<rect stroke="transparent" height="4" width="4" x="6"/>
+<rect stroke="transparent" height="4" width="4" x="12"/>
+<rect stroke="transparent" height="4" width="4" y="6"/>
+<rect stroke="transparent" height="4" width="4" x="6" y="6"/>
+<rect stroke="transparent" height="4" width="4" x="12" y="6"/>
+<rect stroke="transparent" height="4" width="4" y="12"/>
+<rect stroke="transparent" height="4" width="4" x="6" y="12"/>
+<rect stroke="transparent" height="4" width="4" x="12" y="12"/>
+</svg>

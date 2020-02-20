@@ -1,0 +1,15 @@
+.Stock {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $tint-hard;
+  z-index: z("foreground");
+  transition: all $slow, width 0s, height 0s;
+
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

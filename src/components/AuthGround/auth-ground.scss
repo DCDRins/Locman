@@ -1,0 +1,51 @@
+.Auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  color: $primary;
+  color: white;
+  @include mobile {
+    min-height: 80vh;
+  }
+  &__title {
+    text-align: center;
+    font-size: 0;
+    padding: 0;
+    transition: $slow;
+    opacity: 0;
+
+    &--active {
+      @extend %header-2;
+      padding: 10px 0;
+      opacity: 1;
+    }
+  }
+  &__subtitle {
+    width: fit-content;
+    margin: 10px auto;
+    cursor: pointer;
+    @extend %small-text;
+    opacity: $text-transparency;
+    border-radius: $border-radius-small;
+    &:hover {
+      opacity: 1;
+      transition: $fast;
+    }
+  }
+  &__button {
+    margin-left: 10px;
+  }
+  &__route {
+    padding: 10px;
+    opacity: $text-transparency;
+    &--active {
+      opacity: 1;
+
+    }
+    &-container {
+      padding: $margin-default;
+    }
+  }
+}

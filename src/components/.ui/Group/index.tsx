@@ -7,8 +7,8 @@ type Props = HTMLAttributes<HTMLElement> & HasChildren & {
   title?: string;
   description?: string;
   orientation?: 'vertical' | 'horizontal';
-  justify?: 'left' | 'center' | 'right';
-  content?: 'center' | 'start';
+  justify?: 'start' | 'center' | 'end' | 'space-between';
+  content?: 'center' | 'start' | 'end';
   stretched?: boolean;
   reverse?: boolean;
 }
@@ -17,12 +17,13 @@ const Group = ({
   orientation = 'horizontal',
   content = 'start',
   stretched = false,
-  justify = 'left',
-  title, description, className, children, reverse, ...restProps
+  justify = 'space-between',
+  className = '',
+  title, description, children, reverse, ...restProps
 }: Props) => {
   const base = 'Group';
   return (
-    <div {...restProps} className={classNames(base, className!, {
+    <div {...restProps} className={classNames(base, className, {
         [`${base}--orientation-${orientation}`]: true,
         [`${base}--content-${content}`]: true,
         [`${base}--justify-${justify}`]: true,

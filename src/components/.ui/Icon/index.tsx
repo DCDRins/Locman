@@ -3,20 +3,32 @@ import React, { HTMLAttributes, ComponentType, SVGProps } from 'react';
 import classNames from '../../../lib/classNames';
 import { HasChildren } from '../../../common/types/props';
 
-type Props = HTMLAttributes<HTMLElement> & HasChildren & {
-  size?: 's' | 'm' | 'l';
+export type IconProps = HTMLAttributes<SVGSVGElement> & HasChildren & {
+  size?: 's' | 'm' | 'l' | number;
   svg: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
 const Icon = ({
   size = 's',
   svg: Svg,
-  className }: Props) => {
+  className = '',
+  ...restProps
+}: IconProps) => {
+  const style: {[k: string]: string} = {};
   const base = 'Icon';
+
+  if (typeof size === 'number') {
+    style.width = `${size}px`
+    // style.height = `${size}px`
+  }
+
   return (
-    <Svg className={classNames(base, className!,
-      `${base}--size-${size}`
-      )}
+    <Svg
+      {...restProps}
+      style={style}
+      className={classNames(base, className, {
+        [`${base}--size-${size}`]: typeof size !== 'number'
+      })}
     />
   )
 }

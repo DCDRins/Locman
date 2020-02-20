@@ -1,0 +1,16 @@
+.Any-Museum-Ground {
+  &__title {
+    padding: $margin-default 0;
+    @extend %godzilla;
+    font-weight: 700;
+  }
+
+  &__buttons {
+    @include mobile {
+      // justify-content: flex-end;
+    }
+    & > * {
+      margin-right: 10px;
+    }
+  }
+}

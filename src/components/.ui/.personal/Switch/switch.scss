@@ -1,0 +1,52 @@
+.Switch {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  
+  input {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 0;
+    left: 0;
+    margin: 3px;
+    border-radius: 9px;
+    background-color: $primary;
+    box-shadow: 0 2px 4px -2px rgba(0,0,0,.3);
+    transition: all $average, background-color $fast;
+  }
+  &::before {
+    content: '';
+    display: block;
+    border-radius: 12px;
+    background-color: $highlight;
+    width: 42px;
+    height: 24px;
+    transition: $average;
+  }
+  &--active {
+    &::before {
+      background-color: $accent;
+    }
+    &::after {
+      transform: translate3d(18px, 0, 0);
+    }
+    &:active {
+      &::after {
+        left: -8px;
+      }
+    }
+  }
+  &:active {
+    &::after {
+      width: 26px;
+    }
+  }
+}

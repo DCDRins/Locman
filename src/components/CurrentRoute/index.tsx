@@ -3,27 +3,36 @@ import Section from '../.ui/Section';
 import Group from '../.ui/Group';
 import Event from '../.ui/Event';
 import ScrolledContent from '../.ui/ScrolledContent';
+import GroundImage from '../../assets/fake_content/ground_images/hermitage-3.jpg'
+import GroundImage1 from '../../assets/fake_content/ground_images/hermitage-4.jpg'
+import GroundImage2 from '../../assets/fake_content/ground_images/hermitage-2.jpg'
 import terms from '../../common/terms';
-import Side from '../.ui/Event/Side';
 
 const CurrentRoute: FunctionComponent = () => {
   const base = 'Current-Route';
   return (
     <Section
       header={terms.CURRENT_ROUTE}
-      className={`${base} Event`}
+      className={`${base}`}
       side={
-        <Side visitDate="27.10.2019" />
+        // <Side title="27.10.2019" denyMedia />
+        <Group content="start" className={`${base}__content`} stretched orientation="vertical">
+          <ScrolledContent orientation="horizontal" fit className={`${base}__wrapper`}>
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage2} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage1} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage2} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage1} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage2} /> 
+            <Event size="m" name="name" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage1} /> 
+          </ScrolledContent>
+          {/* <Event size="m" name="Эрмитаж" image={GroundImage2} allowMedia /> */}
+        </Group>
       }
     >
-      <Group content="start" className={`${base}__content`}>
-        <ScrolledContent className={`${base}__wrapper`}>
-          <Event size="s" title="Эрмитаж" visitDate="27.10.2019" image="https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg" />
-          <Event size="s" title="Эрмитаж" visitDate="27.10.2019" image="https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg" />
-          <Event size="s" title="Эрмитаж" visitDate="27.10.2019" image="https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg" />
-        </ScrolledContent>
-        <Event title="Эрмитаж" size="m" image="https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg" />
-      </Group>
+      <Event size="l" name="name" title="Эрмитаж" description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, illum ipsa veniam nisi, rerum itaque fugit veritatis suscipit temporibus officiis, commodi quia asperiores! Commodi, nesciunt dolorum delectus totam sapiente ad!" image={GroundImage2} /> 
     </Section>
   )
 }

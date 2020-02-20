@@ -1,115 +1,182 @@
-
 .Button {
   cursor: pointer;
   display: inline-block;
-  outline: none;
   text-decoration: none;
+  outline: none;
   user-select: none;
-  border-radius: $border-radius-small;
-  border: 1px solid transparent;
-  transition: $fast;
+  white-space: nowrap;
+  padding: 0;
+  // border: 1px solid transparent;
+  border: none;
+  outline: none;
+  border-radius: $border-radius-large;
+  background-color: transparent;
+  transition: $fast, opacity $slowly;
 
-  & * {
+  * {
     display: inline-block;
     vertical-align: middle;
-    transition: font-size $fast;
   }
   // Button:active
   &:active {
-   @extend %decrease-scale;
+    @extend %simple-active-effect;
   }
-  // &__in {
-  //   // display: flex;
-  //   // align-items: center;
-  //   // justify-content: space-between;
-  // }
+  
+  // Button__in
+  &__in {
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: padding $fast;
+    // Button__in--size
+    &--size {
+      &-s {
+        @extend %small-text;
+        font-weight: 400;
+        padding: $button-s-padding;
+      }
+      &-m {
+        @extend %small-text;
+        font-weight: 500;
+        padding: $button-m-padding;
+      }
+      &-l {
+        @extend %simple-text;
+        font-weight: 500;
+        padding: $button-l-padding;
+      }
+      &-xl {
+        padding: $button-l-padding;
+      }
+    }
+  }
+  &:focus > &__in {
+    outline: auto;
+    outline-color: $main;
+  }
   // Button__content
-  // &__content {
-
-  // }
+  &__content {
+    white-space: nowrap;
+  }
   // Button__before
   &__before {
     position: relative;
     margin-right: 10px;
     .Icon {
-      @include themify($themes) {
-        fill: themed('light')
-      }
+      fill: $primary;
     }
   }
-  &--size {
-    &-s {
-      padding: 5px 10px;
-      @extend %small-text;
+  &--align {
+    &-left {
+      text-align: left;
     }
-    &-m {
-      padding: 10px 20px;
-      @extend %simple-text;
+    &-center {
+      text-align: center;
     }
-    // &-l {
-
-    // }
+    &-right {
+      text-align: right;
+    }
+  }
+  // Allow media
+  &--media &__content {
+    @include mobile {
+      font-size: 0;
+    }
+  }
+  &--media &__before {
+    display: none;
+    @include mobile {
+      display: inline-block!important;
+      margin-right: 0;
+    }  
+  }
+  // Show only icon
+  &--show-icon &__before {
+    display: inline-block;
+  }
+  &--only-icon &__before {
+    margin-right: 0;
+  }
+  // Button--stretched
+  // &--stretched, &--stretched &__in {
+  //   width: 100%;
+  //   @extend %header-2;
+  // }
+  // Button--hidden
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+    margin: 0!important;
+    transition: all $slow, opacity $fast;
+  }
+  &--hidden &__in {
+    padding: 0;
+    font-size: 0;
+    transition: $fast;
+  }
+  // Button--has-corners
+  &--has-corners {
+    border-radius: $border-radius-small!important;
   }
   // Button--level
   &--level {
     &-primary {
-      font-weight: 600;
-      @include themify($themes) {
-        background-color: themed('primary');
-        color: themed('main');
-        &:hover {
-          background-color: themed('primary');
-          color: themed('main');
-        } 
+      // font-weight: 600;
+      background-color: $primary;
+      color: $main;
+      .Icon {
+        fill: $main;
+        stroke: $main;
       }
     }
     &-secondary {
-      font-weight: 600;
-      @include themify($themes) {
-        background-color: themed('highlight-transparently');
-        color: themed('highlight');
-        &:hover {
-          background-color: themed('highlight');
-          color: themed('main');
-        } 
+      color: $primary;
+      border: 1px solid $primary;
+      &:hover {
+        background-color: $tint-light;
       }
     }
-    &-outline {
-      font-weight: 500;
-      @include themify($themes) {
-        border-color: themed('light');
-        color: themed('light');
-        &:hover {
-          background: themed('light');
-          color: themed('accent');
-          .Icon {
-            fill: themed('accent');
-          }
-        } 
+    &-tertiary {
+      color: $primary;
+      background-color: $tint-light;
+      &:hover {
+        background-color: $primary;
+        color: $main;
+        .Icon {
+          fill: $main;
+        }
+      }
+      &--permanent {
+        user-select: text;
+        pointer-events: none;
       }
     }
     &-simple {
-      font-weight: 500;
-      @include themify($themes) {
-        // color: themed('light');
-        // &:hover {
-        //   background: themed('light');
-        //   color: themed('accent');
-        //   .Icon {
-        //     fill: themed('accent');
-        //   }
-        // }
-        &--permanent {
-          color: themed('light');
-          &:hover {
-            background: themed('light');
-            color: themed('accent');
-            .Icon {
-              fill: themed('accent');
-            }
-          }
-        }
+      color: $primary;
+      // .Icon {
+      //   stroke: $primary;
+      // }
+      &:hover {
+        background: $tint-light;
       }
+      &--permanent {
+        user-select: text;
+        pointer-events: none;
+      }
+    }
+    &-tag {
+      color: $primary;
+      background-color: $tint-light;
+      // .Icon {
+      //   fill: $primary;
+      // }
+    }
+    &-alert {
+      color: $primary;
+      background-color: $red;
+      // .Icon {
+      //   fill: $primary;
+      // }
     }
   }
 }

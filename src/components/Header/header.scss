@@ -1,44 +1,48 @@
 .Header {
   position: relative;
+  margin-bottom: $headerHeight * 2;
   &__nav {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: $headerHeight;
     z-index: z('overlay');
-    @include themify($themes) {
-      background-color: themed('accent');
-      transition: background-color $average;
+    background-color: #222228;
+    animation: fadeIn $slowly forwards;
+    &--personal {
+      background-color: $accent!important;
     }
-    &--transparency {
-      background-color: transparent!important;
+    &--hidden {
+      background-color: transparent;
       transition: background-color $fast;
+    }
+    & > * {
+      flex: 1 0 0;
+      &:last-child {
+        text-align: right;
+      }
     }
   }
   &__logo {
-    width: 50px;
+    margin: 0 10px;
+    @include mobile {
+      display: none;
+    }
+    &--min {
+      display: none;
+      @include mobile {
+        display: block;
+      }
+    }
   }
   &__links {
     width: $minScreen;
     transition: width $fast;
+    align-items: center;
+    margin: 0 auto;
     @include mobile {
       width: 200px;
-    }
-    .Button {
-      transition: $fast;
-      @include mobile {
-        &__content {
-          font-size: 0;
-        }
-        &__before {
-          display: inline-block!important;
-          margin: 0;
-        } 
-      }
-    }
-  }
-  &__button .Button {
-    &__before {
-      display: none;
     }
   }
   &__user {
@@ -47,14 +51,12 @@
     height: 20px;
     border-radius: 10px;
     overflow: hidden;
-    @include themify($themes) {
-      background-color: themed('light');
-      transition: background-color $fast;
-    }
+    background-color: $primary;
   }
   &__sign-in {
+    margin: 0 10px;
     @include mobile {
-      padding: 6px 12px;
+      // padding: 6px 12px;
     }
   }
 }

@@ -2,27 +2,88 @@ import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../lib/classNames';
 import { HasChildren } from '../../../common/types/props';
 
-type State = typeof initialState & {}
-type Props = HTMLAttributes<HTMLElement> & HasChildren & {
+type State = typeof initialState & { }
+type Props = typeof defaultProps 
+& HTMLAttributes<HTMLDivElement>
+& HasChildren
+& {
   src?: string;
-  // layout?: 'top' | 'bottom' | 'both';
+  stretch: boolean;
+  fit: boolean;
+  layout?: 'top' | 'bottom'; // default center
+  mask?: 'no' | 'both'; // default top
+  video?: string;
 }
-const initialState = {
-  blur: 5,
-}
+
+const initialState = Object.freeze({
+  parallaxValue: 0
+})
+const defaultProps = Object.freeze({
+  stretch: false,
+  limit: false,
+  fit: false,
+})
 
 export default class Ground extends Component<Props, State> {
   readonly state: State = initialState
+  static readonly defaultProps: Props = defaultProps
+   _isMounted: boolean = true
+
+  componentDidMount() {
+    const { _handleScroll } = this
+    document.addEventListener("scroll", _handleScroll)
+  }
+  
+  componentWillUnmount() {
+    this._isMounted = false
+    document.removeEventListener("scroll", this._handleScroll, false)
+  }
+
+  _handleScroll = () => {
+    const { _isMounted } = this
+    _isMounted && this.setState({ parallaxValue: window.scrollY })
+  }
 
   render() {
-    const { children, className, src, ...restProps } = this.props
-    const { blur } = this.state
-    const base = 'Ground';
+    const {
+      src,
+      children,
+      stretch,
+      layout,
+      limit,
+      video,
+      mask,
+      fit,
+      className = '',
+      ...restProps
+    } = this.props
+
+    const { parallaxValue } = this.state
+    const base = 'Ground'
+
+    const style = {
+      backgroundImage: `url('${src}')`,
+      // top: `-${parallaxValue * 0.005}%`
+    }
     return (
-      <div {...restProps} className={classNames(base, className!)}
-      >
-        {src && <div style={{ backgroundImage: `url('https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg')` }} className={`${base}__image`} />}
-        <div className={`${base}__in`}>
+      <div {...restProps} className={classNames(base, className, {
+        [`${base}--layout-${layout}`]: layout !== undefined,
+        [`${base}--limit`]: limit,
+      })}>
+        {video && (
+          <div className={`${base}__image`}>
+            <video autoPlay muted loop>
+              <source src={video} type="video/mp4" />
+            </video>
+          </div>
+        )}
+        {src && <div style={style} className={classNames(`${base}__image`, {
+          [`${base}__image--mask-${mask}`]: mask !== undefined,
+          [`${base}__image--fit`]: fit,
+        })} />}
+        <div className={classNames(`${base}__in`, {
+          [`${base}__in--stretch`]: stretch,
+        })}>
           {children}
         </div>
       </div>

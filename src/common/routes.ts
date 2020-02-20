@@ -14,7 +14,7 @@ export interface RouteDictionary {
 }
 
 export interface Route extends withLanguage {
-  relativePath: string;
+  param?: string;
   absolutePath: string;
   accessLevel: number;
   visibleInHeader?: boolean;
@@ -24,7 +24,6 @@ export interface Route extends withLanguage {
 
 const routes: RouteDictionary = {
   MAIN_PAGE: {
-    relativePath: '/',
     absolutePath: '/',
     accessLevel: 5, // user role access
     visibleInHeader: true,
@@ -32,39 +31,37 @@ const routes: RouteDictionary = {
     icon: MainpageIcon,
     lang: {
       ru: 'Главная',
-      en: 'Main page',
+      en: 'Main',
     }
   },
   EVENT_PAGE: {
-    relativePath: 'event',
     absolutePath: '/event',
     accessLevel: 0,
     visibleInHeader: true,
-    page: pages.MainPage,
+    page: pages.EventPage,
     icon: EventsIcon,
     lang: {
       ru: 'Мероприятия',
       en: 'Events',
     }
   },
-  MUSEUM_PAGE: {
-    relativePath: 'museums',
-    absolutePath: '/museums',
+  ANY_EVENT_PAGE: {
+    param: ':id',
+    absolutePath: '/event',
     accessLevel: 0,
-    visibleInHeader: true,
-    page: pages.MainPage,
-    icon: MuseumIcon,
+    page: pages.EventPage,
+    icon: EventsIcon,
     lang: {
-      ru: 'Музеи',
-      en: 'Museums',
+      ru: 'Мероприятия',
+      en: 'Events',
     }
   },
   ABOUT_PAGE: {
-    relativePath: 'about',
+    // param: 'about',
     absolutePath: '/about',
     accessLevel: 0,
     visibleInHeader: true,
-    page: pages.MainPage,
+    page: pages.AboutPage,
     icon: AboutIcon,
     lang: { // maybe drop out all lang dependencies like android does
       ru: 'О сервисе',
@@ -72,13 +69,33 @@ const routes: RouteDictionary = {
     }
   },
   PERSONAL_PAGE: {
-    relativePath: 'account',
-    absolutePath: '/account',
+    absolutePath: '/personal',
     accessLevel: 1,
-    page: pages.MainPage,
+    page: pages.PersonalPage,
     lang: {
       ru: 'Личный кабинет',
-      en: 'Account',
+      en: 'Personal page',
+    }
+  },
+  MUSEUM_PAGE: {
+    absolutePath: '/museums',
+    accessLevel: 0,
+    visibleInHeader: true,
+    page: pages.MuseumPage,
+    icon: MuseumIcon,
+    lang: {
+      ru: 'Музеи',
+      en: 'Museums',
+    }
+  },
+  ANY_MUSEUM_PAGE: {
+    param: ':id',
+    absolutePath: '/museums',
+    accessLevel: 0,
+    page: pages.AnyMuseumPage,
+    lang: {
+      ru: 'Музей',
+      en: 'Museum',
     }
   },
 }

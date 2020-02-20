@@ -6,10 +6,18 @@
     }
   }
   &__wrapper {
-    margin-right: $margin-default;
-    height: calc(#{$eventSize-small} * 2 + #{$margin-default});
-    @include both {
-      height: auto;
+    position: relative;
+    width: 100%;
+    // min-height: calc(#{$defaultSize-min} + #{$margin-default});
+    // width: 45%;
+    & > * {
+      margin-right: $margin-default * 1.5;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
+  // .Scrolled {
+  //   margin-right: 10px;
+  // }
 }

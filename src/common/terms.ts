@@ -29,6 +29,12 @@ const terms: TermDictionary = {
       en: 'Follow',
     }
   },
+  FIND: {
+    lang: {
+      ru: 'Найти',
+      en: 'Find',
+    }
+  },
   CURRENT_ROUTE: {
     lang: {
       ru: 'Текущий маршрут',
@@ -53,6 +59,12 @@ const terms: TermDictionary = {
       en: 'Next',
     }
   },
+  BACK: {
+    lang: {
+      ru: 'Назад',
+      en: 'Back',
+    }
+  },
   SIGN_IN: {
     lang: {
       ru: 'Войти',
@@ -63,6 +75,30 @@ const terms: TermDictionary = {
     lang: {
       ru: 'Зарегистрироваться',
       en: 'Sign up',
+    }
+  },
+  LOGIN: {
+    lang: {
+      ru: 'Логин',
+      en: 'Login',
+    }
+  },
+  PASSWORD: {
+    lang: {
+      ru: 'Пароль',
+      en: 'Password',
+    }
+  },
+  GMAP_LOCATION: {
+    lang: {
+      ru: 'Расположение на карте',
+      en: 'Location on the map',
+    }
+  },
+  LAST_VISITED: {
+    lang: {
+      ru: 'Последние посещенные мероприятия',
+      en: 'Last visited events',
     }
   },
 }

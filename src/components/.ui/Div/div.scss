@@ -1,9 +1,13 @@
 .Div {
   box-sizing: border-box;
-  padding: $margin-default;
+  padding: 10px 0;
   user-select: text;
   transition: padding $fast;
-  @include mobile {
-    padding: $margin-default 10px;
+  // @include mobile {
+  //   padding: 5px;
+  // }
+
+  &--both {
+    padding: 10px;
   }
 }

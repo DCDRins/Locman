@@ -1,11 +1,22 @@
 $fontFamily: "Gilroy";
 
+//colors
+$main: #001;
+$primary: #fff;
+$highlight: #ddd;
+// ---
+$accent: rgb(80, 60, 143); // maybe change this
+$light: #eef;
+$dark: #161616;
+$red: rgba(255, 0, 0, .3);
+$tint: rgba(0, 0, 0, .25);
+$tint-hard: rgba(22, 22, 22, .96);
+$tint-light: rgba(255, 255, 255, .1);
+$tint-bright-light: rgba(255, 255, 255, .2);
 // sizes
-$slider-height: 230px;
-$eventSize: 330px;
-$eventSize-small: 155px;
-// colors
-$transparent-dark: rgba(0, 0, 0, .4);
+$minSize: 180px;
+$defaultSize: 220px;
+$overSize: 560px;
 // header
 $headerHeight: 50px;
 // screen
@@ -17,9 +28,13 @@ $minScreen: 500px;
 // margings
 $margin-default: 20px;
 $margin-large: 50px;
+$button-s-padding: 6px;
+$button-m-padding: 8px;
+$button-l-padding: 12px;
 // border
-$border-radius-small: 5px;
-$border-radius: 10px;
+$border-radius-small: 3px;
+$border-radius: 8px;
+$border-radius-large: 30px;
 // transitions
 $fast: .1s;
 $average: .2s;
@@ -30,47 +45,60 @@ $average-easing: ease-in-out .2s;
 $slow-easing: ease-in-out .3s;
 // mask
 $mask: linear-gradient(rgba(0, 0, 0, 1), transparent);
+$double-mask: linear-gradient(transparent, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent);
+$text-overflow-mask: linear-gradient(rgba(0, 0, 0, 1) 50%, transparent);
 $opacity-mask: linear-gradient(rgba(0, 0, 0, .9) 100%, transparent);
 $magic-mask: radial-gradient(white, black);
 // fonts
+%small-text {
+  font-size: 8pt;
+  font-weight: 300;
+}
+%simple-text {
+  font-size: 9pt;
+  font-weight: 300;
+}
 %header-1 {
-  font-size: 22pt;
-  font-weight: 600;
+  font-size: 24pt!important;
+  font-weight: 700;
   @include mobile {
-    font-size: 16pt;
-    font-weight: 600;
+    font-size: 18pt;
   }
 }
 %header-2 {
-  font-size: 16pt;
+  font-size: 18pt!important;
+  font-weight: 700;
+}
+%header-3 {
+  font-size: 14pt!important;
   font-weight: 600;
 }
 %header-oversize {
-  font-size: 32pt;
-  font-weight: 600;
+  font-size: 22pt;
+  font-weight: 700;
   @include mobile {
-    font-size: 22pt;
-    font-weight: 600;
+    font-size: 18pt;
+    font-weight: 500;
   }
 }
-%simple-text {
-  font-size: 10pt;
-}
-%small-text {
-  font-size: 10pt;
+%godzilla {
+  font-size: 38pt;
+  font-weight: 200;
+  @include mobile {
+    font-size: 48pt;
+  }
 }
 // effects
 $smooth-blur: 3px;
-$large-blur: 5px;
-%decrease-scale {
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: scale(.98);
+$large-blur: 6px;
+$text-transparency: .2;
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
-%increase-scale {
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: scale(1.1);
+%simple-active-effect {
+  opacity: .75;
+  transition: $fast;
 }
 $z-indexes: (
     "overlay",
@@ -87,8 +115,4 @@ $z-indexes: (
         @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
         @return null;
     }
-}
-
-@function themed($key) {
-  @return map-get($theme-map, $key);
 }

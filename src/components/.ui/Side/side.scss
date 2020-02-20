@@ -1,0 +1,69 @@
+.Side {
+  display: flex;
+  position: relative;
+  // flex-shrink: 1;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  @include mobile {
+    padding-top: 10px;
+  }
+
+  & > * {
+    padding-bottom: 10px;
+  }
+
+  &__content {
+    // flex: 1;
+    mask-image: $text-overflow-mask;
+    & > * {
+      padding-bottom: 10px;
+    }
+  }
+
+  &--media {
+    @include mobile {
+      display: none;
+    }
+  }
+  &--reversed {
+    flex-direction: column-reverse;
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+  &--justify {
+    &-start {
+      justify-content: start;
+    }
+    &-center {
+      justify-content: center;
+    }
+    &-end {
+      justify-content: end;
+    }
+  }
+  &__title {
+    @extend %header-2;
+    // padding: 10px 0;
+  }
+  &__description {
+    max-height: 100px;
+    @extend %simple-text;
+    @include mobile {
+      position: relative;
+      // padding-bottom: 20px;
+    }
+  }
+  &__buttons {
+    justify-content: flex-start;
+    @include mobile {
+      justify-content: center;
+      padding-top: 20px;
+    }
+    & > :last-child {
+      margin-left: $margin-default;
+    }
+  }
+}

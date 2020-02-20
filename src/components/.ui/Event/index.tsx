@@ -1,56 +1,71 @@
-import React, { HTMLAttributes, ReactNode, DOMAttributes } from 'react';
-// import { Link } from 'react-router-dom';
-import classNames from '../../../lib/classNames';
-import Icon from '../Icon';
-import { ReactComponent as Hand } from '../../../assets/icons/hand.svg'
+import React, { HTMLAttributes, ReactNode, DOMAttributes } from 'react'
+import { Link } from 'react-router-dom'
+import classNames from '../../../lib/classNames'
 import { ReactComponent as Forward } from '../../../assets/icons/forward.svg'
-import Group from '../Group';
-import Side, { SideProps } from './Side'
+import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
+import Group from '../Group'
+import Side, { SideProps } from '../Side'
+import routes from '../../../common/routes'
+import Button from '../Button'
+import Div from '../Div'
+import Context from '../Context'
+import Icon from '../Icon'
 
 
 type EventProps = HTMLAttributes<HTMLElement> & Partial<SideProps> & {
-  size?: 's' | 'm' | 'l';
-  title: string;
+  size?: 'm' | 'l';
+  type?: 'museum' | 'event'
+  name: string;
   address?: string;
   image?: string;
   isClosest?: boolean;
   stretched?: boolean;
+  allowMedia?: boolean;
   // tagList?: Array<Tag>
 }
 
 const Event = ({
   size = 'm',
   stretched = false,
-  title = "test", isClosest = false, address = "Дворцовая набережная 26, 192491",
-  visitDate, image, description, className, ...restProps }: EventProps) => {
+  className = '',
+  name = "test",
+  isClosest = false,
+  allowMedia = false,
+  address = "Дворцовая набережная 26, 192491",
+  type = 'event',
+  title,
+  image,
+  description,
+  ...restProps
+}: EventProps) => {
     const base = 'Event';
     return (
-      <div {...restProps} className={classNames(base, className!, {
+      <div {...restProps} className={classNames(base, className, {
           [`${base}--size-${size}`]: true,
-          [`${base}--stretched`]: stretched
+          [`${base}--stretched`]: stretched,
+          [`${base}--media-lowscreen`]: allowMedia,
         })} 
-      >
-        <Group>
-          <div className={`${base}__content`}>
+        >
+        <Group justify="start">
+          <div className={classNames(`${base}__content`, {
+            [`${base}__content--type-${type}`]: true,
+          })}>
             <div className={`${base}__image`}>
+              <Div className={`${base}__context`}>
+                <Button
+                  before={<Icon svg={MenuIcon} size="s" />}
+                  level="simple"
+                  size="s"
+                />
+              </Div>
               <div className={`${base}__image__inner`} style={{ backgroundImage: `url('${image}')` }} />
-              <Icon svg={Forward} className={`${base}__share`} />
-              <Icon svg={Hand} size="l" className={`${base}__tap`} />
-              {size !== 's' ? (
-                <div className={`${base}__text`}>
-                  <div className={`${base}__text__title`}>{title}</div>
-                  <div className={`${base}__text__address`}>{address}</div>
-                </div>
-              ) : (
-                <div className={`${base}__text`}>
-                  <div className={`${base}__text__title`}>{title}</div>
-                </div>
-              )}
+            </div>
+            <div className={`${base}__text`}>
+              <Link to={`${routes.MUSEUM_PAGE.absolutePath}/${name}`} className={`${base}__text__title`}>{name}</Link>
+              <div className={`${base}__text__subtitle`}>{address}</div>
             </div>
           </div>
-          {visitDate && description && size === 'l' && (
-            <Side {...{ visitDate, description }} />
-          )}
+          {title && description && size === 'l' && <Side {...{ title, description }} />}
         </Group>
       </div>
     )

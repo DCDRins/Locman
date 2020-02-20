@@ -1,0 +1,35 @@
+
+.page {
+  z-index: z('main');
+  min-height: 100vh;
+  height: 100%;
+  color: $primary;
+  background-color: $main;
+  transition: background-color $fast, color $fast;
+  overflow: hidden;
+  &--personal {
+    background-color: $primary;
+    color: $main;
+    ::selection {
+      background-color: $main;
+      color: $primary;
+    }
+  }
+  &:nth-child(2) {
+    position: fixed;
+    transition: $average;
+    z-index: z('foreground');
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: grey;
+    background-color: $tint-light;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: darkgrey;
+    background-color: $primary;
+    transition: background-color $fast;
+  }
+}

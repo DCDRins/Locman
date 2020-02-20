@@ -1,30 +1,46 @@
-import React, { HTMLAttributes, ReactNode } from 'react'
+import React, { HTMLAttributes, ReactNode, SVGProps, ComponentType } from 'react'
 import classNames from '../../../lib/classNames'
-import { HasChildren } from '../../../common/types/props'
-import Div from '../Div'
-import Icon from '../Icon'
-import { ReactComponent as AboutIcon } from '../../../assets/icons/about.svg';
+import { HasStyleObject, HasClassName } from '../../../common/types/props'
+import { withLanguage } from '../../../common/lang'
+import LangContext from '../../../common/context/lang/lang.context'
+import Group from '../Group'
+import Icon, { IconProps } from '../Icon'
 
+type Field = IconProps & {
+  term: withLanguage;
+}
+type ContextProps = HTMLAttributes<HTMLDivElement>
+& HasStyleObject
+& {
+  header?: ReactNode;
+  fields: Array<Field>;
+  contextButton: ReactNode;
+  // additionals?: Array<Field>;
+}
 
-type ContextProps = HTMLAttributes<HTMLElement> & HasChildren & { }
-
-const Context = ({ className, children, ...restProps }: ContextProps) => {
+const Context = ({
+  className = '',
+  fields,
+  contextButton,
+  ...restProps
+}: ContextProps) => {
   const base = "Context"
     return (
-      <div {...restProps} className={classNames(base, className!)}>
-        <div className={`${base}__main`}>
-          <div>
-            <Icon svg={AboutIcon} />
-            Личный кабинет
-          </div>
-          <div>
-            <Icon svg={AboutIcon} />
-            Настройки
-          </div>
-          <div>
-            <Icon svg={AboutIcon} />
-            Выйти
-          </div>
+      <div {...restProps} className={classNames(base, className)}>
+        {contextButton}
+        <div className={`${base}__content`}>
+          <LangContext.Consumer>
+            {({ getActual }) => getActual && (
+              <div className={`${base}__main`}>
+                {fields.map(({ term, svg, size, ...otherProps }: Field, index) => (
+                  <Group className={`${base}__field`}>
+                    <Icon {...{ svg, size }} />
+                    {getActual(term)}
+                  </Group>
+                ))}
+              </div>
+            )}
+          </LangContext.Consumer>
         </div>
       </div>
     )

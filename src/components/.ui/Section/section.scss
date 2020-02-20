@@ -2,45 +2,82 @@
   $self: &;
   display: block;
   position: relative;
-  overflow: hidden;
   animation: fadeIn $slowly forwards;
+  z-index: z("main");
+  padding: 0 $margin-default $margin-large;
+
+  @include mobile {
+    padding-bottom: $margin-default;
+  }
+
   &__header {
     max-width: $lowScreen;
     margin: 0 auto;
     margin-bottom: $margin-default;
+    text-align: start;
     user-select: text;
     @extend %header-1;
+    &--minify {
+      @extend %header-3;
+      font-weight: 400;
+      margin: 0 auto;
+    }
   }
   &__subtitle {
     margin-left: 10px;
     @extend %small-text;
-    @include themify($themes) {
-      color: themed('highlight');
-    }
+    color: $highlight;
   }
   &__in {
     display: flex;
     max-width: $lowScreen;
     margin: 0 auto;
-    &--media-column {
-      @include mobile {
-        flex-direction: column;
-        #{$self}__content {
-          width: 100%;
-        }
-        #{$self}__side {
-          display: none;
-        }
-      }
-    }
+    padding: 10px 0;
   }
   &__content {
     width: 50%;
+    @include mobile {
+      width: 100%;
+    }
+    &--full {
+      width: 100%;
+    }
+  }
+  &--stretch {
+    .Scrolled {
+      &__button {
+        
+      }
+    }
+  }
+  &--stretch &__in,
+  &--stretch &__header {
+    max-width: 100%;
+  }
+  &--media-reverse {
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+  &--media-reverse &__side {
+    display: block;
+  }
+  &__before {
+    display: inline-block;
+    .Button {
+      margin-left: 10px;
+    }
   }
   &__side {
     width: 50%;
     padding-left: $margin-large;
     box-sizing: border-box;
+    z-index: 1000;
+    @include mobile {
+      display: none;
+      width: 100%;
+      padding: 10px 0;
+    }
   }
   &__after {
     max-width: $lowScreen;

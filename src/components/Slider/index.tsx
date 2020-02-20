@@ -4,6 +4,7 @@ import Div from '../.ui/Div';
 import classNames from '../../lib/classNames';
 import getHashCode from '../../lib/getHashCode';
 import Section from '../.ui/Section';
+import Side from '../.ui/Side';
 
 type State = {
   currentSlideId: number;
@@ -24,25 +25,25 @@ const defaultProps = Object.freeze({
     {
       id: 0,
       title: 'Lorem ipsum',
-      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam, doloribus cupiditate ipsum minus nostrum laudantium in facere veritatis quia',
+      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam, doloribus cupiditate ipsum minus nostrum laudantium in facere veritatis quia'.repeat(3),
       image: 'https://edunavi.online/img/slide4-6bea70.png',
     },
     {
       id: 1,
       title: 'Lorem ipsum',
-      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam, doloribus cupiditate ipsum minus',
+      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam, doloribus cupiditate ipsum minus'.repeat(4),
       image: 'https://cdn23.img.ria.ru/images/103609/79/1036097900_0:158:3083:1892_600x0_80_0_0_30365e257ed6613f1974834fab5badfe.jpg',
     },
     {
       id: 2,
       title: 'Lorem ipsum',
-      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+      description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'.repeat(8),
       image: 'https://images.unsplash.com/photo-1527555197883-98e27ca0c1ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
     },
     {
       id: 3,
       title: 'Lorem ipsum',
-      description: 'Ipsam, doloribus cupiditate ipsum minus nostrum laudantium in facere veritatis quia',
+      description: 'Ipsam, doloribus cupiditate ipsum minus nostrum laudantium in facere veritatis quia'.repeat(2),
       image: 'https://edunavi.online/img/slide1-a6d513.png',
     },
   ]
@@ -57,7 +58,7 @@ export default class Slider extends Component<Props, State> {
   readonly state: State = {
     currentSlideId: 0
   }
-  _intervalId: NodeJS.Timeout | undefined
+  _intervalId?: NodeJS.Timeout
   _isMounted: boolean = true
 
   componentDidMount() {
@@ -102,25 +103,26 @@ export default class Slider extends Component<Props, State> {
     const { handleClick } = this
     const base = "Slider";
     return (
-      <Section className={base}
-        side={slideList.map(({ id, title, description }: Slide, index: number) => (
-          <div
-            key={getHashCode(id + title)}
-            className={classNames(`${base}__in-text-content`, {
-              [`${base}__in-text-content--active`]: id === currentSlideId,
+      <Section
+        // header="Any Title Here"
+        rotateOnMedia={false}
+        side={slideList.map(({ id, title, description }: Slide) => (
+          <Side
+            key={getHashCode(title + id)}
+            __test_render_tag={false}
+            className={classNames(`${base}__slide`, {
+              [`${base}__slide--active`]: id === currentSlideId,
             })}
-          >
-            {title && <div className={`${base}__in-title`}>{title}</div>}
-            {description && <div className={`${base}__in-description`}>{description}</div>}
-          </div>
+            {...{ title, description }}
+          />
         ))}
       >
-        <div className={`${base}__in`} onClick={handleClick}>
+        <div className={`${base}`} onClick={handleClick}>
           {slideList.map(({ id, image }: Slide) => (
             <div
               key={getHashCode(`${id}`)}
-              className={classNames(`${base}__in-image`, {
-                [`${`${base}__in-image--active`}`]: id === currentSlideId,
+              className={classNames(`${base}-image`, {
+                [`${`${base}-image--active`}`]: id === currentSlideId,
               })}
               style={{ backgroundImage: `url('${image}')` }}
             />

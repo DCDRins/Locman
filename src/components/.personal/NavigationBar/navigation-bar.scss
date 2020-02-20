@@ -1,0 +1,11 @@
+.Navigation-Bar {
+  min-width: 150px;
+  max-width: 300px;
+  margin-right: $margin-large;
+  border: 1px solid $highlight;
+  border-radius: $border-radius-small;
+
+  .separate {
+    border-bottom: 1px solid $highlight;
+  }
+}

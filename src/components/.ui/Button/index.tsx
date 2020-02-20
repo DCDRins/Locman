@@ -1,57 +1,79 @@
-import React, { HTMLAttributes, ReactNode } from 'react'
+import React, { HTMLAttributes, ReactNode, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from '../../../lib/classNames'
-import { HasChildren, HasRootRef } from '../../../common/types/props'
+import { HasChildren, HasRef } from '../../../common/types/props'
 import { Route } from '../../../common/routes'
 import Icon from '../Icon'
 
 
-type ButtonProps = HTMLAttributes<HTMLElement> & HasChildren & {
-  level?: 'primary' | 'secondary' | 'outline' | 'simple',
+export type ButtonProps = HTMLAttributes<HTMLButtonElement> & HasChildren & HasRef<HTMLButtonElement> & {
+  level?: 'primary' | 'secondary' | 'tertiary' | 'alert' | 'simple' | 'tag',
   size?: 's' | 'm' | 'l' | 'xl',
   align?: 'left' | 'center' | 'right',
   route?: Route;
-  stretched?: boolean,
+  allowMedia?: boolean;
   before?: ReactNode;
   after?: ReactNode;
-  stopPropagation?: boolean;
   permanent?: boolean;
+  showIcon?: boolean;
+  angular?: boolean;
+  stretched?: boolean;
   /**
    * @ignore
    */
   disabled?: boolean;
 }
 
+
 const Button = ({
   level = 'primary',
   size = 'm',
   align = 'center',
-  stretched = false,
+  title,
+  className = '',
   permanent = false,
-  stopPropagation = true,
-  route, before, after, disabled, className, children, ...restProps }: ButtonProps) => {
+  allowMedia = false,
+  showIcon = false,
+  hidden = false,
+  angular = false,
+  stretched = false,
+  route, before, after, disabled, children, ...restProps }: ButtonProps) => {
     const button = (
-      <div {...restProps} role="button" className={classNames('Button', className!, {
-        [`Button--size-${size}`]: true,
-        [`Button--level-${level}`]: true,
-        [`Button--level-${level}--permanent`]: permanent,
-        [`Button--align-${align}`]: true,
-        [`Button--stretched`]: stretched
-      })} 
-    >
-      <div className="Button__in">
-        {/* route icons priority > before */}
-        {route && route.icon ? (
-          <div className="Button__before">
-            <Icon svg={route.icon} />
-          </div>
-        ) : (
-          before && <div className="Button__before">{before}</div>
-        )}
-        {children && <div className="Button__content">{children}</div>}
-        {after && <div className="Button__after">{after}</div>}
-      </div>
-    </div>
+      <button
+        {...restProps}
+        type="submit"
+        role="button"
+        tabIndex={route ? -1 : 0}
+        className={classNames('Button', className, {
+          [`Button--level-${level}`]: true,
+          [`Button--level-${level}--permanent`]: permanent,
+          [`Button--align-${align}`]: true,
+          [`Button--media`]: allowMedia,
+          [`Button--show-icon`]: showIcon,
+          [`Button--only-icon`]: children === undefined,
+          [`Button--hidden`]: hidden,
+          [`Button--stretched`]: stretched,
+          [`Button--has-corners`]: angular,
+        })} 
+      >
+        <div 
+          className={classNames('Button__in', {
+            [`Button__in--size-${size}`]: true,
+          })}
+          tabIndex={-1}
+        >
+          {route && route.icon ? (
+            <div className="Button__before">
+              <Icon svg={route.icon} />
+            </div>
+          ) : (
+            before && <div className="Button__before">{before}</div>
+          )}
+          {children && <div className="Button__content">{children}</div>}
+          {title && <div className="Button__content">{title}</div>}
+          {after && <div className="Button__after">{after}</div>}
+        </div>
+      </button>
     )
     return route ? <Link to={route.absolutePath}>{button}</Link> : button
 };

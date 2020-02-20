@@ -1,0 +1,44 @@
+.About-Service {
+  height: calc(100vh - #{$headerHeight} * 2);
+  mask-image: $double-mask;
+  *  {
+    user-select: none;
+  }
+  & > :last-child {
+    margin-top: 30vh;
+    margin-bottom: 25vh;
+  }
+
+  &__title {
+    margin-top: 100vh;
+    animation: slideIn 2s ease-in-out forwards;
+    margin-bottom: 40vh;
+    & > * {
+      padding: 50px 0;
+    }
+  }
+  @keyframes slideIn {
+    0% {
+      margin-top: 100vh;
+      // animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+    100% {
+      margin-top: 50vh;
+      animation-timing-function: cubic-bezier(.29,1.16,.95,1);
+    }
+  }
+  // &__title--fade-out {
+  //   // filter: blur(10px);
+  //   // opacity: 0;
+  //   // transition: 1s;
+  //   // animation: blurOut $slow forwards;
+  // }
+
+  // &__content {
+  //   // height: 100%;
+  //   margin-top: 40vh;
+  //   &:last-child {
+  //     margin-bottom: 90vh;
+  //   }
+  // }
+}
