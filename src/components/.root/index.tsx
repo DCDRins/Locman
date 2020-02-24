@@ -7,11 +7,13 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
-import routes, { Route as CustomRouteType } from '../../common/routes';
+import { Route as CustomRouteType, RouteDictionary } from '../../common/routes';
 import getHashCode from '../../lib/getHashCode';
 
-export default class Root extends Component {
+
+export default class Root extends Component<{ routes: RouteDictionary }, {}> {
   render() {
+    const { routes } = this.props;
     return (
       <Route render={({ location }) => ( 
         <TransitionGroup>
@@ -21,18 +23,18 @@ export default class Root extends Component {
             classNames="fade"
           >
             <Switch location={location}>
-              {Object.values(routes).map(({ page, absolutePath, param = '' }: CustomRouteType) => (
+              {Object.values(routes).map(({ page, absolutePath, param = '', exact }: CustomRouteType) => (
                 <Route
                   key={getHashCode(absolutePath)}
-                  exact={param.length === 0}
                   path={`${absolutePath}/${param}`}
                   component={page}
+                  {...{ exact }}
                 />
               ))}
             </Switch>
           </CSSTransition>
         </TransitionGroup>
-        )}
+      )}
       />
     );
   }

@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { HasRouterProps } from '../../common/types/props'
 import LangContext from '../../common/context/lang/lang.context'
-import routes, { RouteDictionary, Route } from '../../common/routes'
+import { appRoutes, RouteDictionary, Route } from '../../common/routes'
 import Group from '../.ui/Group'
 import Button from '../.ui/Button'
 import Div from '../.ui/Div'
@@ -32,9 +32,8 @@ type Props = typeof defaultProps
   & HasRouterProps
   & { }
 const initialState = Object.freeze({
-  transparency: true,
+  isTransparent: true,
   stockOpened: false,
-  scrollTop: window.scrollY,
 })
 const defaultProps = Object.freeze({
   isLoading: true,
@@ -58,7 +57,7 @@ class Header extends Component<Props, State> {
 
   _handleScroll = () => {
     const { scrollY: scrollTop } = window
-    this.setState({ scrollTop });
+    this.setState({ isTransparent: scrollTop <= 0 });
   }
 
   _handleKeyDown = (e: KeyboardEvent) => {
@@ -74,7 +73,7 @@ class Header extends Component<Props, State> {
   hideStock = () => this.setState({ stockOpened: false })
 
   setHeaderLinks = (
-    _routes: RouteDictionary = routes,
+    _routes: RouteDictionary = appRoutes,
     { location: { pathname } } = this.props,
     { hideStock, openStock } = this,
     { stockOpened } = this.state): JSX.Element => (
@@ -126,8 +125,8 @@ class Header extends Component<Props, State> {
   render() {
     const { setHeaderLinks, hideStock, openStock } = this;
     const { location: { pathname } } = this.props;
-    const { stockOpened, scrollTop } = this.state;
-    const isOnPersonalPage = useLocation(pathname, routes.PERSONAL_PAGE.absolutePath);
+    const { stockOpened, isTransparent } = this.state;
+    const isOnPersonalPage = useLocation(pathname, appRoutes.PERSONAL_PAGE.absolutePath);
     const base = "Header"
     return (
       <section className={base}>
@@ -136,11 +135,11 @@ class Header extends Component<Props, State> {
           {({ getActual }) => getActual && (
             <Group content="center" className={classNames(`${base}__nav`, {
               [`${base}__nav--personal`]: isOnPersonalPage,
-              [`${base}__nav--hidden`]: scrollTop <= 0,
+              [`${base}__nav--hidden`]: isTransparent,
             })}
             >
               <Div both>
-                <Link to={routes.MAIN_PAGE.absolutePath}>
+                <Link to={appRoutes.MAIN_PAGE.absolutePath}>
                   <Icon svg={LogoIcon} size={100} className={`${base}__logo`} />
                   {/* <Icon svg={!isOnPersonalPage ? LogoIcon : LogoDarkIcon} size={100} className={`${base}__logo`} /> */}
                   <Icon svg={LogoMinIcon} size={25} className={`${base}__logo ${base}__logo--min`} />

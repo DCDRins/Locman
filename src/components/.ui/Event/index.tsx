@@ -5,7 +5,7 @@ import { ReactComponent as Forward } from '../../../assets/icons/forward.svg'
 import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
 import Group from '../Group'
 import Side, { SideProps } from '../Side'
-import routes from '../../../common/routes'
+import { appRoutes } from '../../../common/routes'
 import Button from '../Button'
 import Div from '../Div'
 import Context from '../Context'
@@ -61,7 +61,7 @@ const Event = ({
               <div className={`${base}__image__inner`} style={{ backgroundImage: `url('${image}')` }} />
             </div>
             <div className={`${base}__text`}>
-              <Link to={`${routes.MUSEUM_PAGE.absolutePath}/${name}`} className={`${base}__text__title`}>{name}</Link>
+              <Link to={`${appRoutes.MUSEUM_PAGE.absolutePath}/${name}`} className={`${base}__text__title`}>{name}</Link>
               <div className={`${base}__text__subtitle`}>{address}</div>
             </div>
           </div>

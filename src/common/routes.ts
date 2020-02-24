@@ -19,16 +19,18 @@ export interface Route extends withLanguage {
   accessLevel: number;
   visibleInHeader?: boolean;
   page: ComponentType;
+  exact?: boolean;
   icon?: ComponentType<SVGProps<SVGSVGElement>>
 }
 
-const routes: RouteDictionary = {
+export const appRoutes: RouteDictionary = {
   MAIN_PAGE: {
     absolutePath: '/',
     accessLevel: 5, // user role access
     visibleInHeader: true,
     page: pages.MainPage,
     icon: MainpageIcon,
+    exact: true,
     lang: {
       ru: 'Главная',
       en: 'Main',
@@ -40,6 +42,7 @@ const routes: RouteDictionary = {
     visibleInHeader: true,
     page: pages.EventPage,
     icon: EventsIcon,
+    exact: true,
     lang: {
       ru: 'Мероприятия',
       en: 'Events',
@@ -63,18 +66,10 @@ const routes: RouteDictionary = {
     visibleInHeader: true,
     page: pages.AboutPage,
     icon: AboutIcon,
+    exact: true,
     lang: { // maybe drop out all lang dependencies like android does
       ru: 'О сервисе',
       en: 'About',
-    }
-  },
-  PERSONAL_PAGE: {
-    absolutePath: '/personal',
-    accessLevel: 1,
-    page: pages.PersonalPage,
-    lang: {
-      ru: 'Личный кабинет',
-      en: 'Personal page',
     }
   },
   MUSEUM_PAGE: {
@@ -83,6 +78,7 @@ const routes: RouteDictionary = {
     visibleInHeader: true,
     page: pages.MuseumPage,
     icon: MuseumIcon,
+    exact: true,
     lang: {
       ru: 'Музеи',
       en: 'Museums',
@@ -98,6 +94,35 @@ const routes: RouteDictionary = {
       en: 'Museum',
     }
   },
+  PERSONAL_PAGE: {
+    absolutePath: '/personal',
+    accessLevel: 1,
+    page: pages.PersonalPage,
+    // exact: true, 
+    lang: {
+      ru: 'Личный кабинет',
+      en: 'Personal page',
+    }
+  },
+  // PERSONAL_MAIN_PAGE: {
+  //   absolutePath: `/personal/main`,
+  //   page: pages.PersonalPage,
+  //   accessLevel: 1,
+  //   lang: {
+  //     ru: 'Личный кабинет',
+  //     en: 'Personal page',
+  //   }
+  // },
+}
+export const personalAppRoutes: RouteDictionary = {
+  PERSONAL_MAIN_PAGE: {
+    absolutePath: `${appRoutes.PERSONAL_PAGE.absolutePath}/main`,
+    page: pages.PersonalPage,
+    accessLevel: 1,
+    lang: {
+      ru: 'Личный кабинет',
+      en: 'Personal page',
+    }
+  },
 }
 
-export default routes

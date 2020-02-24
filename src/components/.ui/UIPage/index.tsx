@@ -4,7 +4,7 @@ import { HasChildren, HasRouterProps } from '../../../common/types/props'
 import Header from '../../Header'
 import NavigationBar from '../../.personal/NavigationBar'
 import classNames from '../../../lib/classNames'
-import routes from '../../../common/routes'
+import { appRoutes } from '../../../common/routes'
 import Group from '../Group'
 import Section from '../Section'
 import { useLocation } from '../../../lib/useLocation'
@@ -33,7 +33,7 @@ class UIPage extends React.Component<Props, {}> {
   render() {
     
     const { children, location: { pathname } } = this.props
-    const isOnPersonalPage = useLocation(pathname, routes.PERSONAL_PAGE.absolutePath)
+    const isOnPersonalPage = useLocation(pathname, appRoutes.PERSONAL_PAGE.absolutePath)
     const base = 'page'
     // if (params) console.log(params)
     // console.log(this.props);

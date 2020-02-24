@@ -3,8 +3,8 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { useEffect, HTMLAttributes } from 'react';
-import { Article, Category } from '../models/knowledge';
-import cuid from 'cuid';
+// import { Article, Category } from '../models/knowledge';
+// import cuid from 'cuid';
 // import getDateFormat from '../lib/getDateFormat';
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
@@ -40,39 +40,39 @@ type InjectedDispatchedProps = {
 export const Tester = ({
   auth,
   // articles
-  fetchArticle,
-  fetchArticleList,
-  fetchCategoriesList,
-  createCategory,
-  createArticle,
-  editArticle,
-  // events
-  fetchEvent,
-  fetchEventList,
-  fetchUserEventList,
+  // fetchArticle,
+  // fetchArticleList,
+  // fetchCategoriesList,
+  // createCategory,
+  // createArticle,
+  // editArticle,
+  // // events
+  // fetchEvent,
+  // fetchEventList,
+  // fetchUserEventList,
 }: InjectedDispatchedProps) => {
-  const randomName = cuid();
+  // const randomName = cuid();
 
   useEffect(() => {
-    fetchCategoriesList({ page: 1, onPage: 20 });
-    auth({ login: "admin", password: "Fh,bljk2012" });
-    createCategory(new Category(randomName).serialize());
-    createArticle(new Article(randomName, 'text', { id: 1, name: 'name' }).serialize());
-    fetchArticle("zagolovok");
-    fetchArticleList({ page: 1, onPage: 20 });
-    fetchEvent("posesenie_muzea11113");
-    fetchEventList({ page: 1, onPage: 20 });
-    fetchUserEventList({ page: 1, onPage: 20 });
-    editArticle(Article.deserialize({
-      id: 5,
-      title: 'Заголовок',
-      text: randomName,
-      characterCode: 'zagolovok',
-      createdAt: '19 декабря 2019 в 12:06',
-      category: {
-        id: 5, name: 'Sub-Обучение'
-      }
-    }).serialize());
+    // fetchCategoriesList({ page: 1, onPage: 20 });
+    // auth({ login: "admin", password: "Fh,bljk2012" });
+    // createCategory(new Category(randomName).serialize());
+    // createArticle(new Article(randomName, 'text', { id: 1, name: 'name' }).serialize());
+    // fetchArticle("zagolovok");
+    // fetchArticleList({ page: 1, onPage: 20 });
+    // fetchEvent("posesenie_muzea11113");
+    // fetchEventList({ page: 1, onPage: 20 });
+    // fetchUserEventList({ page: 1, onPage: 20 });
+    // editArticle(Article.deserialize({
+    //   id: 5,
+    //   title: 'Заголовок',
+    //   text: randomName,
+    //   characterCode: 'zagolovok',
+    //   createdAt: '19 декабря 2019 в 12:06',
+    //   category: {
+    //     id: 5, name: 'Sub-Обучение'
+    //   }
+    // }).serialize());
 });
 
   return (

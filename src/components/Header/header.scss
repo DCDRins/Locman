@@ -9,13 +9,13 @@
     height: $headerHeight;
     z-index: z('overlay');
     background-color: #222228;
+    transition: background-color $fast;
     animation: fadeIn $slowly forwards;
     &--personal {
       background-color: $accent!important;
     }
     &--hidden {
       background-color: transparent;
-      transition: background-color $fast;
     }
     & > * {
       flex: 1 0 0;

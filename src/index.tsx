@@ -7,18 +7,19 @@ import Root from './components/.root';
 import history from './services/history-service'; // chenge this
 import MasterProvider from './common/context';
 import './assets/styles/.main.scss';
+import { appRoutes } from './common/routes';
 
 // import './utils/Extends';
 // import './styles/main.scss';
 
 const store = configureStore(history, undefined);
 
-function render(Component) {
+function render(component) {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <MasterProvider>
-          <Component />
+          {component}
         </MasterProvider>
       </ConnectedRouter>
     </Provider>,
@@ -26,7 +27,7 @@ function render(Component) {
   );
 }
 
-render(Root);
+render(<Root routes={appRoutes} />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

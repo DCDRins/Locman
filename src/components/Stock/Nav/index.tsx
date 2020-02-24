@@ -4,7 +4,7 @@ import Group from '../../.ui/Group';
 import classNames from '../../../lib/classNames';
 import LangContext from '../../../common/context/lang/lang.context';
 import terms from '../../../common/terms';
-import routes, { Route } from '../../../common/routes';
+import { appRoutes, Route } from '../../../common/routes';
 
 type State = typeof initialState & {}
 type Props = HasChildren & HasClassName & {}
@@ -28,7 +28,7 @@ export default class Nav extends Component<Props, State> {
         {({ getActual }) => getActual && (
           <div className={base}>
             <Group className={`${base}__route-container`}>
-            {Object.values(routes)
+            {Object.values(appRoutes)
               .map(({ visibleInHeader, lang }: Route) => (
                 <div className={classNames(`${base}__route`, {
                     [`${base}__route--active`]: !visibleInHeader,

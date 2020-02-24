@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, ReactNode, useEffect, Component } from 'react'
 import { Link } from 'react-router-dom'
-import classNames from '../../../../lib/classNames'
-import { HasChildren, HasRef } from '../../../../common/types/props'
-import { Route } from '../../../../common/routes'
-import Icon from '../../Icon'
+import classNames from '../../../lib/classNames'
+import { HasChildren, HasRef } from '../../../common/types/props'
+import { Route } from '../../../common/routes'
+import Icon from '../Icon'
 
 
 export type Props = HTMLAttributes<HTMLInputElement> & HasRef<HTMLInputElement> & {

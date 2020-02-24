@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Section from '../.ui/Section';
 import Group from '../.ui/Group';
-import routes from '../../common/routes';
+import { appRoutes } from '../../common/routes';
 import Side from '../.ui/Side';
 import Div from '../.ui/Div';
 
@@ -27,7 +27,7 @@ const CurrentEvent: FunctionComponent = () => {
       >
         {/* <Button stretched level="tag" angular>Эрмитаж</Button> */}
         <Div className={`${base}__title`}>
-          <Link to={`${routes.ANY_MUSEUM_PAGE.absolutePath}/any`}>Музей им. Ленина</Link>
+          <Link to={`${appRoutes.ANY_MUSEUM_PAGE.absolutePath}/any`}>Музей им. Ленина</Link>
         </Div>
         <div className={`${base}__date`}>27.10.2020</div>
         <div className={`${base}__address`}>Дворцовая пл., 2, Санкт-Петербург, 190000</div>
