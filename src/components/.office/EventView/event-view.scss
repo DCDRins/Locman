@@ -1,0 +1,22 @@
+.Event-View {
+ 
+  &__add {
+    cursor: pointer;
+    height: 100%;
+    min-height: 400px;
+    max-width: 400px;
+    @extend %godzilla;
+    margin-right: $margin-default;
+    .Icon {
+      fill: $highlight;
+    }
+    &:active {
+      @extend %simple-active-effect;
+    }
+    &:hover {
+      .Icon {
+        fill: $tint-hard;
+      }
+    }
+  }
+}

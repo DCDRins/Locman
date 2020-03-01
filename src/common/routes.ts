@@ -1,7 +1,9 @@
-import { ComponentType, SVGProps } from 'react'
+import { ComponentType, SVGProps, ReactNode } from 'react'
 import { withLanguage } from './lang'
 // pages
 import * as pages from '../components/.pages';
+import * as views from '../components/.office';
+import * as connectedViews from '../connected';
 // icons
 import { ReactComponent as MainpageIcon } from '../assets/icons/home.svg';
 import { ReactComponent as EventsIcon } from '../assets/icons/places.svg';
@@ -18,7 +20,7 @@ export interface Route extends withLanguage {
   absolutePath: string;
   accessLevel: number;
   visibleInHeader?: boolean;
-  page: ComponentType;
+  component: ReactNode;
   exact?: boolean;
   icon?: ComponentType<SVGProps<SVGSVGElement>>
 }
@@ -28,7 +30,7 @@ export const appRoutes: RouteDictionary = {
     absolutePath: '/',
     accessLevel: 5, // user role access
     visibleInHeader: true,
-    page: pages.MainPage,
+    component: pages.MainPage,
     icon: MainpageIcon,
     exact: true,
     lang: {
@@ -40,7 +42,7 @@ export const appRoutes: RouteDictionary = {
     absolutePath: '/event',
     accessLevel: 0,
     visibleInHeader: true,
-    page: pages.EventPage,
+    component: pages.EventPage,
     icon: EventsIcon,
     exact: true,
     lang: {
@@ -52,7 +54,7 @@ export const appRoutes: RouteDictionary = {
     param: ':id',
     absolutePath: '/event',
     accessLevel: 0,
-    page: pages.EventPage,
+    component: pages.EventPage,
     icon: EventsIcon,
     lang: {
       ru: 'Мероприятия',
@@ -64,7 +66,7 @@ export const appRoutes: RouteDictionary = {
     absolutePath: '/about',
     accessLevel: 0,
     visibleInHeader: true,
-    page: pages.AboutPage,
+    component: pages.AboutPage,
     icon: AboutIcon,
     exact: true,
     lang: { // maybe drop out all lang dependencies like android does
@@ -76,7 +78,7 @@ export const appRoutes: RouteDictionary = {
     absolutePath: '/museums',
     accessLevel: 0,
     visibleInHeader: true,
-    page: pages.MuseumPage,
+    component: pages.MuseumPage,
     icon: MuseumIcon,
     exact: true,
     lang: {
@@ -88,40 +90,57 @@ export const appRoutes: RouteDictionary = {
     param: ':id',
     absolutePath: '/museums',
     accessLevel: 0,
-    page: pages.AnyMuseumPage,
+    component: pages.AnyMuseumPage,
     lang: {
       ru: 'Музей',
       en: 'Museum',
     }
   },
-  PERSONAL_PAGE: {
-    absolutePath: '/personal',
+  OFFICE_PAGE: {
+    absolutePath: '/office',
     accessLevel: 1,
-    page: pages.PersonalPage,
-    // exact: true, 
+    component: pages.PersonalOfficePage,
     lang: {
       ru: 'Личный кабинет',
-      en: 'Personal page',
+      en: 'Personal office',
     }
   },
-  // PERSONAL_MAIN_PAGE: {
-  //   absolutePath: `/personal/main`,
-  //   page: pages.PersonalPage,
-  //   accessLevel: 1,
-  //   lang: {
-  //     ru: 'Личный кабинет',
-  //     en: 'Personal page',
-  //   }
-  // },
 }
-export const personalAppRoutes: RouteDictionary = {
-  PERSONAL_MAIN_PAGE: {
-    absolutePath: `${appRoutes.PERSONAL_PAGE.absolutePath}/main`,
-    page: pages.PersonalPage,
+export const officeAppRoutes: RouteDictionary = {
+  OFFICE_USER_PAGE: {
+    absolutePath: appRoutes.OFFICE_PAGE.absolutePath,
+    component: connectedViews.UserViewConnected,
     accessLevel: 1,
     lang: {
-      ru: 'Личный кабинет',
-      en: 'Personal page',
+      ru: 'Кабинет',
+      en: 'Office',
+    }
+  },
+  OFFICE_SETTINGS_PAGE: {
+    absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/settings`,
+    component: connectedViews.UserViewConnected,
+    accessLevel: 1,
+    lang: {
+      ru: 'Настройки',
+      en: 'Settings',
+    }
+  },
+  OFFICE_EVENT_PAGE: {
+    absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/events`,
+    component: connectedViews.UserViewConnected,
+    accessLevel: 1,
+    lang: {
+      ru: 'Мероприятия',
+      en: 'Events',
+    }
+  },
+  OFFICE_ROUTES_PAGE: {
+    absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/routes`,
+    component: connectedViews.UserViewConnected,
+    accessLevel: 1,
+    lang: {
+      ru: 'Маршруты',
+      en: 'Routes',
     }
   },
 }

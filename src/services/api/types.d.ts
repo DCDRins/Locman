@@ -11,8 +11,8 @@ export interface ServerResponse<T> {
   status: number;
   statusText: string;
   config: {
-    url: string;
-    method: string;
-    data: string;
+    url?: string;
+    method?: string;
+    data?: string;
   };
 };

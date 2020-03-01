@@ -4,12 +4,14 @@ import { History } from 'history';
 import clientReducer, { ClientState } from '../reducers/client-reducer';
 import routeReducer, { RouteState } from '../reducers/route-reducer';
 import knowledgeReducer, { KnowledgeState } from '../reducers/knowledge-reducer';
+import eventReducer, { EventState } from '../reducers/event-reducer';
 
 export interface ApplicationState {
   router: ConnecterRouterState;
   client: ClientState;
   route: RouteState;
   knowledge: KnowledgeState;
+  event: EventState;
 }
 
 export default (history: History): Reducer<ApplicationState> => combineReducers({
@@ -17,4 +19,5 @@ export default (history: History): Reducer<ApplicationState> => combineReducers(
   client: clientReducer,
   route: routeReducer,
   knowledge: knowledgeReducer,
+  event: eventReducer,
 });

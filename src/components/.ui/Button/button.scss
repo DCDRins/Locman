@@ -12,37 +12,30 @@
   border-radius: $border-radius-large;
   background-color: transparent;
   transition: $fast, opacity $slowly;
-
   * {
     display: inline-block;
     vertical-align: middle;
   }
-  // Button:active
   &:active {
     @extend %simple-active-effect;
   }
-  
-  // Button__in
   &__in {
-    width: 100%;
-    box-sizing: border-box;
     outline: none;
     transition: padding $fast;
-    // Button__in--size
     &--size {
       &-s {
-        @extend %small-text;
-        font-weight: 400;
+        // @extend %small-text;
+        // font-weight: 400;
         padding: $button-s-padding;
       }
       &-m {
-        @extend %small-text;
-        font-weight: 500;
+        // @extend %small-text;
+        // font-weight: 500;
         padding: $button-m-padding;
       }
       &-l {
-        @extend %simple-text;
-        font-weight: 500;
+        // @extend %simple-text;
+        // font-weight: 500;
         padding: $button-l-padding;
       }
       &-xl {
@@ -77,6 +70,10 @@
       text-align: right;
     }
   }
+  &--stretched {
+    height: 100%;
+    width: 100%;
+  }
   // Allow media
   &--media &__content {
     @include mobile {
@@ -97,12 +94,6 @@
   &--only-icon &__before {
     margin-right: 0;
   }
-  // Button--stretched
-  // &--stretched, &--stretched &__in {
-  //   width: 100%;
-  //   @extend %header-2;
-  // }
-  // Button--hidden
   &--hidden {
     visibility: hidden;
     opacity: 0;
@@ -114,14 +105,11 @@
     font-size: 0;
     transition: $fast;
   }
-  // Button--has-corners
   &--has-corners {
     border-radius: $border-radius-small!important;
   }
-  // Button--level
   &--level {
     &-primary {
-      // font-weight: 600;
       background-color: $primary;
       color: $main;
       .Icon {
@@ -129,11 +117,30 @@
         stroke: $main;
       }
     }
+    &-office-primary {
+      background-color: $accent;
+      color: $primary;
+      .Icon {
+        fill: $primary;
+        stroke: $primary;
+      }
+    }
     &-secondary {
       color: $primary;
       border: 1px solid $primary;
       &:hover {
         background-color: $tint-light;
+      }
+    }
+    &-office-secondary {
+      color: $main;
+      background-color: $tint-light;
+      .Icon {
+        fill: $tint;
+        stroke: $tint;
+      }
+      &:hover {
+        background-color: $highlight-2;
       }
     }
     &-tertiary {
@@ -151,11 +158,20 @@
         pointer-events: none;
       }
     }
+    &-office-tertiary {
+      color: $main;
+      background-color: $highlight;
+      filter: contrast(120%);
+      &:hover {
+        filter: contrast(100%);
+        color: $main;
+        .Icon {
+          fill: $primary;
+        }
+      }
+    }
     &-simple {
       color: $primary;
-      // .Icon {
-      //   stroke: $primary;
-      // }
       &:hover {
         background: $tint-light;
       }
@@ -167,16 +183,17 @@
     &-tag {
       color: $primary;
       background-color: $tint-light;
-      // .Icon {
-      //   fill: $primary;
-      // }
     }
     &-alert {
       color: $primary;
-      background-color: $red;
-      // .Icon {
-      //   fill: $primary;
-      // }
+      background-color: $tint-red;
+    }
+    &-office-alert {
+      color: $red;
+      .Icon {
+        fill: $red;
+        stroke: $red;
+      }
     }
   }
 }

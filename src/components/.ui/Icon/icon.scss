@@ -2,6 +2,7 @@
   transition: fill $fast;
   vertical-align: middle;
   
+  
   &--size {
     &-s {
       margin-top: -3px;
@@ -18,6 +19,12 @@
     }
   }
 
+  &--no-fill {
+    fill: none!important;
+  }
+  &--no-stroke {
+    stroke: none!important;
+  }
   // path {
   //   fill: $primary;
   // }

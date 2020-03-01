@@ -20,7 +20,7 @@ export interface IEventDTO {
   level: NamedType;
   format: NamedType;
   organization: IOrganizationDTO;
-  image?: File;
+  image?: string;
   participationType: number;
   educationProgramm?: number;
   ageLimit?: number;
@@ -38,14 +38,14 @@ export interface IEvent {
   description?: string;
   startDate: string;
   finishDate?: string;
-  requestStartDate: string;
-  requestFinishDate: string;
+  requestStartDate?: string;
+  requestFinishDate?: string;
   eventDuration: string;
   wwwLink?: string;
   eventType: number;
   level: number;
   format: number;
-  organization: number;
+  organization?: number;
   image?: File;
   participationType: number;
   educationProgramm?: number;
@@ -63,15 +63,23 @@ export class Event implements IEventDTO {
   started: boolean = false;
   status: string = '';
 
+  imageFile?: File = undefined;
+  
+  set file(image: File | undefined) {
+    this.imageFile = image;
+  }
+  get file(): File | undefined {
+    return this.imageFile;
+  }
+  
   constructor(public name: string, public location: string, public startDate: string,
     public requestStartDate: string, public requestFinishDate: string, public eventDuration: string,
     public eventType: NamedType, public level: NamedType, public format: NamedType, public organization: IOrganizationDTO,
     public participationType: number, public educationProgramm?: number, public ageLimit?: number, 
-    public tags?: number | number[], public description?: string, public finishDate?: string, public wwwLink?: string, public image?: File
+    public tags?: number | number[], public description?: string, public finishDate?: string, public wwwLink?: string, public image?: string
   ) {
     Object.assign(this, arguments);
   }
-
   static deserialize(dto: IEventDTO): Event {
     const model = new Event(dto.name, dto.location, dto.startDate, dto.requestStartDate,
       dto.requestFinishDate, dto.eventDuration, dto.eventType, dto.level, dto.format, dto.organization,
@@ -103,12 +111,12 @@ export class Event implements IEventDTO {
       eventType: this.eventType.id,
       level: this.level.id,
       format: this.format.id,
-      organization: this.organization.id,
-      image: this.image,
+      // organization: this.organization.id,
+      // image: this.image,
       participationType: this.participationType,
       educationProgramm: this.educationProgramm,
       ageLimit: this.ageLimit,
-      tags: this.tags,
+      tags: Array.isArray(this.tags) && this.tags.length > 0 ? this.tags : !Array.isArray(this.tags) ? this.tags : undefined,
     };
   }
 }

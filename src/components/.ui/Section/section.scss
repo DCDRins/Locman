@@ -2,11 +2,13 @@
   $self: &;
   display: block;
   position: relative;
-  animation: fadeIn $slowly forwards;
+  animation: fadeInWithTransform $slowly forwards;
   z-index: z("main");
   padding: 0 $margin-default $margin-large;
 
   @include mobile {
+    // padding-left: 0!important;
+    // padding-right: 0!important;
     padding-bottom: $margin-default;
   }
 
@@ -43,13 +45,13 @@
       width: 100%;
     }
   }
-  &--stretch {
-    .Scrolled {
-      &__button {
+  // &--stretch {
+  //   .Scrolled {
+  //     &__button {
         
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
   &--stretch &__in,
   &--stretch &__header {
     max-width: 100%;

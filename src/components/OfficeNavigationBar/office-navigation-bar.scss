@@ -1,0 +1,18 @@
+.Office-Navigation-Bar {
+  & > * {
+    opacity: .75;
+    transition: opacity $fast;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &--current {
+    user-select: none;
+    font-size: 1.8em;
+    font-weight: 600;
+    opacity: 1;
+  }
+  @include mobile {
+    flex-direction: column;
+  }
+}

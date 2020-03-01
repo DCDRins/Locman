@@ -1,0 +1,7 @@
+.Preloader {
+ 
+  padding: $margin-default;
+  &--hidden {
+    display: none;
+  }
+}

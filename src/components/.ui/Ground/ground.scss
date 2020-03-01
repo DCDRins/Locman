@@ -26,7 +26,7 @@
     z-index: z("background");
     filter: blur($large-blur) contrast(120%) hue-rotate(-5deg) saturate(110%);
     transform: translateZ(0.1px);
-    animation: fadeIn $slowly forwards;
+    animation: fadeInWithTransform $slowly forwards;
     &--fit {
       background-size: contain;
       filter: unset;

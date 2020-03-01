@@ -4,7 +4,7 @@
     position: relative;
     height: $defaultSize;
     user-select: text;
-    animation: fadeIn $slowly forwards;
+    animation: fadeInWithTransform $slowly forwards;
     // @include mobile {
     //   height: 200px;
     //   padding: 0;

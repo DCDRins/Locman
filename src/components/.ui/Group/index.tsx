@@ -3,14 +3,15 @@ import classNames from '../../../lib/classNames';
 import { HasChildren } from '../../../common/types/props';
 
 
-type Props = HTMLAttributes<HTMLElement> & HasChildren & {
+export type GroupProps = HTMLAttributes<HTMLElement> & HasChildren & {
   title?: string;
   description?: string;
   orientation?: 'vertical' | 'horizontal';
   justify?: 'start' | 'center' | 'end' | 'space-between';
   content?: 'center' | 'start' | 'end';
-  stretched?: boolean;
+  stretched?: boolean | 'x' | 'y';
   reverse?: boolean;
+  rotateOnMedia?: boolean;
 }
 
 const Group = ({
@@ -19,15 +20,18 @@ const Group = ({
   stretched = false,
   justify = 'space-between',
   className = '',
+  rotateOnMedia = false,
   title, description, children, reverse, ...restProps
-}: Props) => {
+}: GroupProps) => {
   const base = 'Group';
   return (
     <div {...restProps} className={classNames(base, className, {
         [`${base}--orientation-${orientation}`]: true,
         [`${base}--content-${content}`]: true,
         [`${base}--justify-${justify}`]: true,
-        [`${base}--stretched`]: stretched
+        [`${base}--stretched`]: stretched === true,
+        [`${base}--stretched-${stretched}`]: typeof stretched === 'string',
+        // [`${base}--media`]: rotateOnMedia,
       })}
     >
       {children}

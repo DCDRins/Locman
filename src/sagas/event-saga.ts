@@ -108,7 +108,7 @@ function* watchEditEvent() {
 }
 function* watchDeleteEvent() {
   while (true) {
-    const { payload: charCode }: { payload: string } = yield take(getType(editEventAsync.request));
+    const { payload: charCode }: { payload: string } = yield take(getType(deleteEventAsync.request));
     yield fork(deleteEvent, charCode);
   }
 }

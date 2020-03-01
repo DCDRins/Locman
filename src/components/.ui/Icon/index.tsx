@@ -6,12 +6,16 @@ import { HasChildren } from '../../../common/types/props';
 export type IconProps = HTMLAttributes<SVGSVGElement> & HasChildren & {
   size?: 's' | 'm' | 'l' | number;
   svg: ComponentType<SVGProps<SVGSVGElement>>;
+  noFill?: boolean;
+  noStroke?: boolean;
 }
 
 const Icon = ({
   size = 's',
   svg: Svg,
   className = '',
+  noFill = false,
+  noStroke = false,
   ...restProps
 }: IconProps) => {
   const style: {[k: string]: string} = {};
@@ -19,6 +23,7 @@ const Icon = ({
 
   if (typeof size === 'number') {
     style.width = `${size}px`
+    style.height = `${size}px`
     // style.height = `${size}px`
   }
 
@@ -27,7 +32,9 @@ const Icon = ({
       {...restProps}
       style={style}
       className={classNames(base, className, {
-        [`${base}--size-${size}`]: typeof size !== 'number'
+        [`${base}--size-${size}`]: typeof size !== 'number',
+        [`${base}--no-fill`]: noFill,
+        [`${base}--no-stroke`]: noStroke,
       })}
     />
   )

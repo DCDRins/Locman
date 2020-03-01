@@ -1,0 +1,48 @@
+@import 'variables';
+
+.u-slider-time {
+  position: relative;
+  width: 100%!important;
+  display: inline-block;
+  background-color: $highlight;
+  border-radius: 3px;
+  height: $slider-size;
+  width: 100%;
+  cursor: pointer;
+
+  .value {
+    position: absolute;
+    background-color: $accent-blue;
+    border-radius: 3px;
+    top: 0;
+    height: 100%;
+  }
+  .track {
+    background-color: red;
+  }
+
+  & > * {
+    &:first-child {
+      background-color: $accent-blue;
+    }
+  }
+  .handle {
+    position: absolute;
+    width: $slider-size;
+    height: $slider-size;
+
+    &:after {
+      content: '';
+      position: relative;
+      display: block;
+      top: - $slider-fix / 2;
+      left: - ($slider-size + $slider-fix) / 2;
+      width: $slider-size + $slider-fix;
+      height: $slider-size + $slider-fix;
+      background-color: $accent-blue;
+      border-radius: 50%;
+      border: 3px solid $accent-blue;
+      cursor: pointer;
+    }
+  }
+}

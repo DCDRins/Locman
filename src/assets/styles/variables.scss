@@ -4,11 +4,14 @@ $fontFamily: "Gilroy";
 $main: #001;
 $primary: #fff;
 $highlight: #ddd;
+$highlight-2: #eee;
 // ---
-$accent: rgb(80, 60, 143); // maybe change this
+$accent-blue: rgb(54, 117, 219); // maybe change this
+$accent: rgb(56, 56, 63); // maybe change this
 $light: #eef;
 $dark: #161616;
-$red: rgba(255, 0, 0, .3);
+$red: red;
+$tint-red: rgba(255, 0, 0, .3);
 $tint: rgba(0, 0, 0, .25);
 $tint-hard: rgba(22, 22, 22, .96);
 $tint-light: rgba(255, 255, 255, .1);

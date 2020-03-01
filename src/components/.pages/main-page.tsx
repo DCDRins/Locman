@@ -9,6 +9,8 @@ import ScrolledContentViewer from '../ScrolledContentViewer'
 import terms from '../../common/terms'
 import Section from '../.ui/Section'
 import classNames from '../../lib/classNames'
+import Button from '../.ui/Button'
+import { appRoutes } from '../../common/routes'
 
 export const MainPage: FunctionComponent = () => {
 
@@ -17,6 +19,14 @@ export const MainPage: FunctionComponent = () => {
       <Ground stretch src={GroundImage}>
         <Slider />
       </Ground>
+      <Section>
+        <Button
+          level="primary"
+          route={appRoutes.OFFICE_PAGE}
+        >
+          Перейти в кабинет
+        </Button>
+      </Section>
       <CurrentRoute />
       <Section header="Недавние мероприятия">
         <ScrolledContentViewer header={terms.LAST_VISITED} />

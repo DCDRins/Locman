@@ -1,6 +1,6 @@
 import api from '../agent';
 import { MessageReply, IEventDTO, IEvent, IFetchParams, Pagination, Message } from '../../../models';
-import { responseLogger } from '../utils';
+import { responseLogger, transformResponse } from '../utils';
 import { ServerResponse } from '../types';
 
 export const event = {
@@ -15,14 +15,14 @@ export const event = {
   fetchUserEventList: (params: IFetchParams) =>
     api.get<Pagination<IEventDTO>>(`/user/event`, {
       data: params,
-    }).then(responseLogger),
+    }).then(r => transformResponse<Pagination<IEventDTO>>(r)),
   createEvent: (params: IEvent) =>
     api.post<MessageReply<IEventDTO>>(`/event`, params)
-    .then(responseLogger),
+    .then(r => transformResponse<MessageReply<IEventDTO>>(r).data),
   editEvent: (params: IEvent) =>
     api.put<Message>(`/event/${params.charCode}`, params)
     .then(responseLogger),
-  deleteEvent: (charCode: string) =>
-    api.delete<Message>(`/event/${charCode}`)
+  deleteEvent: (charCode: string) => 
+  api.delete<Message>(`/event/${charCode}`)
     .then(responseLogger),
 };

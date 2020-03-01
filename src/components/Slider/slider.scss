@@ -3,7 +3,7 @@
   position: relative;
   height: 220px;
   user-select: text;
-  animation: fadeIn $slowly forwards;
+  animation: fadeInWithTransform $slowly forwards;
   // @include mobile {
   //   height: 200px;
   //   padding: 0;
@@ -41,7 +41,7 @@
     display: none;
     height: 100%;
     mask-image: $text-overflow-mask;
-    animation: fadeIn $slowly forwards;
+    animation: fadeInWithTransform $slowly forwards;
     @include mobile {
       display: none;
       width: 100%;

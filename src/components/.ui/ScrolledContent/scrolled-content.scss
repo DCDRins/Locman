@@ -34,29 +34,30 @@
     }
   }
 
-  &__button {
+  &__buttons {
     position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  &__button {
     z-index: z('foreground');
-    top: $defaultSize * .5 - $button-l-padding;
     box-shadow: 0 5px 30px -10px $dark;
+    // top: $defaultSize * .5 - $button-l-padding;
     transition: $fast;
-    // .Icon {
-    //   stroke: $main;
-    // }
     @extend .hidden;
 
-    &:first-of-type {
-      left: - $button-s-padding * 2;
-      @include mobile {
-        left: $button-s-padding;
-      }
-    }
-    &:last-of-type {
-      right: - $button-s-padding * 2;
-      @include mobile {
-        right: $button-s-padding;
-      }
-    }
+    // &:first-of-type {
+    //   left: - $button-s-padding * 2;
+    //   @include mobile {
+    //     left: $button-s-padding;
+    //   }
+    // }
+    // &:last-of-type {
+    //   right: - $button-s-padding * 2;
+    //   @include mobile {
+    //     right: $button-s-padding;
+    //   }
+    // }
     &--active {
       visibility: visible;
       opacity: 1;

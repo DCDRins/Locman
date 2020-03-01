@@ -4,10 +4,15 @@ import classNames from '../../../lib/classNames'
 import { HasChildren, HasRef } from '../../../common/types/props'
 import { Route } from '../../../common/routes'
 import Icon from '../Icon'
+import Group from '../Group'
 
 
-export type ButtonProps = HTMLAttributes<HTMLButtonElement> & HasChildren & HasRef<HTMLButtonElement> & {
-  level?: 'primary' | 'secondary' | 'tertiary' | 'alert' | 'simple' | 'tag',
+export type ButtonProps = HTMLAttributes<HTMLButtonElement>
+& HasChildren
+& HasRef<HTMLButtonElement>
+& {
+  level?: 'primary' | 'secondary' | 'tertiary' | 'alert' | 'simple' | 'tag'
+  | 'office-primary' | 'office-secondary' | 'office-tertiary' | 'office-alert',
   size?: 's' | 'm' | 'l' | 'xl',
   align?: 'left' | 'center' | 'right',
   route?: Route;
@@ -56,7 +61,10 @@ const Button = ({
           [`Button--has-corners`]: angular,
         })} 
       >
-        <div 
+        <Group
+          content="center"
+          justify="center"
+          stretched
           className={classNames('Button__in', {
             [`Button__in--size-${size}`]: true,
           })}
@@ -72,7 +80,7 @@ const Button = ({
           {children && <div className="Button__content">{children}</div>}
           {title && <div className="Button__content">{title}</div>}
           {after && <div className="Button__after">{after}</div>}
-        </div>
+        </Group>
       </button>
     )
     return route ? <Link to={route.absolutePath}>{button}</Link> : button

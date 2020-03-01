@@ -1,0 +1,69 @@
+@import 'variables';
+
+.Calendar {
+  display: inline-block;
+  animation: fadeInWithTransform $slow forwards;
+  box-sizing: border-box;
+  // margin-bottom: $margin-default;
+
+  &__day {
+    cursor: pointer;
+    width: (100% / 7);
+    padding: {
+      left: 0;
+      right: 0;
+    };
+    text-align: center;
+    border-radius: $border-radius-large;
+    color: #666666;
+    &:hover {
+      background: $accent-blue;
+      color: $color-white;
+    }
+    overflow: hidden;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 5px;
+      margin-left: 16px;
+      margin-top: -5px;
+      background-color: $accent-blue;
+      opacity: 0;
+      transition: $fast;
+    }
+  }
+
+  &__week-day {
+    color: $accent-blue;
+    @extend %simple-text;
+    font-weight: 400;
+  }
+  &__toolbar {
+    color: $accent-blue;
+  }
+  &__current-day {
+    color: $accent-blue!important;
+    font-weight: 700;
+    transition: $average;
+    &::before {
+      opacity: 1!important;
+    }
+    
+    &:hover {
+      color: $primary!important;
+      &:before {
+        background-color: $primary;
+      }
+    }
+  }
+  &__prev-month, &__next-month {
+    color: $highlight!important;
+  }
+  &__current-date {
+    color: $accent-blue;
+    text-transform: capitalize;
+  }
+}

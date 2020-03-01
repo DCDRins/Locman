@@ -1,6 +1,6 @@
 
 import React, { HTMLAttributes } from 'react';
-import { Link } from '../.personal/Switch/node_modules/react-router-dom';
+import { Link } from '../Switch/node_modules/react-router-dom';
 // import classNames from '../../../lib/classNames';
 import Button, { ButtonProps } from '../Button';
 import LangContext from '../../../common/context/lang/lang.context';

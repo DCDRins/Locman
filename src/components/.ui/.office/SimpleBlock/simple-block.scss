@@ -1,0 +1,37 @@
+.Simple-Block {
+  display: block;
+  position: relative;
+  min-height: 200px;
+  width: 340px;
+  animation: fadeInWithTransform $slow forwards;
+  // padding: $margin-default;
+  margin-right: $margin-default;
+  background: $primary;
+  border: 1px solid $highlight;
+  border-radius: $border-radius;
+  overflow: hidden;
+  &:last-child {
+    margin-right: 0;
+  }
+  .Image {
+    box-sizing: content-box!important;
+  }
+  &__name {
+    @extend %header-2;
+    font-weight: 700;
+  }
+
+  &__datepicker-trigger {
+    @extend %small-text;
+    font-weight: 500;
+    .Icon {
+      transform: rotateZ(90deg);
+      transition: $fast;
+    }
+    &.isClosed {
+      .Icon {
+        transform: rotateZ(270deg);
+      }
+    }
+  }
+}

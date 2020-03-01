@@ -126,7 +126,7 @@ class Header extends Component<Props, State> {
     const { setHeaderLinks, hideStock, openStock } = this;
     const { location: { pathname } } = this.props;
     const { stockOpened, isTransparent } = this.state;
-    const isOnPersonalPage = useLocation(pathname, appRoutes.PERSONAL_PAGE.absolutePath);
+    const isOnOfficePage = useLocation(pathname, appRoutes.OFFICE_PAGE.absolutePath);
     const base = "Header"
     return (
       <section className={base}>
@@ -134,22 +134,22 @@ class Header extends Component<Props, State> {
         <LangContext.Consumer>
           {({ getActual }) => getActual && (
             <Group content="center" className={classNames(`${base}__nav`, {
-              [`${base}__nav--personal`]: isOnPersonalPage,
+              [`${base}__nav--office`]: isOnOfficePage,
               [`${base}__nav--hidden`]: isTransparent,
             })}
             >
               <Div both>
                 <Link to={appRoutes.MAIN_PAGE.absolutePath}>
                   <Icon svg={LogoIcon} size={100} className={`${base}__logo`} />
-                  {/* <Icon svg={!isOnPersonalPage ? LogoIcon : LogoDarkIcon} size={100} className={`${base}__logo`} /> */}
+                  {/* <Icon svg={!isOnOfficePage ? LogoIcon : LogoDarkIcon} size={100} className={`${base}__logo`} /> */}
                   <Icon svg={LogoMinIcon} size={25} className={`${base}__logo ${base}__logo--min`} />
                 </Link>
               </Div>
               <Div>
-                {isOnPersonalPage
+                {isOnOfficePage
                   ? <Input
                       placeholder={getActual(terms.FIND)}
-                      design="light"
+                      level="light"
                       button={
                         <Button
                         level="tertiary"
@@ -178,7 +178,8 @@ class Header extends Component<Props, State> {
                           angular
                           allowMedia
                           showIcon
-                          before={!stockOpened ? <Icon svg={SignInIcon} /> : getActual(terms.BACK)}
+                          // before={!stockOpened ? <Icon svg={SignInIcon} /> : getActual(terms.BACK)}
+                          before={!stockOpened && <Icon svg={SignInIcon} />}
                           onClick={stockOpened ? hideStock : openStock}
                         >
                           {getActual<withLanguage>((stockOpened ? terms.BACK : terms.SIGN_IN))}

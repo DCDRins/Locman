@@ -2,12 +2,13 @@ import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../lib/classNames';
 import { HasChildren } from '../../../common/types/props';
 import Group from '../Group';
-import Button from '../Button';
+import Button, { ButtonProps } from '../Button';
 import Icon from '../Icon';
 
 import { ReactComponent as NextIcon } from '../../../assets/icons/next.svg';
 import { ReactComponent as PreviousIcon } from '../../../assets/icons/previous.svg';
 import easeInOutQuad from '../../../lib/easeInOutQuad';
+import Div from '../Div';
 
 type State = typeof initialState 
 type Props = HTMLAttributes<HTMLDivElement> & HasChildren & {
@@ -16,12 +17,14 @@ type Props = HTMLAttributes<HTMLDivElement> & HasChildren & {
   autoscroll?: number;
   // allowMedia: boolean;
   fit: boolean;
+  buttonSize?: 's' | 'm' | 'l';
 }
 
 const defaultProps = Object.freeze({
   orientation: 'vertical',
   // allowMedia: false,
   fit: false,
+  buttonSize: 's',
 })
 const initialState = Object.freeze({
   atStartPoint: true,
@@ -117,23 +120,34 @@ export default class ScrolledContent extends Component<Props, State> {
       children,
       autoscroll,
       fit,
+      buttonSize,
     } = this.props
     const { atStartPoint, onEndPoint } = this.state
     return (
+
       <Group {...{ orientation }} className={`${base}__wrapper`}>
         {!autoscroll && (
-          <>
-            <Button className={classNames(`${base}__button`, {
-                [`${base}__button--active`]: !atStartPoint,
-              })} before={<Icon svg={PreviousIcon} />} level="primary"
-              onClick={this._backwardClick}
-            />
-            <Button className={classNames(`${base}__button`, {
-                [`${base}__button--active`]: !onEndPoint,
-              })} before={<Icon svg={NextIcon} />} level="primary"
-              onClick={this._forwardClick}
-            />
-          </>
+          <Div both className={`${base}__buttons`}>
+            <Group justify="space-between" content="center" stretched>
+              <Button
+                className={classNames(`${base}__button`, {
+                  [`${base}__button--active`]: !atStartPoint,
+                })}
+                before={<Icon svg={PreviousIcon} size="s" />}
+                level="primary"
+                onClick={this._backwardClick}
+                size={buttonSize}
+              />
+              <Button 
+                className={classNames(`${base}__button`, {
+                  [`${base}__button--active`]: !onEndPoint,
+                })}
+                before={<Icon svg={NextIcon} size="s" />} level="primary"
+                onClick={this._forwardClick}
+                size={buttonSize}
+              />
+            </Group>
+          </Div>
         )}
         <div
           ref={this.scroll}

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { withRouter } from 'react-router-dom'
 import { HasChildren, HasRouterProps } from '../../../common/types/props'
 import Header from '../../Header'
-import NavigationBar from '../../.personal/NavigationBar'
+import NavigationBar from '../../OfficeNavigationBar'
 import classNames from '../../../lib/classNames'
 import { appRoutes } from '../../../common/routes'
 import Group from '../Group'
@@ -33,7 +33,7 @@ class UIPage extends React.Component<Props, {}> {
   render() {
     
     const { children, location: { pathname } } = this.props
-    const isOnPersonalPage = useLocation(pathname, appRoutes.PERSONAL_PAGE.absolutePath)
+    const isOnOfficePage = useLocation(pathname, appRoutes.OFFICE_PAGE.absolutePath)
     const base = 'page'
     // if (params) console.log(params)
     // console.log(this.props);
@@ -44,11 +44,11 @@ class UIPage extends React.Component<Props, {}> {
     ))
     return (
       <main className={classNames(base, {
-        [`${base}--personal`]: isOnPersonalPage,
+        [`${base}--office`]: isOnOfficePage,
       })}>
         {/* <FixedLayout /> */}
         <Tester />
-        <Header {...{ isOnPersonalPage }} />
+        <Header {...{ isOnOfficePage }} />
         {mappedChildren}
       </main>
     )

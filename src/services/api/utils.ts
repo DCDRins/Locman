@@ -1,3 +1,4 @@
+import { ServerResponse } from "./types";
 
 export const removeKeys = <T>(payload: T, keys: Array<keyof T>) => {
   keys.forEach((key) => {
@@ -21,3 +22,4 @@ export const responseLogger = (response) => {
     console.groupEnd();
   }, 1000)
 }
+export const transformResponse = <T>(r: ServerResponse<T>) => r && r.data

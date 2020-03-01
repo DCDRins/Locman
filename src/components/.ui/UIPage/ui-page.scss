@@ -7,11 +7,11 @@
   background-color: $main;
   transition: background-color $fast, color $fast;
   overflow: hidden;
-  &--personal {
+  &--office {
     background-color: $primary;
-    color: $main;
+    color: $dark;
     ::selection {
-      background-color: $main;
+      background-color: $dark;
       color: $primary;
     }
   }

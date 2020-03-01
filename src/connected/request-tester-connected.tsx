@@ -54,8 +54,9 @@ export const Tester = ({
   // const randomName = cuid();
 
   useEffect(() => {
-    // fetchCategoriesList({ page: 1, onPage: 20 });
+    auth({ login: "mevas16268@janmail.org", password: "password" });
     // auth({ login: "admin", password: "Fh,bljk2012" });
+    // fetchCategoriesList({ page: 1, onPage: 20 });
     // createCategory(new Category(randomName).serialize());
     // createArticle(new Article(randomName, 'text', { id: 1, name: 'name' }).serialize());
     // fetchArticle("zagolovok");

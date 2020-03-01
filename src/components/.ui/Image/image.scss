@@ -1,0 +1,17 @@
+.Image {
+  max-width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: $highlight;
+  filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
+  &--bordered {
+    border-radius: $border-radius-small;
+  }
+  color: $tint;
+  transition: color $average;
+  &:hover {
+    cursor: pointer;
+    color: $tint-hard;
+  }
+}

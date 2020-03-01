@@ -5,6 +5,7 @@ import classNames from '../../../lib/classNames';
 import LangContext from '../../../common/context/lang/lang.context';
 import terms from '../../../common/terms';
 import { appRoutes, Route } from '../../../common/routes';
+import Input from '../../.ui/Input';
 
 type State = typeof initialState & {}
 type Props = HasChildren & HasClassName & {}
@@ -38,7 +39,7 @@ export default class Nav extends Component<Props, State> {
                 </div>
               ))}
             </Group>
-            <input
+            <Input
               type="text"
               name="finder"
               id="finder"

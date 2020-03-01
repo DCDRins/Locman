@@ -6,6 +6,7 @@
   height: 100%;
   border-radius: $border-radius-small;
   box-sizing: border-box;
+  // transition: opacity $fast;
   // overflow: hidden;
   input {
     display: block;
@@ -19,8 +20,12 @@
       // width: unset;
     }
   }
-
-  &--type {
+  &--hidden {
+    // display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  &--level {
     &-default {
       color: $primary;
       background-color: $tint-light;
@@ -28,7 +33,7 @@
     &-light {
       color: $main;
       background-color: $primary;
-      transition: $fast;
+      // transition: $fast;
       .Icon {
         fill: $highlight;
       }

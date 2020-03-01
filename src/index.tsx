@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore from './store'
-import Root from './components/.root';
+import Root from './components/.ui/.root';
 import history from './services/history-service'; // chenge this
 import MasterProvider from './common/context';
 import './assets/styles/.main.scss';

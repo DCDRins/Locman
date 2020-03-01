@@ -1,16 +1,17 @@
-import React, { HTMLAttributes, ReactNode, FormEvent, InputHTMLAttributes, SVGAttributes, useEffect } from 'react'
+import React, { ReactNode, InputHTMLAttributes } from 'react'
 import classNames from '../../../lib/classNames'
-import Icon, { IconProps } from '../Icon'
 import { HasFormStatus, HasRef } from '../../../common/types/props';
 import Group from '../Group';
-import Button from '../Button';
+import cuid from 'cuid';
 
 
 type Props = HasFormStatus
 & InputHTMLAttributes<HTMLInputElement>
 & HasRef<HTMLInputElement> & {
-  design?: 'default' | 'light';
+  level?: 'default' | 'light';
   button?: ReactNode;
+  hidden?: boolean;
+  bordered?: boolean;
   // before?: ReactNode;
   // after?: ReactNode;
 }
@@ -18,7 +19,10 @@ type Props = HasFormStatus
 const Input = ({
   disabled = false,
   className = '',
-  design = 'default',
+  level = 'default',
+  hidden = false,
+  bordered = false,
+  name = '',
   button,
   onKeyDown,
   // before,
@@ -34,14 +38,18 @@ const Input = ({
   return (
     <label
       className={classNames(base, className, 
-        `${base}--type-${design}`, {
+        `${base}--level-${level}`, {
         [`${base}--disabled`]: disabled,
+        [`${base}--hidden`]: hidden,
+        [`${base}--bordered`]: bordered,
       })}
     >
       <Group content="center">
         <input
           ref={getRef}
           autoComplete="off"
+          {...{ name }}
+          id={cuid()}
           onKeyDown={_onKeyDown}
           {...restProps}
         />

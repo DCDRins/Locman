@@ -34,9 +34,14 @@ a {
   text-decoration: none;
 }
 
-// a:focus {
-//   // outline: none;
-// }
+hr {
+  border: 1px solid $highlight-2;
+  margin: 0;
+}
+
+// reverse // active // hidden
+// and other words like this are reserved
+// Use .ClassName--active, .ClassName--reverse instead
 
 
 /* simple - enter transition 300ms, exit 150ms */
