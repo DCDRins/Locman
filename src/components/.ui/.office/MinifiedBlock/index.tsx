@@ -42,7 +42,7 @@ export default class SimpleBlock extends Component<Props, {}> {
     } = this.props;
     return (
       // <Div >
-        <Link className={base} to={appRoutes.ANY_EVENT_PAGE.absolutePath}>
+        <Link className={base} to={`${appRoutes.ANY_MUSEUM_PAGE.absolutePath}/1`}>
           <Group className={`${base}__group`} content="center" stretched="x" justify="start">
             <Div both>
               <Image src={image} height={20} width={20} rounded />

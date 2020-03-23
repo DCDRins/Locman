@@ -12,7 +12,9 @@ export class AnyMuseumPage extends React.Component {
     return (
       <UIPage>
         <AnyMuseumGround />
-        <GoogleApiWrapper  />
+        <Section header="Расположение на карте" unfollow>
+          <GoogleApiWrapper  />
+        </Section>
         <Section>
           <ScrolledContentViewer header="Мероприятия" />
         </Section>
