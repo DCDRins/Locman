@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../common/types/props';
+import { HasChildren } from '../../../.types/props';
 import Group from '../Group';
 import Button, { ButtonProps } from '../Button';
 import Icon from '../Icon';
@@ -126,7 +126,7 @@ export default class ScrolledContent extends Component<Props, State> {
     return (
 
       <Group {...{ orientation }} className={`${base}__wrapper`}>
-        {!autoscroll && (
+        {!autoscroll && orientation === 'horizontal' && (
           <Div both className={`${base}__buttons`}>
             <Group justify="space-between" content="center" stretched>
               <Button

@@ -1,9 +1,9 @@
 import React, { Component, HTMLAttributes, ReactNode } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { HasChildren, HasRouterProps } from '../../../common/types/props'
+import { HasChildren, HasRouterProps } from '../../../.types/props'
 import LangContext from '../../../common/context/lang/lang.context'
-import { withLanguage } from '../../../common/lang'
-import terms from '../../../common/terms'
+import { withLanguage } from '../../../common/dictionaries/lang'
+import terms from '../../../common/dictionaries/terms'
 import classNames from '../../../lib/classNames'
 
 type Props = HasChildren

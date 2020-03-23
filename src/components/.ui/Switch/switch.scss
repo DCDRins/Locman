@@ -8,45 +8,98 @@
     display: none;
   }
 
+  &.size {
+    &-s {
+      &::before {
+        border-radius: 12px;
+        width: 32px;
+        height: 16px;
+      }
+      &::after {
+        width: 10px;
+        height: 10px;
+        margin: 3px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px -2px rgba(0,0,0,.3);
+      }
+    }
+    &-m {
+      &::before {
+        border-radius: 12px;
+        width: 42px;
+        height: 24px;
+      }
+      &::after {
+        width: 18px;
+        height: 18px;
+        margin: 3px;
+        border-radius: 9px;
+        box-shadow: 0 2px 4px -2px rgba(0,0,0,.3);
+      }
+    }
+    &-l {
+
+    }
+  }
   &::after {
     content: '';
     display: block;
     position: absolute;
-    width: 18px;
-    height: 18px;
     top: 0;
     left: 0;
-    margin: 3px;
-    border-radius: 9px;
     background-color: $primary;
-    box-shadow: 0 2px 4px -2px rgba(0,0,0,.3);
     transition: all $average, background-color $fast;
   }
   &::before {
     content: '';
     display: block;
-    border-radius: 12px;
     background-color: $highlight;
-    width: 42px;
-    height: 24px;
     transition: $average;
   }
   &--active {
     &::before {
       background-color: $accent-blue;
     }
-    &::after {
-      transform: translate3d(18px, 0, 0);
-    }
-    &:active {
-      &::after {
-        left: -8px;
+    &.size {
+      &-s {
+        &::after {
+          transform: translate3d(16px, 0, 0);
+        }
+        &:active {
+          &::after {
+            left: -8px;
+          }
+        }
+      }
+      &-m {
+        &::after {
+          transform: translate3d(18px, 0, 0);
+        }
+        &:active {
+          &::after {
+            left: -8px;
+          }
+        }
       }
     }
   }
   &:active {
-    &::after {
-      width: 26px;
+    &.size {
+      &-s {
+        &::after {
+          width: 18px;
+        }
+      }
+      &-m {
+        &::after {
+          width: 26px;
+        }
+      }
+      &-l {
+        &::after {
+          width: 26px;
+        }
+      }
     }
   }
 }

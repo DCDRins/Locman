@@ -7,12 +7,15 @@ import Root from './components/.ui/.root';
 import history from './services/history-service'; // chenge this
 import MasterProvider from './common/context';
 import './assets/styles/.main.scss';
-import { appRoutes } from './common/routes';
+import { appRoutes } from './common/dictionaries/routes';
+import SystemState from './components/SystemState';
 
 // import './utils/Extends';
 // import './styles/main.scss';
 
 const store = configureStore(history, undefined);
+const root = document.getElementById('root');
+const modal = document.getElementById('modal');
 
 function render(component) {
   ReactDOM.render(
@@ -20,12 +23,16 @@ function render(component) {
       <ConnectedRouter history={history}>
         <MasterProvider>
           {component}
+          {modal && ReactDOM.createPortal((
+            <SystemState />
+          ), modal)}
         </MasterProvider>
       </ConnectedRouter>
     </Provider>,
-    document.getElementById('root'),
-  );
-}
+    root,
+    );
+    return 
+  }
 
 render(<Root routes={appRoutes} />);
 

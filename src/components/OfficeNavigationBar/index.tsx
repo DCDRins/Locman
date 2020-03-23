@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { HasChildren, HasRouterProps } from '../../common/types/props';
+import { HasChildren, HasRouterProps } from '../../.types/props';
 import getHashCode from '../../lib/getHashCode';
-import { officeAppRoutes } from '../../common/routes';
+import { officeAppRoutes } from '../../common/dictionaries/routes';
 import LangContext from '../../common/context/lang/lang.context';
 import Div from '../.ui/Div';
 import Section from '../.ui/Section';
 import Group from '../.ui/Group';
+import isSatisfied from '../../lib/isSatisfied';
 
 type State = { }
 type Props = typeof defaultProps
@@ -22,7 +23,7 @@ const initialState = Object.freeze({ })
 
 
 class OfficeNavigationBar extends Component<Props, State> {
-  static readonly defaultProps: Props = defaultProps
+  static readonly defaultProps = defaultProps
   readonly state: State = initialState
 
   render() {
@@ -31,21 +32,23 @@ class OfficeNavigationBar extends Component<Props, State> {
     return (
       <Section>
         <Group content="center" justify="center" rotateOnMedia className={base}>
-          {Object.values(officeAppRoutes).map(({ absolutePath, lang }) => (
-            pathname === absolutePath ? (
-              <Div both key={getHashCode(absolutePath)} className={`${base}--current`}>
-                <LangContext.Consumer>
-                  {({ getActual }) => getActual && getActual({ lang })}
-                </LangContext.Consumer>
-              </Div>
-            ) : (
-              <Link to={absolutePath} key={getHashCode(absolutePath)}>
-                <Div both>
+          {Object.values(officeAppRoutes).map(({ absolutePath, lang, credentials }) => (
+            isSatisfied(credentials) && (
+              pathname === absolutePath ? (
+                <Div both key={getHashCode(absolutePath)} className={`${base}--current`}>
                   <LangContext.Consumer>
                     {({ getActual }) => getActual && getActual({ lang })}
                   </LangContext.Consumer>
                 </Div>
-              </Link>
+              ) : (
+                <Link to={absolutePath} key={getHashCode(absolutePath)}>
+                  <Div both>
+                    <LangContext.Consumer>
+                      {({ getActual }) => getActual && getActual({ lang })}
+                    </LangContext.Consumer>
+                  </Div>
+                </Link>
+              )
             )
           ))}
         </Group>

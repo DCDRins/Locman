@@ -1,15 +1,16 @@
 import React, { HTMLAttributes, ReactNode, DOMAttributes } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from '../../../lib/classNames'
-import { ReactComponent as Forward } from '../../../assets/icons/forward.svg'
+import { ReactComponent as Share } from '../../../assets/icons/forward.svg'
 import { ReactComponent as MenuIcon } from '../../../assets/icons/menu.svg'
 import Group from '../Group'
 import Side, { SideProps } from '../Side'
-import { appRoutes } from '../../../common/routes'
+import { appRoutes } from '../../../common/dictionaries/routes'
 import Button from '../Button'
 import Div from '../Div'
 import Context from '../Context'
 import Icon from '../Icon'
+import terms from '../../../common/dictionaries/terms'
 
 
 type EventProps = HTMLAttributes<HTMLElement> & Partial<SideProps> & {
@@ -52,10 +53,21 @@ const Event = ({
           })}>
             <div className={`${base}__image`}>
               <Div className={`${base}__context`}>
-                <Button
-                  before={<Icon svg={MenuIcon} size="s" />}
-                  level="simple"
-                  size="s"
+                <Context
+                  contextButton={(
+                      <Button
+                        before={<Icon svg={MenuIcon} size="s" />}
+                        level="simple"
+                        size="s"
+                      />
+                    )
+                  }
+                  hidden={false}
+                  fields={[{
+                      svg: Share,
+                      term: terms.SHARE
+                    },
+                  ]}
                 />
               </Div>
               <div className={`${base}__image__inner`} style={{ backgroundImage: `url('${image}')` }} />

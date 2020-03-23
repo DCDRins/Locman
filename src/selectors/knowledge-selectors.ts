@@ -1,5 +1,5 @@
 import Types from 'MyTypes'
-import { IArticleDTO, HasPaginationParams } from '../models';
+import { IArticleDTO } from '../models';
 
 // export const getArticle = (state: Types.RootState, charCode) => state.knowledge[charCode]; // need selector here
 // export const getArticle = (state: Types.RootState, charCode: string): IArticleDTO => ({

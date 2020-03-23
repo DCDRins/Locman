@@ -1,5 +1,6 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { IArticleDTO, ICategoryDTO, IFetchParams, Pagination, MessageReply, IArticle, Message } from '../models';
+import { IArticleDTO, ICategoryDTO, IArticle } from '../models';
+import { Pagination, IFetchParams, MessageReply, Message } from '../.types/types';
 
 
 export const fetchArticleAsync = createAsyncAction(

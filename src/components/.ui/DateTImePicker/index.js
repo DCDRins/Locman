@@ -40,7 +40,7 @@ export default class DateTimePicker extends Component {
       nextMonthIcon,
       minStep,
       hourStep,
-      onSave,
+      onClose,
       onChange,
       isClosed,
       ...props
@@ -50,7 +50,18 @@ export default class DateTimePicker extends Component {
       <Div both className={classNames(base, className, {
         'closed': isClosed,
       })} {...props}>
-        <Group stretched content="center" justify="center">
+        <Group content="center" justify="center">
+          <Button
+            level="office-tertiary"
+            size="s"
+            angular
+            stretched="x"
+            onClick={onClose}
+          >
+            Закрыть
+          </Button>
+        </Group>
+        <Group content="stretch" justify="center">
           <Div both>
             <Button
               className={classNames('ion-calendar im-btn')}
@@ -58,7 +69,7 @@ export default class DateTimePicker extends Component {
               size="s"
               angular
               onClick={e => this.handleClickTab(e, 0)}
-              before={<Icon svg={DateIcon} size={10} />}
+              before={<Icon isRect svg={DateIcon} size={10} />}
             >
               Дата
             </Button>
@@ -70,7 +81,7 @@ export default class DateTimePicker extends Component {
               size="s"
               angular
               onClick={e => this.handleClickTab(e, 1)}
-              before={<Icon svg={TimeIcon} size={10} />}
+              before={<Icon isRect svg={TimeIcon} size={10} />}
             >
               Время
             </Button>
@@ -90,18 +101,6 @@ export default class DateTimePicker extends Component {
             {...{ onChange }}
           />
         </div>
-        {/* {onSave && ( */}
-        <Group content="center" justify="center">
-          <Button
-            level="office-tertiary"
-            size="l"
-            angular
-            stretched
-          >
-            Сохранить
-          </Button>
-        </Group>
-        {/* )} */}
       </Div>
     );
   }

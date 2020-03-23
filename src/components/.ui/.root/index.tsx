@@ -7,9 +7,9 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
-import GenericList from '../GenericList';
-import { Route as CustomRouteType, RouteDictionary } from '../../../common/routes';
+import { Route as CustomRouteType, RouteDictionary } from '../../../common/dictionaries/routes';
 import getHashCode from '../../../lib/getHashCode';
+import isSatisfied from '../../../lib/isSatisfied';
 
 
 export default class Root extends Component<{ routes: RouteDictionary }, {}> {
@@ -24,13 +24,15 @@ export default class Root extends Component<{ routes: RouteDictionary }, {}> {
             classNames="fade"
           >
             <Switch location={location}>
-              {Object.values(routes).map(({ component, absolutePath, param = '', exact }: CustomRouteType) => (
-                <Route
-                  key={getHashCode(absolutePath)}
-                  path={`${absolutePath}/${param}`}
-                  component={component}
-                  {...{ exact }}
-                />
+              {Object.values(routes).map(({ component, absolutePath, param = '', exact, credentials }: CustomRouteType) => (
+                isSatisfied(credentials) && (
+                  <Route
+                    key={getHashCode(absolutePath)}
+                    path={`${absolutePath}/${param}`}
+                    component={component}
+                    {...{ exact }}
+                  />
+                )
               ))}
             </Switch>
           </CSSTransition>

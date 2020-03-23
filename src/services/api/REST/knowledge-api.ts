@@ -1,6 +1,7 @@
 import api from '../agent';
-import { IArticleDTO, IFetchParams, Pagination, ICategoryDTO, MessageReply, IArticle } from '../../../models';
+import { IArticleDTO, ICategoryDTO, IArticle } from '../../../models';
 import { responseLogger } from '../utils';
+import { IFetchParams, Pagination, MessageReply } from '../../../.types/types';
 // import { ServerResponse } from '../types';
 // import transformRequest from './subroutines/transformRequest';
 

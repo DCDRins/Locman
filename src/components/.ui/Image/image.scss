@@ -1,17 +1,81 @@
 .Image {
-  max-width: 100%;
+  width: 100%;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: $highlight;
-  filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
-  &--bordered {
-    border-radius: $border-radius-small;
-  }
-  color: $tint;
+  background-color: transparent;
+  animation: fadeInWithTransform $slowly forwards;
+  color: $primary;
   transition: color $average;
-  &:hover {
-    cursor: pointer;
-    color: $tint-hard;
+  overflow: hidden;
+  filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
+  cursor: pointer;
+
+  &--bordered {
+    border: 1px solid $tint;
+  }
+  &--editable {
+    color: $tint;
+    background-color: $highlight;
+    &:hover {
+      color: $tint-hard;
+    }
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    &::before {
+      content: '';
+      cursor: pointer;
+      display: block;
+      border: none;
+      outline: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      user-select: none;
+      background-color: black;
+      visibility: visible;
+      z-index: 1;
+      opacity: 0;
+    }
+    &:hover {
+      + .editable {
+        &--photo {
+          opacity: .75;
+          color: $tint-hard;
+        }
+        &--empty {
+          color: $tint-hard;
+        }
+      }
+    }
+  }
+  &__children {
+    &.editable {
+      background-color: $highlight;
+
+      color: $tint;
+      font-weight: 300;
+      &--photo {
+        opacity: 0;
+        transition: $fast;
+        // &:hover {
+        //   opacity: .75;
+        //   color: $tint-hard;
+        // }
+      }
+      &--empty {
+        transition: $fast;
+        // &:hover {
+        //   color: $tint-hard;
+        // }
+      }
+    }
   }
 }

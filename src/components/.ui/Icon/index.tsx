@@ -1,13 +1,14 @@
 {/* <img src={searchIcon} alt="search" /> */}
 import React, { HTMLAttributes, ComponentType, SVGProps } from 'react';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../common/types/props';
+import { HasChildren } from '../../../.types/props';
 
 export type IconProps = HTMLAttributes<SVGSVGElement> & HasChildren & {
   size?: 's' | 'm' | 'l' | number;
   svg: ComponentType<SVGProps<SVGSVGElement>>;
   noFill?: boolean;
   noStroke?: boolean;
+  isRect?: boolean;
 }
 
 const Icon = ({
@@ -16,6 +17,7 @@ const Icon = ({
   className = '',
   noFill = false,
   noStroke = false,
+  isRect = false,
   ...restProps
 }: IconProps) => {
   const style: {[k: string]: string} = {};
@@ -23,8 +25,7 @@ const Icon = ({
 
   if (typeof size === 'number') {
     style.width = `${size}px`
-    style.height = `${size}px`
-    // style.height = `${size}px`
+    style.height = isRect ? `${size}px` : 'auto';
   }
 
   return (

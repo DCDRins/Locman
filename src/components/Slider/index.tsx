@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HasChildren } from '../../common/types/props';
+import { HasChildren } from '../../.types/props';
 import Div from '../.ui/Div';
 import classNames from '../../lib/classNames';
 import getHashCode from '../../lib/getHashCode';

@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../Header'
+import Header from '../Header/view'
 import UIPage from '../.ui/UIPage'
 import StockContentViewer from '../StockContentViewer'
 import AnyMuseumGround from '../AnyMuseumGround'

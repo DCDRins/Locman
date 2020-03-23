@@ -1,12 +1,11 @@
 .Button {
   cursor: pointer;
   display: inline-block;
-  text-decoration: none;
-  outline: none;
-  user-select: none;
-  white-space: nowrap;
   padding: 0;
   // border: 1px solid transparent;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
   border: none;
   outline: none;
   border-radius: $border-radius-large;
@@ -24,17 +23,17 @@
     transition: padding $fast;
     &--size {
       &-s {
-        // @extend %small-text;
+        @extend %small-text;
         // font-weight: 400;
         padding: $button-s-padding;
       }
       &-m {
-        // @extend %small-text;
+        @extend %small-text;
         // font-weight: 500;
         padding: $button-m-padding;
       }
       &-l {
-        // @extend %simple-text;
+        @extend %simple-text;
         // font-weight: 500;
         padding: $button-l-padding;
       }
@@ -45,7 +44,7 @@
   }
   &:focus > &__in {
     outline: auto;
-    outline-color: $main;
+    outline-color: $accent-blue;
   }
   // Button__content
   &__content {
@@ -53,6 +52,8 @@
   }
   // Button__before
   &__before {
+    display: flex;
+    align-items: center;
     position: relative;
     margin-right: 10px;
     .Icon {
@@ -99,6 +100,10 @@
     opacity: 0;
     margin: 0!important;
     transition: all $slow, opacity $fast;
+  }
+  &--disabled {
+    pointer-events: none;
+    opacity: .55;
   }
   &--hidden &__in {
     padding: 0;

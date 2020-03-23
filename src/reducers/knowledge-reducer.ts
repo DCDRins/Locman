@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
 
-import { IArticleDTO, ICategoryDTO, Pagination } from '../models';
+import { IArticleDTO, ICategoryDTO } from '../models';
 import { knowledgeActions } from '../actions';
 import { ReducerDefaultState } from './types';
+import { Pagination } from '../.types/types';
 
 export interface KnowledgeState {
   readonly articles: ReducerDefaultState<Pagination<IArticleDTO>>;

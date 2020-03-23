@@ -1,4 +1,4 @@
-import { NamedType } from "./types";
+import { NamedType } from "../.types/types";
 import { ICategoryDTO } from "./knowledge";
 
 export interface IOrganizationDTO {

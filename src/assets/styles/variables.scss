@@ -10,6 +10,8 @@ $accent-blue: rgb(54, 117, 219); // maybe change this
 $accent: rgb(56, 56, 63); // maybe change this
 $light: #eef;
 $dark: #161616;
+$dark-100: #242424;
+$dark-200: #323232;
 $red: red;
 $tint-red: rgba(255, 0, 0, .3);
 $tint: rgba(0, 0, 0, .25);
@@ -104,6 +106,7 @@ $text-transparency: .2;
   transition: $fast;
 }
 $z-indexes: (
+    "overoverlay",
     "overlay",
     "foreground",
     "main",
@@ -118,4 +121,15 @@ $z-indexes: (
         @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
         @return null;
     }
+}
+
+.stretched {
+  width: 100%;
+  height: 100%;
+  &--x {
+    width: 100%;
+  }
+  &--y {
+    height: 100%;
+  }
 }

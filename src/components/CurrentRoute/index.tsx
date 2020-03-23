@@ -6,7 +6,7 @@ import ScrolledContent from '../.ui/ScrolledContent';
 import GroundImage from '../../assets/fake_content/ground_images/hermitage-3.jpg'
 import GroundImage1 from '../../assets/fake_content/ground_images/hermitage-4.jpg'
 import GroundImage2 from '../../assets/fake_content/ground_images/hermitage-2.jpg'
-import terms from '../../common/terms';
+import terms from '../../common/dictionaries/terms';
 
 const CurrentRoute: FunctionComponent = () => {
   const base = 'Current-Route';

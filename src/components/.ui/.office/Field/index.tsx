@@ -2,12 +2,14 @@ import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../../lib/classNames';
 import Div from '../../Div';
 import Group, { GroupProps } from '../../Group';
-import { HasChildren } from '../../../../common/types/props';
+import { HasChildren } from '../../../../.types/props';
 import Button from '../../Button';
 import Icon from '../../Icon';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit.svg';
+import { ReactComponent as CrossIcon } from '../../../../assets/icons/cross.svg';
 import Input from '../../Input';
 import Switch from '../../Switch';
+import NumericUpDown from '../../NumericUpDown';
 
 type Props = HTMLAttributes<HTMLDivElement>
 & HasChildren
@@ -15,8 +17,10 @@ type Props = HTMLAttributes<HTMLDivElement>
 & {
   title?: string;
   showTitle?: boolean;
+  bordered?: boolean;
+  readonly?: boolean;
   field: {
-    [key: string]: number | string | boolean
+    [key: string]: string | boolean
   }
 }
 
@@ -38,13 +42,15 @@ export default class Field extends Component<Props, State> {
     this._isMounted = false;
     _intervalId && clearInterval(_intervalId)
   }
-  triggerMode = () => {
+
+  editOff = () => this.setState({ editMode: false })
+
+  editOn = () => {
+    const { readonly } = this.props
     const { current } = this.inputRef
-    const { editMode } = this.state
-    this.setState({ editMode: !editMode },() => {
-      if (editMode) return
+    this.setState({ editMode: !readonly }, () => {
       this._intervalId = setInterval(() => {
-        !editMode && current && current.focus()
+        current && current.focus()
         this._intervalId && document.activeElement === current && clearInterval(this._intervalId)
       }, 100)
     })
@@ -56,8 +62,10 @@ export default class Field extends Component<Props, State> {
       children,
       field,
       justify,
+      bordered = false,
       onChange,
       showTitle = false,
+      readonly = false,
       title,
       ...restProps
     } = this.props;
@@ -66,7 +74,11 @@ export default class Field extends Component<Props, State> {
     const key = Object.keys(field)[0]
     const property = field[key]
     return (
-      <Div {...restProps} both className={classNames(base, className)}>
+      <Div
+        {...restProps}
+        both
+        className={classNames(base, className)}
+      >
         {title && (
           <Div className={classNames(`${base}__title`, {
             'show': showTitle,
@@ -74,39 +86,48 @@ export default class Field extends Component<Props, State> {
             {title}
           </Div>
         )}
-        <Group content="center" {...{ justify }}>
+        <Group
+          content="center"
+          {...{ justify }}
+          onDoubleClick={this.editOn}
+          className={classNames(`${base}__group`,{
+            'bordered': bordered,
+          })}
+        >
           <div className={`${base}__main`}>
             {children
               ? children
-              : field[key]
+              : property ? property : (
+                <div className={`${base}__empty-string`}>{title}...</div>
+              )
             }
           </div>
-          {typeof property === 'string' && (
+          {typeof property === 'string' && !readonly && (
             <Button
               level="office-secondary"
-              before={<Icon noStroke svg={EditIcon} />}
-              onClick={this.triggerMode}
+              before={<Icon noStroke svg={!editMode ? EditIcon : CrossIcon} />}
+              onClick={!editMode ? this.editOn : this.editOff}
             />
           )}
           {typeof property === 'boolean' && (
             <Switch
-              active={property}
+              defaultChecked={property}
               name={key}
               {...{ onChange }}
             />
           )}
         </Group>
-        {typeof property !== 'boolean' && (
+        {typeof property === 'string' && (
           <Input
             className={`${base}__input`}
             name={key}
             level="light"
             bordered
-            hidden={!editMode}
+            hidden={!editMode && property !== undefined}
             getRef={this.inputRef}
             autoFocus
             defaultValue={property}
-            onBlur={this.triggerMode}
+            onBlur={this.editOff}
             placeholder={title}
             {...{ onChange }}
           />

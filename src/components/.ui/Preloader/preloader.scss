@@ -1,7 +1,28 @@
 .Preloader {
  
-  padding: $margin-default;
-  &--hidden {
+  // padding: $margin-default;
+  &.hidden {
     display: none;
+    // visibility: hidden;
+    // opacity: 0;
+    // transform: scale(0.1, 0.1);
+  }
+
+  &.global {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $tint-hard;
+    z-index: 999;
+    transition: $slow;
+    &.hidden {
+      display: block!important;
+      visibility: hidden;
+      opacity: 0;
+    }
   }
 }

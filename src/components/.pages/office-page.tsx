@@ -1,53 +1,35 @@
 import React from 'react'
-import Section from '../.ui/Section'
 import UIPage from '../.ui/UIPage'
-import Group from '../.ui/Group'
-import OfficeNavigationBar from '../OfficeNavigationBar'
-import { officeAppRoutes } from '../../common/routes'
 import Root from '../.ui/.root'
+import OfficeNavigationBar from '../OfficeNavigationBar'
+import Image from '../.ui/Image'
+import Img from '../../assets/images/office-page.png'
+import NonAuthorizedImg from '../../assets/images/office-page-non-authorized.png'
+import { officeAppRoutes } from '../../common/dictionaries/routes'
+import Section from '../.ui/Section'
+import Group from '../.ui/Group'
+import isSatisfied from '../../lib/isSatisfied'
+import roles from '../../common/dictionaries/roles'
 
 export class PersonalOfficePage extends React.Component {
 
   render() {
     return (
-      <UIPage>
-        {/* <Section> */}
-        {/* <Group justify="start"> */}
-        <OfficeNavigationBar />
-        <Root routes={officeAppRoutes} />
-        {/* </Group> */}
-        {/* </Section> */}
-      </UIPage>
+      !isSatisfied(roles.GUEST) ? (
+        <UIPage>
+          <OfficeNavigationBar />
+          {/* <Group justify="center" content="center" stretched>
+            <Image src={Img} height={300} width={600} />
+          </Group> */}
+          <Root routes={officeAppRoutes} />
+        </UIPage>
+      ) : (
+        <UIPage>
+          <Group justify="center" content="center" stretched>
+            <Image src={NonAuthorizedImg} height={300} width={600} />
+          </Group>
+        </UIPage>
+      )
     )
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// <div>
-// <Section header="Test">
-//   Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque odio dicta possimus cumque doloribus necessitatibus cupiditate debitis minima reiciendis. Neque beatae veritatis repellendus, cum distinctio labore veniam corrupti praesentium consectetur!
-// </Section>
-// <Section
-//   unfollow
-//   header="Test"
-// >
-//   Some settings here
-//   <Group content="center" justify="space-between">
-//     Some settings
-//     <Input />
-//     <Switch />
-//   </Group>
-// </Section>
-// </div>

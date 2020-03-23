@@ -1,0 +1,18 @@
+.Date-Field {
+
+  &__title{
+    font-weight: 600;
+    color: $tint;
+  }
+  &__date-picker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  &__date {
+    font-weight: 600;
+  }
+}

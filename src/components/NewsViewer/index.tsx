@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { HasChildren } from '../../common/types/props';
+import { HasChildren } from '../../.types/props';
 // import Div from '../.ui/Div';
 import classNames from '../../lib/classNames';
 import getHashCode from '../../lib/getHashCode';
 import Section from '../.ui/Section';
-import terms from '../../common/terms';
+import terms from '../../common/dictionaries/terms';
 import Button from '../.ui/Button';
 import LangContext from '../../common/context/lang/lang.context';
 import Group from '../.ui/Group';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { HasChildren } from '../../common/types/props';
+import { HasChildren } from '../../.types/props';
 import UserContext from '../../common/context/user/user.context';
 import Ground from '../.ui/Ground';
-import AuthGround from '../../connected/auth-ground-connected-bind-action-creators';
+import AuthGround from '../AuthGround';
 import Nav from './Nav';
 import classNames from '../../lib/classNames';
 

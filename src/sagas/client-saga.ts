@@ -1,47 +1,131 @@
 // ./src/store/heroes/sagas.ts
 
-import { call, put, takeLatest, all } from 'redux-saga/effects'
-import { client } from '../services/api';
-import { authAsync, refreshAsync } from '../actions/client-actions'
-import { AuthResponse } from '../models';
+import { cancel, select, call, put, take, all, fork } from 'redux-saga/effects'
+import { client, setToken } from '../services/api';
+import * as actions from '../actions'
+import { AuthResponse, AuthParams, IUserDTO, User, IUser } from '../models';
+import { Nullable, ErrorReply, Message, MessageReply, ImageReply } from '../.types/types'
 import { getType } from 'typesafe-actions';
+import { remember, recall } from '../lib/localStorage';
+import history from '../services';
+import { appRoutes, officeAppRoutes } from '../common/dictionaries/routes';
+import { forget } from '../lib/localStorage';
+import { getUserData } from '../selectors/client-selectors';
+import handleErrors from './subroutines/handleErrors';
+import { ServerResponse } from '../services/api/types';
 
-// Here we use `redux-saga` to trigger actions asynchronously. `redux-saga` uses something called a
-// "generator function", which you can read about here:
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
-
-function* authWorker(action: ReturnType<typeof authAsync.request>): Generator {
+function* authWorker(payload: AuthParams): Generator {
   try {
-    const response = (yield call(client.auth, action.payload)) as AuthResponse;
-    
-    // dispatch a success action to the store
-    yield put(authAsync.success(response));
-    
-  } catch (err) {
-    // dispatch a failure action to the store with the error
-    yield put(authAsync.failure(err));
+    yield put(actions.systemActions.somethingIsLoading());
+    const response = (yield call(client.auth, payload)) as AuthResponse;
+    yield remember<AuthResponse>('client', response);
+    yield setToken()
+    yield put(actions.systemActions.somethingIsSuccessfullyLoaded({ message: 'Успешно' }));
+    history.push(appRoutes.OFFICE_PAGE.absolutePath)
+    yield put(actions.clientActions.authAsync.success(response));
+  } catch ({ response }) {
+    const { data } = response as ServerResponse<ErrorReply>;
+    yield put(actions.clientActions.authAsync.failure(data));
+    yield put(actions.systemActions.somethingIsThrowException(data));
   }
 }
-function* refreshWorker(action: ReturnType<typeof refreshAsync.request>): Generator {
+function* refreshWorker(): Generator {
   try {
     const response = (yield call(client.refresh)) as AuthResponse;
-    
-    // dispatch a success action to the store
-    yield put(refreshAsync.success(response));
-    
+    yield put(actions.clientActions.refreshAsync.success(response));
   } catch (err) {
-    // dispatch a failure action to the store with the error
-    yield put(refreshAsync.failure(err));
+    yield put(actions.clientActions.refreshAsync.failure(err));
   }
 }
 
-// This is our watcher function. We use `take*()` functions to watch Redux for a specific action
-// type, and run our saga, for example the `handleFetch()` saga above.
-// export default function* authRequestWatcher() {
+function* loadUserData(): Generator {
+  try {
+    yield put(actions.systemActions.somethingIsLoading());
+    const user = (yield call(client.fetchUserData)) as User;
+    const { name } = user;
+    yield put(actions.clientActions.fetchUserData.success(user));
+    yield put(actions.systemActions.somethingIsSuccessfullyLoaded({ message: `Здравствуйте, ${name}!` }));
+  } catch ({ response }) {
+    const { status, data } = response as ServerResponse<ErrorReply>;
+    yield handleErrors(status)
+    yield put(actions.clientActions.fetchUserData.failure(data));
+    yield put(actions.systemActions.somethingIsThrowException(data));
+  }
+}
+
+function* editUserData(user: IUser): Generator {
+  try {
+    yield put(actions.systemActions.somethingIsLoading());
+    const response = (yield call(client.editUserData, user)) as Message;
+    yield put(actions.clientActions.editUserData.success(response));
+    yield put(actions.systemActions.somethingIsSuccessfullyLoaded(response));
+  } catch ({ response }) {
+    const { status, data } = response as ServerResponse<ErrorReply>;
+    yield handleErrors(status)
+    yield put(actions.clientActions.editUserData.failure(data));
+    yield put(actions.systemActions.somethingIsThrowException(data));
+  }
+}
+
+function* uploadUserImage(image: File): Generator {
+  try {
+    yield put(actions.systemActions.somethingIsLoading());
+    const { data: { path }, message } = (yield call(client.uploadUserImage, image)) as MessageReply<ImageReply>;
+    yield put(actions.clientActions.uploadUserImage.success(path));
+    yield put(actions.systemActions.somethingIsSuccessfullyLoaded({ message }));
+  } catch ({ response }) {
+    const { status, data } = response as ServerResponse<ErrorReply>;
+    yield handleErrors(status)
+    yield put(actions.clientActions.uploadUserImage.failure(data));
+    yield put(actions.systemActions.somethingIsThrowException({ message: "Это изображение нельзя использовать, либо оно слишком большое" }));
+  }
+}
+
+// WATHCERS ------------
+
+
+function* loginFlow() { // without reload
+  const client = yield recall<AuthResponse>('client');
+  while (true) {
+    if (!client) {
+      const { payload }: { payload: AuthParams } = yield take(getType(actions.clientActions.authAsync.request));
+      yield fork(authWorker, payload);
+    }
+    yield take(getType(actions.clientActions.logout))
+    yield forget('client')
+    history.push(appRoutes.MAIN_PAGE.absolutePath)
+  }
+}
+function* watchLoadUserData() {
+  while (true) {
+    yield take(getType(actions.clientActions.fetchUserData.request));
+    const data = (yield select(getUserData)) as Nullable<User>;
+    if (data) {
+      yield put(actions.clientActions.fetchUserData.success(data))
+    } else { 
+      yield fork(loadUserData);
+    }
+  }
+}
+function* watchEditUserData() {
+  while (true) {
+    const { payload }: { payload: IUser } = yield take(getType(actions.clientActions.editUserData.request));
+    yield fork(editUserData, payload);
+  }
+}
+function* watchUploadUserImage() {
+  while (true) {
+    const { payload }: { payload: File } = yield take(getType(actions.clientActions.uploadUserImage.request));
+    yield fork(uploadUserImage, payload);
+  }
+}
+
 export default function* () {
   yield all([
-    takeLatest(getType(authAsync.request), authWorker),
-    takeLatest(getType(refreshAsync.request), refreshWorker)
+    fork(loginFlow),
+    fork(watchLoadUserData),
+    fork(watchEditUserData),
+    fork(watchUploadUserImage),
   ])
 }
 // export function* refreshRequestWatcher() {

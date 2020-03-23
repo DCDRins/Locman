@@ -1,0 +1,17 @@
+.User {
+  animation: fadeInWithTransform $slowly forwards;
+  &__content {
+    max-width: $minScreen * 1.1;
+    background: $primary;
+    border: 1px solid $highlight;
+    border-radius: $border-radius-large;
+    overflow: hidden;
+    // padding: 20px;
+    .Field {
+      max-width: 250px;
+      @include mobile {
+        max-width: unset;
+      }
+    }
+  }
+}

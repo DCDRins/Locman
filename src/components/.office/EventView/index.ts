@@ -1,3 +1,3 @@
-import { UserViewConnected } from './event-view-connected-bind-action-creators'
+import { EventViewConnected as EventView } from './connected'
 
-export default UserViewConnected
+export default EventView

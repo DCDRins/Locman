@@ -1,13 +1,13 @@
 
 import React, { HTMLAttributes } from 'react';
-import { Link } from '../Switch/node_modules/react-router-dom';
+import { Link } from 'react-router-dom';
 // import classNames from '../../../lib/classNames';
 import Button, { ButtonProps } from '../Button';
 import LangContext from '../../../common/context/lang/lang.context';
-import { withLanguage } from '../../../common/lang';
-import terms from '../../../common/terms';
+import { withLanguage } from '../../../common/dictionaries/lang';
+import terms from '../../../common/dictionaries/terms';
 import Group from '../Group';
-import { HasClassName } from '../../../common/types/props';
+import { HasClassName } from '../../../.types/props';
 import classNames from '../../../lib/classNames';
 import Icon from '../Icon';
 import { ReactComponent as Ico } from '../../../assets/icons/home.svg';

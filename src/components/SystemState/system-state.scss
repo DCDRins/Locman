@@ -1,0 +1,25 @@
+.System-State {
+  position: fixed;
+  bottom: -100px;
+  right: 20px;
+  background-color: $primary;
+  border-radius: $border-radius;
+  border: 1px solid $highlight-2;
+  z-index: z('overoverlay');
+  transition: bottom $slow;
+  &.active {
+    bottom: 20px;
+  }
+  &__success-icon {
+    padding-left: 10px;
+    fill: green;
+    animation: fadeIn $slow forwards;
+  }
+  
+  &__error-icon {
+    padding-left: 10px;
+    fill: none;
+    stroke: $red;
+    animation: fadeIn $slow forwards;
+  }
+}

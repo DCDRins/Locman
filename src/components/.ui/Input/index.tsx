@@ -1,6 +1,6 @@
 import React, { ReactNode, InputHTMLAttributes } from 'react'
 import classNames from '../../../lib/classNames'
-import { HasFormStatus, HasRef } from '../../../common/types/props';
+import { HasFormStatus, HasRef } from '../../../.types/props';
 import Group from '../Group';
 import cuid from 'cuid';
 

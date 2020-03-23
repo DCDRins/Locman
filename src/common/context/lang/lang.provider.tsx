@@ -1,8 +1,8 @@
 
 import React from 'react';
 import LangContext, { LangContextType } from './lang.context'
-import { HasChildren } from '../../types/props';
-import lang, { withLanguage } from '../../lang';
+import { HasChildren } from '../../../.types/props';
+import lang, { withLanguage } from '../../dictionaries/lang';
 
 // Provider types 
 type Props = HasChildren

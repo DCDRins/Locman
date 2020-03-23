@@ -29,6 +29,6 @@
     "node_modules"
   ],
   "include": [
-    "src",
+    "src", "src/.types/props.d.ts", "src/.types/types.ts",
   ]
 }

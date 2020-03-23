@@ -1,0 +1,11 @@
+.ISelect {
+  &__control {
+    border-radius: $border-radius!important;
+    &--is-focused {
+      border: 1px solid $accent-blue!important;
+    }
+  }
+  &__value-container {
+    white-space: nowrap!important;
+  }
+}

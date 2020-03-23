@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import Section from '../Section'
-import terms from '../../../common/terms'
+import terms from '../../../common/dictionaries/terms'
 import Div from '../Div'
 
 
@@ -17,10 +17,10 @@ export class MapContainer extends Component {
     const { onMarkerClick, onInfoWindowClose } = this
     const { selectedPlace: { name } } = this.state
     return (
-      <Section
+      <Div
         className={base}
-        header={terms.GMAP_LOCATION}
-        unfollow
+        // header={terms.GMAP_LOCATION}
+        // unfollow
       >
         <Map
           {...{ google }}
@@ -33,7 +33,7 @@ export class MapContainer extends Component {
         >
           <Marker onClick={onMarkerClick} name={'Санкт Петербург'} />
         </Map>
-      </Section>
+      </Div>
     );
   }
 }

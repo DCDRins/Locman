@@ -1,8 +1,9 @@
 
 import React, { HTMLAttributes } from 'react';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../common/types/props';
+import { HasChildren } from '../../../.types/props';
 import Group from '../Group';
+import Input from '../Input';
 
 export type Props = HTMLAttributes<HTMLDivElement>
 & HasChildren
@@ -11,6 +12,8 @@ export type Props = HTMLAttributes<HTMLDivElement>
   height: number;
   width?: number;
   bordered?: boolean;
+  editable?: boolean;
+  rounded?: boolean;
 }
 
 const Image = ({
@@ -19,20 +22,41 @@ const Image = ({
   width,
   children,
   bordered = false,
+  editable = false,
+  rounded = false,
   className = '',
+  onChange,
   ...restProps
-}: Props) => (
-  <div
-    {...restProps}
-    style={{ backgroundImage: `url('${src}')`, height, width }}
-    className={classNames('Image', className, {
-      ['Image--bordered']: bordered,
-    })}
-  >
-    <Group content="center" justify="center" stretched>
-      {children}
-    </Group>
-  </div>
-)
+}: Props) => {
+  const base = 'Image';
+  return (
+    <div
+      {...restProps}
+      style={{
+        backgroundImage: `url('${src}')`,
+        height,
+        width,
+        borderRadius: `${rounded && width && width * 0.5}px`,
+      }}
+      className={classNames(base, className, {
+        [`${base}--bordered`]: bordered,
+        [`${base}--editable`]: editable,
+      })}
+    >
+      {editable && <input type="file" {...{ onChange }} />}
+      <Group
+        className={classNames(`${base}__children`, {
+          'editable': editable,
+          'editable--photo': editable && src !== undefined,
+          'editable--empty': editable && src === undefined,
+        })}
+        content="center" justify="center" stretched
+        style={{ borderRadius: `${rounded && width && width * 0.5}px` }}
+      >
+        {children}
+      </Group>
+    </div>
+  )
+}
 
 export default Image

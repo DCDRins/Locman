@@ -1,10 +1,10 @@
 import React, { Component, FormEvent } from 'react';
-import { HasChildren, HasClassName } from '../../../common/types/props';
+import { HasChildren, HasClassName } from '../../../.types/props';
 import Group from '../../.ui/Group';
 import classNames from '../../../lib/classNames';
 import LangContext from '../../../common/context/lang/lang.context';
-import terms from '../../../common/terms';
-import { appRoutes, Route } from '../../../common/routes';
+import terms from '../../../common/dictionaries/terms';
+import { appRoutes, Route } from '../../../common/dictionaries/routes';
 import Input from '../../.ui/Input';
 
 type State = typeof initialState & {}

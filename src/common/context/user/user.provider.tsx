@@ -1,7 +1,7 @@
 
 import React from 'react';
 import UserContext, { UserContextType } from './user.context'
-import { HasChildren } from '../../types/props';
+import { HasChildren } from '../../../.types/props';
 
 // Provider types 
 type Props = HasChildren

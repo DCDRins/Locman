@@ -1,7 +1,7 @@
 // ./src/store/heroes/sagas.ts
 
 import { call, put, take, fork, all } from 'redux-saga/effects'
-import { IArticleDTO, Pagination, ICategoryDTO, IFetchParams, MessageReply, IArticle, Message } from '../models';
+import { IArticleDTO, ICategoryDTO, IArticle } from '../models';
 import { getType } from 'typesafe-actions';
 import { knowledge as api } from '../services/api';
 import {
@@ -14,6 +14,7 @@ import {
   deleteArticleAsync,
   deleteCategoryAsync,
 } from '../actions/knowledge-actions';
+import { IFetchParams, Pagination, MessageReply, Message } from '../.types/types';
 
 // Here we use `redux-saga` to trigger actions asynchronously. `redux-saga` uses something called a
 // "generator function", which you can read about here:

@@ -1,4 +1,4 @@
-import { ObjectClassNames } from '../common/types/props';
+import { ObjectClassNames } from '../.types/props';
 
 export default function classNames(...classnames: Array<number | string | ObjectClassNames>): string {
   let result: string[] = [];

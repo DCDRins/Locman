@@ -1,5 +1,5 @@
 import React from 'react';
-import { Role } from '../../roles'
+import { Credentials } from '../../../models';
 
 // context types 
 type UserContextProps = {
@@ -9,7 +9,7 @@ type UserContextProps = {
 export interface UserContextType {
   authenticated: boolean;
   lang?: string;
-  role?: Role;
+  role?: Credentials;
 }
 
 export default React.createContext<Partial<UserContextProps>>({})

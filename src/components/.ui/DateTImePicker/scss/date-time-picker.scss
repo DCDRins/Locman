@@ -6,13 +6,16 @@
 
 .Date-Time-Picker {
   &.closed {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
   }
-  transition: max-height $slow;
+  z-index: z('main');
+  transition: $slow;
   display: block;
   box-sizing: border-box;
   width: 100%;
   border-radius: 3px;
+  background-color: $primary;
   &__tabs {
     margin-bottom: $margin-default;
   }

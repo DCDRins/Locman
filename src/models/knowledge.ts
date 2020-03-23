@@ -1,7 +1,7 @@
 import getDateFormat from "../lib/getDateFormat";
 import uid from "uid";
 import cuid from "cuid";
-import { NamedType } from "./types";
+import { NamedType } from "../.types/types";
 
 export interface IArticleDTO {
   id: number;

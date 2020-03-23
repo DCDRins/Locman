@@ -1,7 +1,8 @@
 import api from '../agent';
-import { MessageReply, IEventDTO, IEvent, IFetchParams, Pagination, Message } from '../../../models';
+import { IEventDTO, IEvent, Tag } from '../../../models';
 import { responseLogger, transformResponse } from '../utils';
 import { ServerResponse } from '../types';
+import { IFetchParams, Pagination, MessageReply, Message, HasSearchParams } from '../../../.types/types';
 
 export const event = {
   fetchEventByCharCode: (charCode: string | number) => // characterCode or ID
@@ -20,9 +21,19 @@ export const event = {
     api.post<MessageReply<IEventDTO>>(`/event`, params)
     .then(r => transformResponse<MessageReply<IEventDTO>>(r).data),
   editEvent: (params: IEvent) =>
-    api.put<Message>(`/event/${params.charCode}`, params)
-    .then(responseLogger),
+    api.put<MessageReply<IEventDTO>>(`/event/${params.charCode}`, params)
+    .then(r => transformResponse<Message>(r)),
   deleteEvent: (charCode: string) => 
-  api.delete<Message>(`/event/${charCode}`)
+    api.delete<Message>(`/event/${charCode}`)
     .then(responseLogger),
+  fetchTagList: (params: HasSearchParams) => 
+    api.get<Pagination<Tag>>(`/tag`, {
+      data: params
+    }).then(r => transformResponse<Pagination<Tag>>(r)),
+  uploadImage: (charCode: string, image: File) => {
+    const fd = new FormData();
+    fd.append('image', image, image.name);
+    return api.post<Message>(`/event/${charCode}/image`, fd)
+      .then(r => transformResponse<Message>(r))
+  },
 };

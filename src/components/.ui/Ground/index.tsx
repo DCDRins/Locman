@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../common/types/props';
+import { HasChildren } from '../../../.types/props';
 
 type State = typeof initialState & { }
 type Props = typeof defaultProps 

@@ -5,8 +5,8 @@ import GroundImage3 from '../../assets/fake_content/ground_images/hermitage-3.jp
 import GroundImage4 from '../../assets/fake_content/ground_images/hermitage-4.jpg'
 import ScrolledContent from '../.ui/ScrolledContent'
 import Group from '../.ui/Group'
-import { HasChildren, HasClassName } from '../../common/types/props'
-import { withLanguage } from '../../common/lang'
+import { HasChildren, HasClassName } from '../../.types/props'
+import { withLanguage } from '../../common/dictionaries/lang'
 import classNames from '../../lib/classNames'
 import Event from '../.ui/Event'
 

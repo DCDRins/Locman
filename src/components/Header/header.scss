@@ -9,9 +9,9 @@
     width: 100%;
     height: $headerHeight;
     z-index: z('overlay');
-    background-color: #222228;
+    background-color: $dark;
     transition: background-color $fast;
-    animation: fadeInWithTransform $slowly forwards;
+    // animation: fadeInWithTransform $slowly forwards;
     &--office {
       background-color: $accent!important;
     }
@@ -47,12 +47,25 @@
     }
   }
   &__user {
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: $primary;
+    padding-right: $margin-default;
+    & > * {
+      white-space: nowrap;
+        &:last-child {
+          @extend %small-text;
+          color: $highlight;
+        }
+    }
+    &.loading {
+      & > * {
+        background-color: $tint-light;
+        padding: 5px 30px;
+        border-radius: $border-radius-small;
+        &:first-child {
+          padding: 5px 15px;
+          margin-bottom: 5px;
+        }
+      }
+    }
   }
   &__sign-in {
     margin: 0 10px;

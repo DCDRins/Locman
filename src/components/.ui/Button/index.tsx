@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, ReactNode, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from '../../../lib/classNames'
-import { HasChildren, HasRef } from '../../../common/types/props'
-import { Route } from '../../../common/routes'
+import { HasChildren, HasRef } from '../../../.types/props'
+import { Route } from '../../../common/dictionaries/routes'
 import Icon from '../Icon'
 import Group from '../Group'
 
@@ -22,7 +22,7 @@ export type ButtonProps = HTMLAttributes<HTMLButtonElement>
   permanent?: boolean;
   showIcon?: boolean;
   angular?: boolean;
-  stretched?: boolean;
+  stretched?: boolean | 'x' | 'y';
   /**
    * @ignore
    */
@@ -42,10 +42,12 @@ const Button = ({
   hidden = false,
   angular = false,
   stretched = false,
-  route, before, after, disabled, children, ...restProps }: ButtonProps) => {
+  disabled = false,
+  route, before, after, children, ...restProps }: ButtonProps) => {
     const button = (
       <button
         {...restProps}
+        {...{ disabled }}
         type="submit"
         role="button"
         tabIndex={route ? -1 : 0}
@@ -57,8 +59,10 @@ const Button = ({
           [`Button--show-icon`]: showIcon,
           [`Button--only-icon`]: children === undefined,
           [`Button--hidden`]: hidden,
-          [`Button--stretched`]: stretched,
           [`Button--has-corners`]: angular,
+          [`Button--disabled`]: disabled,
+          [`stretched`]: stretched === true,
+          [`stretched--${stretched}`]: typeof stretched === 'string',
         })} 
       >
         <Group
@@ -67,6 +71,8 @@ const Button = ({
           stretched
           className={classNames('Button__in', {
             [`Button__in--size-${size}`]: true,
+            [`stretched`]: typeof stretched === 'boolean',
+            [`stretched--${stretched}`]: typeof stretched === 'string',
           })}
           tabIndex={-1}
         >

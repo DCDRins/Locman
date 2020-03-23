@@ -18,7 +18,7 @@ const Day = ({ i, w, d, className, ...props }) => {
     [`${className}__current-day`]: !prevMonth && !nextMonth && i === d
   });
 
-  return <Div both className={cls} {...props}>{i}</Div>;
+  return <div className={cls} {...props}>{i}</div>;
 };
 
 export default class Calendar extends Component {
@@ -61,54 +61,44 @@ export default class Calendar extends Component {
     const weeks = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     const base = 'Calendar';
     return (
-      <Div className={classNames(base, className)}>
-        <Div>
-          <Group content="center" justify="space-between" className={`${base}__toolbar`}>
-            <Button
-              level="office-secondary"
-              before={<Icon svg={PreviousIcon} size="s" />}
-              onClick={this.prevMonth}
-            />
-            <span className={`${base}__current-date`}>{moment.format('MMMM YYYY')}</span>
-            <Button
-              level="office-secondary"
-              before={<Icon svg={NextIcon} size="s" />}
-              onClick={this.nextMonth}
-            />
-          </Group>
-        </Div>
-        <Div>
-          <Group content="center" justify="space-between">
-            {weeks.map((w, i) => (
-              <Div
-                both
-                key={i}
-                className={`${base}__week-day`}
-              >
-                {w}
-              </Div>
-            ))}
-          </Group>
-        </Div>
-        {/* <Div> */}
-          {/* <Group content="center" justify="space-between" orientation="vertical"> */}
-            {chunk(days, 7).map((row, w) =>
-              <Group content="center" justify="space-between" key={w}>
-                {row.map(i =>
-                  <Day
-                    key={i}
-                    {...{ i }}
-                    {...{ d }}
-                    {...{ w }}
-                    className={base}
-                    onClick={() => this.selectDate(i, w)}
-                  />
-                )}
-              </Group>
-            )}
-          {/* </Group> */}
-        {/* </Div> */}
-      </Div>
+      <div className={classNames(base, className)}>
+        <Group content="center" justify="space-between" className={`${base}__toolbar`}>
+          <Button
+            size="s"
+            level="office-secondary"
+            before={<Icon svg={PreviousIcon} isRect size="s" />}
+            onClick={this.prevMonth}
+          />
+          <span className={`${base}__current-date`}>{moment.format('MMMM YYYY')}</span>
+          <Button
+            size="s"
+            level="office-secondary"
+            before={<Icon svg={NextIcon} isRect size="s" />}
+            onClick={this.nextMonth}
+          />
+        </Group>
+        <Group content="center" justify="center">
+          {weeks.map((w, i) => (
+            <div key={i} className={`${base}__week-day`}>
+              {w}
+            </div>
+          ))}
+        </Group>
+          {chunk(days, 7).map((row, w) =>
+            <Group content="center" justify="center" key={w}>
+              {row.map(i =>
+                <Day
+                  key={i}
+                  {...{ i }}
+                  {...{ d }}
+                  {...{ w }}
+                  className={base}
+                  onClick={() => this.selectDate(i, w)}
+                />
+              )}
+            </Group>
+          )}
+      </div>
     );
   }
 }

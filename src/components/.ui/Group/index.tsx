@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../common/types/props';
+import { HasChildren } from '../../../.types/props';
 
 
 export type GroupProps = HTMLAttributes<HTMLElement> & HasChildren & {
@@ -8,7 +8,7 @@ export type GroupProps = HTMLAttributes<HTMLElement> & HasChildren & {
   description?: string;
   orientation?: 'vertical' | 'horizontal';
   justify?: 'start' | 'center' | 'end' | 'space-between';
-  content?: 'center' | 'start' | 'end';
+  content?: 'center' | 'start' | 'end' | 'stretch';
   stretched?: boolean | 'x' | 'y';
   reverse?: boolean;
   rotateOnMedia?: boolean;
@@ -29,9 +29,9 @@ const Group = ({
         [`${base}--orientation-${orientation}`]: true,
         [`${base}--content-${content}`]: true,
         [`${base}--justify-${justify}`]: true,
-        [`${base}--stretched`]: stretched === true,
-        [`${base}--stretched-${stretched}`]: typeof stretched === 'string',
-        // [`${base}--media`]: rotateOnMedia,
+        [`stretched`]: stretched === true,
+        [`stretched--${stretched}`]: typeof stretched === 'string',
+        'media': rotateOnMedia,
       })}
     >
       {children}

@@ -1,5 +1,5 @@
 import React from 'react';
-import lang, { Lang, withLanguage } from '../../lang'
+import lang, { Lang, withLanguage } from '../../dictionaries/lang'
 
 // context types
 type LangContextProps = {

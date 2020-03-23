@@ -8,7 +8,6 @@ export type Props = HTMLAttributes<HTMLInputElement> & {
   level?: 'office';
   size?: 's' | 'm' | 'l';
   align?: 'left' | 'center' | 'right';
-  active: boolean;
   name: string;
 }
 
@@ -16,19 +15,27 @@ const Switch = ({
   size = 'm',
   level = 'office',
   align = 'center',
-  active = false,
+  defaultChecked,
   name = '',
   onChange,
   ...restProps
 }: Props) => {
   const base = "Switch"
   return (
-    <label className={classNames(base, {
-      [`${base}--active`]: active,
+    <label className={classNames(base,
+      `size-${size}`, {
+      [`${base}--active`]: defaultChecked === true,
     })}>
-      <input {...restProps} type="checkbox" {...{ name }} id={getHashCode(name).toString()} defaultChecked={active} onChange={e => {
-        onChange && onChange(e);
-      }} />
+      <input
+        {...restProps}
+        type="checkbox"
+        {...{ name }}
+        id={getHashCode(name).toString()}
+        {...{ defaultChecked }}
+        onChange={e => {
+          onChange && onChange(e);
+        }}
+      />
     </label>
   )
 }

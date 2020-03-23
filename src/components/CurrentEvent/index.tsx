@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Section from '../.ui/Section';
 import Group from '../.ui/Group';
-import { appRoutes } from '../../common/routes';
+import { appRoutes } from '../../common/dictionaries/routes';
 import Side from '../.ui/Side';
 import Div from '../.ui/Div';
 

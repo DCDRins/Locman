@@ -15,9 +15,8 @@ export const responseLogger = (response) => {
   setTimeout(() => {
 
     console.groupCollapsed(`%c${method}: ${url}`, `background: ${colorType}`);
-    console.info('method:', method);
     console.info('config:', configData || {});
-    console.info({status, statusText});
+    console.info({ status, statusText });
     console.info(data);
     console.groupEnd();
   }, 1000)

@@ -1,15 +1,39 @@
-import { createAsyncAction } from 'typesafe-actions';
-import { AuthResponse, AuthParams } from '../models';
+import { createAsyncAction, createCustomAction } from 'typesafe-actions';
+import { AuthResponse, AuthParams, IUserDTO, IUser } from '../models';
+import { Message, MessageReply, ImageReply } from '../.types/types';
 
 export const authAsync = createAsyncAction(
   '@@auth/request - Send login and password to receive user data',
   '@@auth/success - Async service returned user data',
   '@@auth/failure - Something in user authorization went wrong',
   '@@auth/cancel - Cancelling on going auth request',
-)<AuthParams, AuthResponse, Error>();
+)<AuthParams, AuthResponse, Message>();
 
 export const refreshAsync = createAsyncAction(
   '@@refhresh/request - Ask service to refresh my token',
   '@@refresh/success - Async service returned refreshed token',
   '@@refresh/failure - Something went wrong while token was refreshing',
 )<{}, AuthResponse, Error>();
+
+export const logout = createCustomAction('@@user/logout');
+
+export const fetchUserData = createAsyncAction(
+  '@@user/request - Fetching user data async',
+  '@@user/success - Async service returned user data',
+  '@@user/failure - Something went wrong',
+  '@@user/cancel - Cancelling ongoing fetch request',
+)<{}, IUserDTO, Message>();
+
+export const editUserData = createAsyncAction(
+  '@@user/edit/request - Edit user data async',
+  '@@user/edit/success - Successfully edited',
+  '@@user/edit/failure - Something went wrong',
+  '@@user/edit/cancel - Cancelling ongoing edit request',
+)<IUser, Message, Message>();
+
+export const uploadUserImage = createAsyncAction(
+  '@@user/image/request - Upload user image async',
+  '@@user/image/success - Successfully uploaded',
+  '@@user/image/failure - Something went wrong',
+  '@@user/image/cancel - Cancelling ongoing upload request',
+)<File, string, Message>();

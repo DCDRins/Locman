@@ -6,28 +6,23 @@ import NewsViewer from '../NewsViewer'
 import GroundImage from '../../assets/fake_content/ground_images/6.jpg'
 import UIPage from '../.ui/UIPage'
 import ScrolledContentViewer from '../ScrolledContentViewer'
-import terms from '../../common/terms'
+import terms from '../../common/dictionaries/terms'
 import Section from '../.ui/Section'
 import classNames from '../../lib/classNames'
 import Button from '../.ui/Button'
-import { appRoutes } from '../../common/routes'
+import { appRoutes } from '../../common/dictionaries/routes'
+import isSatisfied from '../../lib/isSatisfied'
+import roles from '../../common/dictionaries/roles'
 
 export const MainPage: FunctionComponent = () => {
 
   return (
     <UIPage>
+      {/* <Ground> */}
       <Ground stretch src={GroundImage}>
         <Slider />
       </Ground>
-      <Section>
-        <Button
-          level="primary"
-          route={appRoutes.OFFICE_PAGE}
-        >
-          Перейти в кабинет
-        </Button>
-      </Section>
-      <CurrentRoute />
+      {isSatisfied([roles.PARTICIPANT]) && <CurrentRoute />}
       <Section header="Недавние мероприятия">
         <ScrolledContentViewer header={terms.LAST_VISITED} />
       </Section>

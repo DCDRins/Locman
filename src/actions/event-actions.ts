@@ -1,5 +1,6 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { IFetchParams, IEventDTO, Pagination, IEvent, Message, MessageReply } from '../models';
+import { IEventDTO, IEvent, Tag } from '../models';
+import { IFetchParams, Pagination, MessageReply, Message, ErrorReply, HasSearchParams, HasStringParams } from '../.types/types';
 
 
 export const fetchEventAsync = createAsyncAction(
@@ -35,7 +36,7 @@ export const editEventAsync = createAsyncAction(
   '@@event/edit/success',
   '@@event/edit/failure',
   '@@event/edit/cancel',
-)<IEvent, Message, Error>();
+)<IEvent, Message, ErrorReply>();
 
 export const deleteEventAsync = createAsyncAction(
   '@@event/delete/request',
@@ -43,3 +44,17 @@ export const deleteEventAsync = createAsyncAction(
   '@@event/delete/failure',
   '@@event/delete/cancel',
 )<string, Message, Error>();
+
+export const uploadImageAsync = createAsyncAction(
+  '@@event/image upload/request',
+  '@@event/image upload/success',
+  '@@event/image upload/failure',
+  '@@event/image upload/cancel',
+)<HasStringParams<File>, Message, Error>();
+
+export const fetchTagListAsync = createAsyncAction(
+  '@@tags/fetch/request',
+  '@@tags/fetch/success',
+  '@@tags/fetch/failure',
+  '@@tags/fetch/cancel',
+)<HasSearchParams, Pagination<Tag>, Error>();

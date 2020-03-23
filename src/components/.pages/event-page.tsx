@@ -5,7 +5,7 @@ import CurrentEvent from '../CurrentEvent'
 import UIPage from '../.ui/UIPage'
 import StockContentViewer from '../StockContentViewer'
 import ScrolledContentViewer from '../ScrolledContentViewer'
-import terms from '../../common/terms'
+import terms from '../../common/dictionaries/terms'
 import Section from '../.ui/Section'
 
 export class EventPage extends React.Component {

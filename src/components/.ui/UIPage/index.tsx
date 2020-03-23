@@ -1,47 +1,26 @@
 import React, { ReactElement } from 'react'
 import { withRouter } from 'react-router-dom'
-import { HasChildren, HasRouterProps } from '../../../common/types/props'
+import { HasChildren, HasRouterProps } from '../../../.types/props'
 import Header from '../../Header'
-import NavigationBar from '../../OfficeNavigationBar'
 import classNames from '../../../lib/classNames'
-import { appRoutes } from '../../../common/routes'
-import Group from '../Group'
-import Section from '../Section'
-import { useLocation } from '../../../lib/useLocation'
+import useLocation from '../../../lib/useLocation'
+import { appRoutes } from '../../../common/dictionaries/routes'
 import Tester from '../../../connected/request-tester-connected'
 
-type Props =
-& HasChildren
-& HasRouterProps
-& { }
-
+type Props = HasChildren & HasRouterProps
 const defaultProps = Object.freeze({ })
 
-// type State = typeof initialState
-// const initialState = Object.freeze({
-//   scrollTop: 0
-// })
-
 class UIPage extends React.Component<Props, {}> {
-  static readonly defaultProps: Props = defaultProps
-  // readonly state: State = initialState
+  static readonly defaultProps = defaultProps
 
   componentDidMount() {
     window.scrollTo(0, 0)
   }
 
-  render() {
-    
+  render() {  
     const { children, location: { pathname } } = this.props
     const isOnOfficePage = useLocation(pathname, appRoutes.OFFICE_PAGE.absolutePath)
     const base = 'page'
-    // if (params) console.log(params)
-    // console.log(this.props);
-    const mappedChildren = React.Children.map(children, child => 
-      React.cloneElement(child as ReactElement, {
-        // globals available in children
-      }
-    ))
     return (
       <main className={classNames(base, {
         [`${base}--office`]: isOnOfficePage,
@@ -49,7 +28,7 @@ class UIPage extends React.Component<Props, {}> {
         {/* <FixedLayout /> */}
         <Tester />
         <Header {...{ isOnOfficePage }} />
-        {mappedChildren}
+        {children}
       </main>
     )
   }

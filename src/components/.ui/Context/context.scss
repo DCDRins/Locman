@@ -1,36 +1,49 @@
 .Context {
+  display: inline-block;
   position: relative;
   box-sizing: border-box;
-  
+  color: $primary;
+  input {
+    display: none;
+  }
+  hr {
+    border-color: $tint-light;
+  }
   &__content {
     display: block;
-    position: fixed;
+    position: absolute;
     user-select: none;
     border-radius: $border-radius-small;
-    background-color: $dark;
+    background-color: $dark-100;
+    right: 0;
     transition: $fast;
     overflow: hidden;
-    .Icon {
-      fill: $primary;
-      margin-right: 20px;
+    
+    &.hidden {
+      display: none;
     }
   }
+  &__header {
+    @extend %simple-text;
+    width: fit-content;
+  }
   &__main {
-    padding: 10px 0;
+    padding: 5px 0;
   }
   &__field {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px 10px 12px;
-
     @extend %small-text;
+    user-select: none;
     font-weight: 400;
-
+    white-space: nowrap;
     &:hover {
       background-color: $tint-light;
     }
     &:active {
       @extend %simple-active-effect;
+    }
+    .Icon {
+      fill: $primary;
+      margin-right: 20px;
     }
   }
 }
