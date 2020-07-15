@@ -1,24 +1,46 @@
-$mobileWidth: 320px;
-$tabletWidth: 768px;
-$desktopWidth: 1920px;
 
 @mixin mobile {
-  @media  only screen and (max-width: #{$tabletWidth - 1px}) {
+  @media only screen and (max-width: #{$mobile-media - 0.02px}) {
     @content;
   }
 }
-@mixin lowscreen {
-  @media  only screen and (min-width: #{$tabletWidth}) and (max-width: #{$desktopWidth - 1px}) {
+@mixin tablet {
+  @media only screen and (min-width: #{$mobile-media}) and (max-width: #{$tablet-media - 0.02px}) {
     @content;
   }
 }
-@mixin both {
-  @media  only screen and (max-width: #{$desktopWidth - 1px}) {
+@mixin laptop {
+  @media only screen and (min-width: #{$tablet-media}) and (max-width: #{$laptop-media - 0.02px}) {
     @content;
   }
 }
-
-@mixin toned($pseudo, $amount: .1) {
+@mixin desktop {
+  @media only screen and (min-width: #{$laptop-media}) and (max-width: #{$desktop-media - 0.02px}) {
+    @content;
+  }
+}
+@mixin TM {
+  @media only screen and (max-width: #{$tablet-media - 0.02px}) {
+    @content;
+  }
+}
+@mixin LTM {
+  @media only screen and (min-width: #{$mobile-media}) and (max-width: #{$laptop-media - 0.02px}) {
+    @content;
+  }
+}
+@mixin text-overflow {
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, $main, transparent);
+  }
+}
+@mixin toned-half($pseudo, $amount: .1) {
   &#{$pseudo} {
     content: '';
     position: absolute;
@@ -27,6 +49,48 @@ $desktopWidth: 1920px;
     opacity: #{$amount};
     background-color: $main;
     transition: $average;
-    mask-image: $mask;
+    background: linear-gradient(to bottom, $main, transparent);
+  }
+}
+@mixin toned-full($pseudo, $amount: .1) {
+  &#{$pseudo} {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: #{$amount};
+    background-color: $main;
+    transition: $average;
+  }
+}
+@mixin flare($pseudo, $duration, $height: 200%, $width: 50%) {
+  position: relative;
+  overflow: hidden;
+  &#{$pseudo} {
+    content: '';
+    display: block;
+    position: absolute;
+    top: $height * - .25;
+    // left: 0;
+    width: $width;
+    height: $height;
+    background: linear-gradient(0.25turn, transparent 5%, $tint-light-100 85%, transparent);
+    animation: loader $duration infinite forwards;
+    transform: rotateZ(20deg);
+    // background-attachment: fixed;
+    // background-repeat: no-repeat;
+  }
+}
+@mixin alert($color) {
+  animation: backToColor 3s forwards;
+  @keyframes backToColor {
+    0% {
+      color: $red;
+      border-color: $red;
+    }
+    100% {
+      color: $color;
+      border-color: $color;
+    }
   }
 }

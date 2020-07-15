@@ -8,10 +8,14 @@
   &.closed {
     opacity: 0;
     visibility: hidden;
+    height: 0;
   }
-  z-index: z('main');
+  z-index: z('overlay');
+  // box-shadow: 0 5px 25px -20px $dark;
+  border: 1px solid $highlight-2;
   transition: $slow;
   display: block;
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   border-radius: 3px;

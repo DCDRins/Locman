@@ -1,8 +1,7 @@
 
 import React, { HTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
-// import classNames from '../../../lib/classNames';
-import Button, { ButtonProps } from '../Button';
+import Button from '../Button';
 import LangContext from '../../../common/context/lang/lang.context';
 import { withLanguage } from '../../../common/dictionaries/lang';
 import terms from '../../../common/dictionaries/terms';
@@ -12,13 +11,13 @@ import classNames from '../../../lib/classNames';
 import Icon from '../Icon';
 import { ReactComponent as Ico } from '../../../assets/icons/home.svg';
 import getHashCode from '../../../lib/getHashCode';
-import ScrolledContent from '../ScrolledContent';
+import { Tag } from '../../../models';
 
 
 export type SideProps = HasClassName & {
   title?: string;
   description?: string;
-  tagList?: Array<ButtonProps>;
+  tagList?: Array<Tag>;
   __test_render_tag?: boolean;
   reversed?: boolean;
   justify?: 'start' | 'center' | 'end';
@@ -27,16 +26,13 @@ export type SideProps = HasClassName & {
 }
 
 const Side = ({
-  title = "27.10.2019",
+  title,
   reversed = false,
   justify = 'start',
   className = '',
   denyMedia = false,
-  __test_render_tag = true,
-  description = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.\
-  Odit distinctio qui quam doloremque ad recusandae numquam, atque soluta\
-  excepturi repellendus officia ducimus fugiat voluptatem iusto repudiandae!\
-  Repudiandae perferendis quod cumque.',
+  description,
+  tagList,
 }: SideProps) => {
     const base = 'Side';
     return (
@@ -45,15 +41,14 @@ const Side = ({
         [`${base}--justify-${justify}`]: true,
         [`${base}--media`]: !denyMedia,
       })}>
-        {__test_render_tag && (
+        {tagList && (
           <Group justify="start">
-            {[...Array(2)].map((_, index: number) => (
+            {tagList.map((_, index: number) => (
               <Button
                 key={getHashCode(`${index}-tag`)}
                 before={<Icon svg={Ico} />}
                 level="tag"
                 size="s"
-                // permanent
                 angular
                 style={{ marginRight: '10px'}}
                 // MAYBE DROP IT TO ANOTHER COMPONENT ???
@@ -69,8 +64,7 @@ const Side = ({
         </div>
         <LangContext.Consumer>
           {({ getActual }) => (
-            <Group className={`${base}__buttons`}>
-              <Button angular level="secondary">{getActual && getActual<withLanguage>(terms.SHARE)}</Button>
+            <Group className={`${base}__buttons`} stretched content="end">
               <Button angular level="primary">{getActual && getActual<withLanguage>(terms.VIEW)}</Button>
             </Group>
           )}

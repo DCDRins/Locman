@@ -6,6 +6,9 @@ import routeReducer, { RouteState } from '../reducers/route-reducer';
 import knowledgeReducer, { KnowledgeState } from '../reducers/knowledge-reducer';
 import eventReducer, { EventState } from '../reducers/event-reducer';
 import systemReducer, { SystemState } from '../reducers/system-reducer';
+import organizationReducer, { OrganizationState } from '../reducers/organization-reducer';
+import catalogReducer, { CatalogState } from '../reducers/catalog-reducer';
+import newsReducer, { NewsState } from '../reducers/news-reducer';
 
 export interface ApplicationState {
   router: ConnecterRouterState;
@@ -14,6 +17,9 @@ export interface ApplicationState {
   route: RouteState;
   knowledge: KnowledgeState;
   event: EventState;
+  organization: OrganizationState;
+  catalog: CatalogState;
+  news: NewsState;
 }
 
 export default (history: History): Reducer<ApplicationState> => combineReducers({
@@ -23,4 +29,7 @@ export default (history: History): Reducer<ApplicationState> => combineReducers(
   route: routeReducer,
   knowledge: knowledgeReducer,
   event: eventReducer,
+  organization: organizationReducer,
+  catalog: catalogReducer,
+  news: newsReducer,
 });

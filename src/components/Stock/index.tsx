@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { HasChildren } from '../../.types/props';
 import UserContext from '../../common/context/user/user.context';
 import Ground from '../.ui/Ground';
-import AuthGround from '../AuthGround';
 import Nav from './Nav';
 import classNames from '../../lib/classNames';
 
@@ -20,22 +19,14 @@ export default class Stock extends Component<Props, {}> {
   render() {
     const base = 'Stock'
     const { hidden } = this.props
-    return (
-      <UserContext.Consumer>
-          {({ authenticated }) => (
-          <section className={classNames(base, {
-            [`${base}--hidden`]: hidden,
-          })}>
-            <Ground>
-              {authenticated
-                ? <Nav className={base} />
-                : <AuthGround />
-              }
-            </Ground>
-            {/* Content */}
-          </section>
-        )}
-      </UserContext.Consumer>
+    return (          
+      <section className={classNames(base, {
+        [`${base}--hidden`]: hidden,
+      })}>
+        <Ground>
+          {/* <Nav className={base} /> */}
+        </Ground>
+      </section>
     )
   }
 }

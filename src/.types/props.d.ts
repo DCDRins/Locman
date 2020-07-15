@@ -22,7 +22,10 @@ export type HasRouterProps = {
     pathname: string;
   },
   match: {
+    isExact: boolean;
     params: any;
+    path: string;
+    url: string;
   }
 }
 

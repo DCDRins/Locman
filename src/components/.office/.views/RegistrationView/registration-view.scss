@@ -1,0 +1,20 @@
+.Registration-View {
+  
+  z-index: 0;
+  &__wallpaper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    .Image {
+      height: 100%;
+
+      @include mobile {
+        &:nth-child(odd) {
+          display: none;
+        }
+      }
+    }
+  }
+}

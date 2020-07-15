@@ -1,0 +1,40 @@
+.Organization {
+  animation: fadeInWithTransform $slowly forwards;
+  
+  &__image {
+    border-radius: $border-radius-large $border-radius-large 0 0;
+  }
+  &__content {
+    position: relative;
+    max-width: $tablet;
+    background: $primary;
+    border: 1px solid $highlight;
+    border-radius: $border-radius-large;
+
+    .Field, .ISelect {
+      max-width: 350px;
+      @include mobile {
+        max-width: unset;
+      }
+      &:only-child {
+        max-width: 700px;
+      }
+    }
+  }
+  &__map {
+    & > * {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &--readonly {
+    font-size: 8pt;
+    font-weight: 600;
+    & > * {
+      &.alert {
+        color: $red-light;
+      }
+    }
+  }
+}

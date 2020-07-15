@@ -1,37 +1,32 @@
-import React, { HTMLAttributes, ReactNode, useEffect, Component } from 'react'
+import React, { InputHTMLAttributes } from 'react'
 import classNames from '../../../lib/classNames'
 import getHashCode from '../../../lib/getHashCode'
 
 
                                                  //  & HasRef<HTMLInputElement>
-export type Props = HTMLAttributes<HTMLInputElement> & {
+export type SwitchProps = InputHTMLAttributes<HTMLInputElement> & {
   level?: 'office';
-  size?: 's' | 'm' | 'l';
+  switchSize?: 's' | 'm' | 'l';
   align?: 'left' | 'center' | 'right';
-  name: string;
 }
 
 const Switch = ({
-  size = 'm',
+  switchSize = "m",
   level = 'office',
   align = 'center',
-  defaultChecked,
-  name = '',
   onChange,
   ...restProps
-}: Props) => {
+}: SwitchProps) => {
   const base = "Switch"
   return (
     <label className={classNames(base,
-      `size-${size}`, {
-      [`${base}--active`]: defaultChecked === true,
+      `size-${switchSize}`, {
+      [`${base}--active`]: restProps.defaultChecked === true || restProps.checked === true,
     })}>
       <input
         {...restProps}
         type="checkbox"
-        {...{ name }}
-        id={getHashCode(name).toString()}
-        {...{ defaultChecked }}
+        id={name}
         onChange={e => {
           onChange && onChange(e);
         }}

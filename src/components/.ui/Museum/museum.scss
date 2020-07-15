@@ -1,0 +1,89 @@
+.Museum {
+  $parent: &;
+  position: relative;
+  user-select: text;
+  $museumSize: ($laptop - $margin-default * 5) / 6;
+  @include mobile {
+    width: 100%;
+    $museumSizeMobile: ($tablet - $margin-default * 3) / 4;
+    #{$parent}__content {
+      min-width: $museumSizeMobile;
+      max-width: $museumSizeMobile;
+    }
+    #{$parent}__image {
+      height: $museumSizeMobile;
+    }
+  }
+  &:not(:only-child) {
+    margin-right: $margin-default;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &.detailed {
+    transition: $slow;
+    // &:hover {
+    //   transform: rotate3d(1, 1, 0, -0.05turn);
+    // }
+    // height: 100%;
+    // background-color: $primary;
+    // border-radius: $museumSize $border-radius-small $border-radius-small $museumSize;
+    // border-radius: $border-radius-small;
+    #{$parent}__content {
+      width: 100%;
+      max-width: unset;
+    }
+    // #{$parent}__title, #{$parent}__subtitle {
+    //   text-align: left;
+    //   margin: 0;
+    // }
+  }
+  &__content {
+    $self: &;
+    box-sizing: border-box;
+    position: relative;
+    min-width: $museumSize;
+    max-width: $museumSize;
+  }
+  &__image {
+    height: $museumSize;
+    mask-image: -webkit-radial-gradient(white, black);
+    filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
+    cursor: pointer;
+  }
+  &__title, &__subtitle {
+    cursor: pointer;
+    display: block;
+    // text-align: center;
+    // max-width: 75%;
+    // margin: 0 auto;
+    // background-color: $primary;
+    // color: $dark;
+    // width: fit-content;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: $primary;
+    transition: $fast;
+    // padding: 5px 10px;
+    border-radius: $border-radius-small;
+    &:active {
+      @extend %simple-active-effect;
+    }
+  }
+  &__title {
+    // font-size: 22pt;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+  &__subtitle {
+    // display: none;
+    @extend .simple-text;
+    color: $dark-500;
+    font-weight: 500;
+  }
+
+  // &__detailed {
+    // color: $dark;
+  // }
+}

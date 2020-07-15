@@ -2,7 +2,7 @@ import React, { HTMLAttributes, Component } from 'react';
 import classNames from '../../../../lib/classNames';
 import Div from '../../Div';
 import Group, { GroupProps } from '../../Group';
-import { HasChildren } from '../../../../.types/props';
+import { HasChildren, HasDangerHTML, HasFormStatus } from '../../../../.types/props';
 import Button from '../../Button';
 import Icon from '../../Icon';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit.svg';
@@ -14,14 +14,19 @@ import NumericUpDown from '../../NumericUpDown';
 type Props = HTMLAttributes<HTMLDivElement>
 & HasChildren
 & GroupProps
+& HasDangerHTML
 & {
   title?: string;
   showTitle?: boolean;
   bordered?: boolean;
   readonly?: boolean;
-  field: {
-    [key: string]: string | boolean
-  }
+  lightMode?: boolean;
+  custom?: boolean;
+  autoComplete?: string;
+  error?: boolean;
+  field?: {
+    [key: string]: string | boolean | undefined
+  };
 }
 
 type State = typeof initialState & { }
@@ -55,6 +60,9 @@ export default class Field extends Component<Props, State> {
       }, 100)
     })
   }
+  handleFocus = (e: React.FormEvent<HTMLInputElement>) => {
+    e.currentTarget.select()
+  }
 
   render() {
     const {
@@ -64,20 +72,57 @@ export default class Field extends Component<Props, State> {
       justify,
       bordered = false,
       onChange,
+      autoComplete,
       showTitle = false,
       readonly = false,
+      custom = false,
+      lightMode = false,
+      error = false,
       title,
+      dangerouslySetInnerHTML,
       ...restProps
     } = this.props;
     const { editMode } = this.state;
     const base = 'Field'
+    if (custom) return (
+      <Div
+        {...restProps}
+        both
+        className={classNames(base, className, {
+          'light': lightMode
+        })}
+      >
+        {title && (
+          <Div className={classNames(`${base}__title`, {
+            'show': showTitle,
+          })}>
+            {title}
+          </Div>
+        )}
+        <Group
+          content="center"
+          {...{ justify }}
+          className={classNames(`${base}__group`,{
+            'bordered': bordered,
+          })}
+        >
+          {children}
+        </Group>
+      </Div>
+    )
+    if (!field) return null;
     const key = Object.keys(field)[0]
     const property = field[key]
+    if (property === undefined) return null;
     return (
       <Div
         {...restProps}
         both
-        className={classNames(base, className)}
+        className={classNames(base, className, {
+          'light': lightMode,
+          'readonly': readonly,
+          'error': error,
+        })}
       >
         {title && (
           <Div className={classNames(`${base}__title`, {
@@ -95,16 +140,20 @@ export default class Field extends Component<Props, State> {
           })}
         >
           <div className={`${base}__main`}>
-            {children
+            {dangerouslySetInnerHTML
+            ? <div dangerouslySetInnerHTML={dangerouslySetInnerHTML}></div>
+            : children
               ? children
-              : property ? property : (
-                <div className={`${base}__empty-string`}>{title}...</div>
-              )
+              : property
+                ? key.includes('password') && typeof property === 'string'
+                  ? `${property.split(/.?/).join('*')}`
+                  : property
+                : <div className={`${base}__empty-string`}>{title}...</div>
             }
           </div>
           {typeof property === 'string' && !readonly && (
             <Button
-              level="office-secondary"
+              level={lightMode ? "tertiary" : "office-secondary"}
               before={<Icon noStroke svg={!editMode ? EditIcon : CrossIcon} />}
               onClick={!editMode ? this.editOn : this.editOff}
             />
@@ -119,7 +168,9 @@ export default class Field extends Component<Props, State> {
         </Group>
         {typeof property === 'string' && (
           <Input
+            autoComplete={autoComplete ? autoComplete : key}
             className={`${base}__input`}
+            type={key.includes('password') ? 'password' : 'text'}
             name={key}
             level="light"
             bordered
@@ -127,6 +178,7 @@ export default class Field extends Component<Props, State> {
             getRef={this.inputRef}
             autoFocus
             defaultValue={property}
+            onFocus={this.handleFocus}
             onBlur={this.editOff}
             placeholder={title}
             {...{ onChange }}

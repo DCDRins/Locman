@@ -30,7 +30,7 @@ export default class SystemState extends Component<Props, State> {
     if (prevIsLoading === isLoading) return
     setTimeout(() => {
       this.setState({ done: !isLoading })
-    }, prevIsLoading && !isLoading ? 2000 : 0)
+    }, prevIsLoading && !isLoading ? 3000 : 0)
   }
   render() {
     const base = "System-State";

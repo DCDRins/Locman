@@ -1,49 +1,61 @@
 .Context {
-  display: inline-block;
-  position: relative;
+  display: block;
+  user-select: none;
+  border-radius: $border-radius-small;
+  background-color: $dark-100;
   box-sizing: border-box;
   color: $primary;
+  
+  &.pinned {
+    position: absolute!important;
+  }
+
   input {
     display: none;
   }
   hr {
-    border-color: $tint-light;
-  }
-  &__content {
-    display: block;
-    position: absolute;
-    user-select: none;
-    border-radius: $border-radius-small;
-    background-color: $dark-100;
-    right: 0;
-    transition: $fast;
-    overflow: hidden;
-    
-    &.hidden {
-      display: none;
-    }
+    border-color: $tint-light-100;
   }
   &__header {
-    @extend %simple-text;
     width: fit-content;
+    &__info {
+      margin-left: $margin;
+    }
+    &__name {
+      font-size: 11pt;
+      font-weight: 500;
+    }
+    &__email {
+      font-size: 10pt;
+      font-weight: 300;
+    }
   }
   &__main {
+    display: block;
+    position: relative;
     padding: 5px 0;
   }
   &__field {
-    @extend %small-text;
     user-select: none;
-    font-weight: 400;
-    white-space: nowrap;
+    min-width: 150px;
+    height: 40px;
+    padding: 0 $margin;
     &:hover {
-      background-color: $tint-light;
+      background-color: $tint-light-100;
     }
     &:active {
       @extend %simple-active-effect;
     }
+    &__title {
+      margin: 0 $margin;
+      font-size: 10.5pt;
+      font-weight: 400;
+      white-space: nowrap;
+    }
     .Icon {
-      fill: $primary;
-      margin-right: 20px;
+      fill: $tint-light-500;
+      stroke: $tint-light-500;
+      margin: $margin;
     }
   }
 }

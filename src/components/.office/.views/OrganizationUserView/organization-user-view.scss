@@ -1,0 +1,47 @@
+.Organization-User-View {
+  
+  &__user {
+    position: relative;
+    width: 100%;
+    border: 1px solid $highlight;
+    box-sizing: border-box;
+    &:nth-child(odd) {
+      background-color: $highlight-2;
+    }
+    &:hover {
+      background-color: $highlight;
+    }
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+  }
+  &__group {
+    & > * {
+      flex: .2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  &__name {
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  // &__list {
+  //   display: block;
+  //   max-height: 300px;
+  //   margin: 0 auto;
+  //   margin-top: 50px;
+  //   padding-bottom: 100px;
+  //   mask-image: $text-overflow-mask;
+  //   opacity: .65;
+  //   border-right: none;
+  //   border-left: none;
+  //   transition: $fast;
+  //   &:hover {
+  //     opacity: 1;
+  //   }
+  // }
+}

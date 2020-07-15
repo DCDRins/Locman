@@ -32,7 +32,7 @@ export default class StockContentViewer extends Component<{}, State> {
       <Section
         className={base}
         header="Все доступные мероприятия"
-        // header={routes.EVENT_PAGE}
+        // header={routes.STOCK_PAGE}
         before={
           <div className={`${base}__section-buttons`}>
             <Button level={listView ? 'simple' : 'primary'} size="s" onClick={_disableListView} before={<Icon svg={Blocks} />} />
@@ -44,14 +44,13 @@ export default class StockContentViewer extends Component<{}, State> {
           [`${base}__content--active`]: listView,
         })}>
           <Group orientation="vertical" className={`${base}__group`}>
-            <Event name="Эрмитаж" size="l" image={GroundImage} title="Test" description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero quod deserunt dolor laborum totam ad magni consectetur! Accusamus, praesentium ea reiciendis perspiciatis, sint corrupti quasi minus sapiente veritatis accusantium consequuntur." />
-            <Event name="Эрмитаж" size="l" image={GroundImage1} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage2} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage3} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage1} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage2} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage3} title="Test" description="test" />
-            <Event name="Эрмитаж" size="l" image={GroundImage} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage} title="Test" description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero quod deserunt dolor laborum totam ad magni consectetur! Accusamus, praesentium ea reiciendis perspiciatis, sint corrupti quasi minus sapiente veritatis accusantium consequuntur." />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage1} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage2} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage1} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage2} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage1} title="Test" description="test" />
+            <Event allowMedia name="Эрмитаж" exaggerate image={GroundImage2} title="Test" description="test" />
           </Group>
         </div>
         <div className={classNames(`${base}__content`, {
@@ -63,12 +62,14 @@ export default class StockContentViewer extends Component<{}, State> {
             <Event name="Эрмитаж" image={GroundImage1} />
             <Event name="Эрмитаж" image={GroundImage2} />
             <Event name="Эрмитаж" image={GroundImage3} />
+            <Event name="Эрмитаж" image={GroundImage3} />
           </Group>
           <Group justify="space-between" className={`${base}__group`}>
             <Event name="Эрмитаж" image={GroundImage1} />
             <Event name="Эрмитаж" image={GroundImage1} />
             <Event name="Эрмитаж" image={GroundImage2} />
             <Event name="Эрмитаж" image={GroundImage3} />
+            <Event name="Эрмитаж" image={GroundImage} />
             <Event name="Эрмитаж" image={GroundImage} />
           </Group>
         </div>

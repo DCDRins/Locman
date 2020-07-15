@@ -1,0 +1,31 @@
+.Organization-View {
+  &__title {
+    @extend .header-3;
+  }
+  
+  &__empty-string {
+    @extend .header-3;
+    color: $highlight;
+    text-align: center;
+    animation: fadeInWithTransform $slowly forwards;
+  }
+
+  &__search {
+    width: $mobile * .5;
+    border: 1px solid $tint-light-200;
+    z-index: z('foreground');
+    padding: 10px;
+    input {
+      text-align: center;
+      margin-left: 0;
+    }
+  }
+  &__info {
+    font-size: 10pt;
+    font-weight: 500;
+    color: $dark;
+    animation: fadeInWithTransform $slowly forwards;
+    max-width: fit-content;
+    text-align: center;
+  }
+}

@@ -1,7 +1,7 @@
 .Any-Museum-Ground {
   &__title {
     padding: $margin-default 0;
-    @extend %godzilla;
+    @extend .godzilla;
     font-weight: 700;
   }
 

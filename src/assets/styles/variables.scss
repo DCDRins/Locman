@@ -1,41 +1,90 @@
+@charset "utf-8";
 $fontFamily: "Gilroy";
+$sfText: "SF Text";
+$sfDisplay: "SF Display";
+$sfMono: "SF Mono";
 
 //colors
-$main: #001;
+$main: #101018;
 $primary: #fff;
 $highlight: #ddd;
 $highlight-2: #eee;
+$highlight-3: #efefef;
 // ---
 $accent-blue: rgb(54, 117, 219); // maybe change this
-$accent: rgb(56, 56, 63); // maybe change this
+// $accent: rgb(56, 56, 63); // maybe change this
+$accent: rgb(41, 43, 46); // maybe change this
 $light: #eef;
 $dark: #161616;
 $dark-100: #242424;
 $dark-200: #323232;
+$dark-300: #484848;
+$dark-400: #646464;
+$dark-500: #929292;
+$dark-600: #c0c0c0;
+$dark-700: #eeeeee;
 $red: red;
+$cyan: DarkCyan;
+$pink: DeepPink;
+$orange: OrangeRed;
+$blue: MidnightBlue;
+$red-light: rgba(255, 150, 150, 1);
 $tint-red: rgba(255, 0, 0, .3);
-$tint: rgba(0, 0, 0, .25);
-$tint-hard: rgba(22, 22, 22, .96);
-$tint-light: rgba(255, 255, 255, .1);
-$tint-bright-light: rgba(255, 255, 255, .2);
-// sizes
-$minSize: 180px;
-$defaultSize: 220px;
-$overSize: 560px;
+$tint-hard-100: rgba(22, 22, 22, .1);
+$tint-hard-200: rgba(22, 22, 22, .2);
+$tint-hard-300: rgba(22, 22, 22, .3);
+$tint-hard-400: rgba(22, 22, 22, .4);
+$tint-hard-500: rgba(22, 22, 22, .5);
+$tint-hard-600: rgba(22, 22, 22, .6);
+$tint-hard-700: rgba(22, 22, 22, .7);
+$tint-hard-800: rgba(22, 22, 22, .8);
+$tint-hard-900: rgba(22, 22, 22, .9);
+$tint-light-100: rgba(255, 255, 255, .1);
+$tint-light-200: rgba(255, 255, 255, .2);
+$tint-light-300: rgba(255, 255, 255, .3);
+$tint-light-400: rgba(255, 255, 255, .4);
+$tint-light-500: rgba(255, 255, 255, .5);
+$tint-light-600: rgba(255, 255, 255, .6);
+$tint-light-700: rgba(255, 255, 255, .7);
+$tint-light-800: rgba(255, 255, 255, .8);
+$tint-light-900: rgba(255, 255, 255, .9);
 // header
-$headerHeight: 50px;
+$headerHeight: 64px;
 // screen
-$screen: 1920px;
-$lowScreen: 1280px;
-$tabScreen: 1024px;
-$mobileScreen: 768px;
-$minScreen: 500px;
+$mobile-media: 935px;
+$tablet-media: 1280px;
+$laptop-media: 1440px;
+$desktop-media: 1920px;
+
+$mobile: 935px;
+$tablet: 1024px;
+$laptop: 1200px;
+$desktop: 1366px;
+$large-desktop: 1480px;
 // margings
-$margin-default: 20px;
+$margin: 8px;
+$margin-default: 25px;
 $margin-large: 50px;
 $button-s-padding: 6px;
-$button-m-padding: 8px;
+$button-m-padding: 10px;
 $button-l-padding: 12px;
+$button-xl-padding: 20px;
+// sizes
+$eventSizeMobile: ($mobile - $margin * 5) / 6;
+$eventSizeTablet: ($tablet - $margin-default * 5) / 6;
+$eventSizeLaptop: ($laptop - $margin-default * 5) / 6;
+$eventSizeDesktop: ($desktop - $margin-default * 5) / 6;
+$eventSizeDefault: ($large-desktop - $margin-default * 5) / 6;
+
+$newsSizeMobile: $eventSizeMobile * 2 + $margin;
+$newsSizeTablet: $eventSizeTablet * 2 + $margin-default;
+$newsSizeLaptop: $eventSizeLaptop * 2 + $margin-default;
+$newsSizeDesktop: $eventSizeDesktop * 2 + $margin-default;
+$newsSizeDefault: $eventSizeDefault * 2 + $margin-default;
+
+$defaultSize: 195px;
+$mobileContainerWidth: calc(100vw - #{$margin * 2});
+$tabletContainerWidth: calc(100vw - #{$margin-large * 2});
 // border
 $border-radius-small: 3px;
 $border-radius: 8px;
@@ -55,43 +104,33 @@ $text-overflow-mask: linear-gradient(rgba(0, 0, 0, 1) 50%, transparent);
 $opacity-mask: linear-gradient(rgba(0, 0, 0, .9) 100%, transparent);
 $magic-mask: radial-gradient(white, black);
 // fonts
-%small-text {
+.small-text {
   font-size: 8pt;
   font-weight: 300;
 }
-%simple-text {
+.simple-text {
   font-size: 9pt;
   font-weight: 300;
 }
-%header-1 {
+.header-1 {
   font-size: 24pt!important;
   font-weight: 700;
-  @include mobile {
-    font-size: 18pt;
-  }
 }
-%header-2 {
+.header-2 {
   font-size: 18pt!important;
   font-weight: 700;
 }
-%header-3 {
+.header-3 {
   font-size: 14pt!important;
   font-weight: 600;
 }
-%header-oversize {
+.header-oversize {
   font-size: 22pt;
   font-weight: 700;
-  @include mobile {
-    font-size: 18pt;
-    font-weight: 500;
-  }
 }
-%godzilla {
+.godzilla {
   font-size: 38pt;
   font-weight: 200;
-  @include mobile {
-    font-size: 48pt;
-  }
 }
 // effects
 $smooth-blur: 3px;
@@ -103,7 +142,7 @@ $text-transparency: .2;
 }
 %simple-active-effect {
   opacity: .75;
-  transition: $fast;
+  transition: opacity $fast;
 }
 $z-indexes: (
     "overoverlay",

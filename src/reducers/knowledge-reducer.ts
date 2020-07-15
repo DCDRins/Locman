@@ -3,12 +3,12 @@ import { ActionType, getType } from 'typesafe-actions';
 
 import { IArticleDTO, ICategoryDTO } from '../models';
 import { knowledgeActions } from '../actions';
-import { ReducerDefaultState } from './types';
+import { ReducerBaseState } from './types';
 import { Pagination } from '../.types/types';
 
 export interface KnowledgeState {
-  readonly articles: ReducerDefaultState<Pagination<IArticleDTO>>;
-  readonly categories: ReducerDefaultState<Pagination<ICategoryDTO>>;
+  readonly articles: ReducerBaseState<Pagination<IArticleDTO>>;
+  readonly categories: ReducerBaseState<Pagination<ICategoryDTO>>;
 };
 
 const initialArticleState = Object.freeze({

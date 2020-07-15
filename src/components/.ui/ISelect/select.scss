@@ -1,11 +1,16 @@
 .ISelect {
-  &__control {
-    border-radius: $border-radius!important;
-    &--is-focused {
-      border: 1px solid $accent-blue!important;
-    }
+  box-sizing: border-box;
+  width: 100%;
+
+  &-container {
+    font-size: 10pt;
   }
-  &__value-container {
-    white-space: nowrap!important;
+  &__title {
+    color: $tint-hard-300;
+    font-weight: 600;
+    
+    .light & {
+      color: $primary;
+    }
   }
 }

@@ -18,7 +18,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   max?: number;
   postfix?: string;
   field: {
-    [key: string]: number;
+    [key: string]: number | undefined;
   };
   handleChange: (field: string, value: number) => void;
 }
@@ -41,7 +41,8 @@ const NumericUpDown = ({
   const base = 'Numeric-Up-Down';
   const key  = Object.keys(field)[0];
   const value  = Object.values(field)[0];
-  
+  if (value === undefined) return null;
+
   const increment = () => {
     const summary = value + step;
     summary >= min && summary <= max && handleChange(key, summary)
@@ -51,8 +52,8 @@ const NumericUpDown = ({
     summary >= min && summary <= max && handleChange(key, summary)
   }
   return (
-    <Div both>
-      <Group {...group} {...restProps} className={base}>
+    <Div both className={base}>
+      <Group {...group} {...restProps}>
         {title && (
           <Div className={`${base}__title`}>
             {title}

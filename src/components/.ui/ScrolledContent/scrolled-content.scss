@@ -3,29 +3,21 @@
   flex-wrap: nowrap;
   flex-direction: column;
   box-sizing: border-box;
-  // height: 100%;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   z-index: z('main');
 
+  contain: layout style;
+
   &__wrapper {
     position: relative;
-    // height: 100%;
     width: 100%;
-    // overflow: hidden;
-  }
-
-  &--fit {
-    position: absolute;
-    @include both {
-      position: relative;
-    }
   }
 
   &--orientation {
     &-vertical {
       overflow-y: auto;
-      padding-right: 10px;
+      // padding-right: 10px;
     }
 
     &-horizontal {
@@ -37,35 +29,50 @@
   &__buttons {
     position: absolute;
     width: 100%;
-    height: 100%;
+    top: $eventSizeDefault * 0.5;
+    transform: translateY(-50%);
+    z-index: z('foreground');
+    pointer-events: none;
+    @include mobile {
+      top: $eventSizeMobile * 0.5;
+    }
+    @include tablet {
+      top: $eventSizeTablet * 0.5;
+    }
+    @include laptop {
+      top: $eventSizeLaptop * 0.5;
+    }
+    @include desktop {
+      top: $eventSizeDesktop * 0.5;
+    }
+    &.minify {
+      top: $eventSizeMobile * 0.5;
+    }
+    &.atMiddle {
+      top: 0;
+      transform: none;
+    }
   }
   &__button {
-    z-index: z('foreground');
-    box-shadow: 0 5px 30px -10px $dark;
-    // top: $defaultSize * .5 - $button-l-padding;
-    transition: $fast;
+    pointer-events: all;
+    box-shadow: 0 5px 30px -10px $dark-400;
+    transition: all 0s, opacity $fast, visibility $fast;
     @extend .hidden;
-
-    // &:first-of-type {
-    //   left: - $button-s-padding * 2;
-    //   @include mobile {
-    //     left: $button-s-padding;
-    //   }
-    // }
-    // &:last-of-type {
-    //   right: - $button-s-padding * 2;
-    //   @include mobile {
-    //     right: $button-s-padding;
-    //   }
-    // }
-    &--active {
+    &:first-of-type {
+      transform: translateX(-50%);
+      @include TM {
+        transform: translateX($margin-large) translateX(-50%);
+      }
+    }
+    &:last-of-type {
+      transform: translateX(50%);
+      @include TM {
+        transform: translateX(-$margin-large) translateX(50%);
+      }
+    }
+    &.active {
       visibility: visible;
       opacity: 1;
     }
   }
-  // &--non-selected-content {
-  //   * {
-  //     user-select: none;
-  //   }
-  // }
 }

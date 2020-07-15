@@ -4,40 +4,42 @@ import { Dictionary } from "../../.types/types"
 interface RoleDictionary extends Dictionary<Credentials> { }
 
 const roles: RoleDictionary = {
+  GUEST: {
+    id: 1,
+    name: 'OTHER',
+    description: 'Гость',
+    // description: 'Пользователь без конкретной роли',
+  },
   ADM: {
-    id: 5,
+    id: 2,
     name: 'ADMINISTRATOR',
-    description: 'Администратор'
+    description: 'Пользователь с правами администратора'
   },
-  MUSEUM: {
-    id: 6,
-    name: 'MUSEUM_ORGANIZER',
-    description: 'Организатор музея',
-  },
-  ORGANIZATION: {
+  PARTICIPANT: {
     id: 3,
-    name: 'ORGANIZER',
-    description: 'Представитель организации',
+    name: 'PARTICIPANT',
+    description: 'Ученик',
   },
   TEACHER: {
     id: 4,
     name: 'TEACHER',
     description: 'Учитель',
   },
-  PARTICIPANT: {
-    id: 1,
-    name: 'PARTICIPANT',
-    description: 'Ученик',
+  SCHOOL: {
+    id: 5,
+    name: 'EDUCATIONAL_ORGANIZER',
+    description: 'Школа',
+    // description: 'Организатор образовательной организации',
+  },
+  MUSEUM: {
+    id: 6,
+    name: 'MUSEUM_ORGANIZER',
+    description: 'Музей',
   },
   PARENT: {
-    id: 2,
+    id: 7,
     name: 'PARENT',
     description: 'Родитель',
-  },
-  GUEST: {
-    id: 7,
-    name: 'GUEST',
-    description: 'Гость',
   },
 }
 

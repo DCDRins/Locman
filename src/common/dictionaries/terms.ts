@@ -4,6 +4,7 @@ import { Dictionary } from '../../.types/types'
 export interface TermDictionary extends Dictionary<withLanguage> { }
 
 const terms: TermDictionary = { 
+  PARTNERS: { lang: { ru: 'Партнеры', en: 'Partners' } },
   STOCK_SEARCH: { lang: { ru: 'Поиск', en: 'Search' } },
   SHARE: { lang: { ru: 'Поделиться', en: 'Share' } },
   VIEW: { lang: { ru: 'Просмотреть', en: 'View' } },
@@ -22,6 +23,10 @@ const terms: TermDictionary = {
   LAST_VISITED: { lang: { ru: 'Последние посещенные мероприятия', en: 'Last visited events' } },
   PERSONAL_OFFICE: { lang: { ru: 'Личный кабинет', en: 'Office' } },
   LOGOUT: { lang: { ru: 'Выйти', en: 'Logout' } },
+  REMOVE: { lang: { ru: 'Удалить', en: 'Remove' } },
+  CHANGE_IMAGE: { lang: { ru: 'Изменить изображение', en: 'Edit image' } },
+  EDIT: { lang: { ru: 'Редактировать', en: 'Edit' } },
+  READ_MORE: { lang: { ru: 'Читать еще', en: 'Read more' } },
 }
 
 export default terms

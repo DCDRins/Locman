@@ -1,6 +1,6 @@
 import { createAsyncAction, createCustomAction } from 'typesafe-actions';
-import { AuthResponse, AuthParams, IUserDTO, IUser } from '../models';
-import { Message, MessageReply, ImageReply } from '../.types/types';
+import { AuthResponse, AuthParams, IUserDTO, IUser, IRegistrationModel } from '../models';
+import { Message, ImageType, ErrorReply, HasPaginationParams, Pagination } from '../.types/types';
 
 export const authAsync = createAsyncAction(
   '@@auth/request - Send login and password to receive user data',
@@ -8,6 +8,20 @@ export const authAsync = createAsyncAction(
   '@@auth/failure - Something in user authorization went wrong',
   '@@auth/cancel - Cancelling on going auth request',
 )<AuthParams, AuthResponse, Message>();
+
+export const register = createAsyncAction(
+  '@@register/request',
+  '@@register/success',
+  '@@register/failure',
+  '@@register/cancel',
+)<IRegistrationModel, Message, Message>();
+
+export const confirm = createAsyncAction(
+  '@@register/confirm/request',
+  '@@register/confirm/success',
+  '@@register/confirm/failure',
+  '@@register/confirm/cancel',
+)<string, any, ErrorReply>(); // success doesnt matter
 
 export const refreshAsync = createAsyncAction(
   '@@refhresh/request - Ask service to refresh my token',
@@ -36,4 +50,4 @@ export const uploadUserImage = createAsyncAction(
   '@@user/image/success - Successfully uploaded',
   '@@user/image/failure - Something went wrong',
   '@@user/image/cancel - Cancelling ongoing upload request',
-)<File, string, Message>();
+)<File, ImageType, Message>();

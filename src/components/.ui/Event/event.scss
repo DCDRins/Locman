@@ -2,102 +2,137 @@
   $parent: &;
   position: relative;
   user-select: text;
-  @include mobile {
-    width: 100%;
+
+  &:not(:only-child) {
+    margin-right: $margin-default;
+    &.minify {
+      margin-right: $margin;
+    }
+    @include mobile {
+      margin-right: $margin;
+    }
+    &:first-child {
+      @include tablet {
+        padding-left: $margin-large;
+      }
+      @include mobile {
+        padding-left: $margin;
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+      @include tablet {
+        padding-right: $margin-large;
+      }
+      @include mobile {
+        padding-right: $margin;
+      }
+    }
+  }
+  &.isLoading {
+    #{$parent}__context {
+      display: none;
+    }
+    #{$parent}__image {
+      @include flare('::after', 2s);
+      background-color: $tint-light-100;
+      &::before {
+        content: none;
+      }
+    }
+    #{$parent}__title {
+      background-color: $tint-light-100;
+      height: 18px;
+      width: 75%;
+      margin: 3px 0;
+    }
+    #{$parent}__subtitle {
+      background-color: $tint-light-100;
+      height: 14px;
+      width: 90%;
+    }
   }
   .Side {
     margin-left: $margin-default;
   }
-  &--size {
-    // &-m {
-    // }
-    &-l {
-      width: 100%;
-    }
-  }
-
-  &--media-lowscreen {
-    @include both {
-      width: 100%;
-      #{$parent}__content {
-        max-width: unset;
-      }
-      #{$parent}__image {
-        border-radius: 0;
-        width: 100%;
-      }
-    }
+  &.exaggerate {
+    width: 100%;
   }
   &__content {
     $self: &;
     position: relative;
-    width: 100%;
-    // flex-shrink: 3;
-    @include mobile {
-      max-width: unset!important;
-      width: 100%!important;
+    max-width: $eventSizeDefault;
+    min-width: $eventSizeDefault;
+    .minify & {
+      max-width: $eventSizeMobile;
+      min-width: $eventSizeMobile;
     }
-    &--type {
-      &-event {
-        max-width: $defaultSize;
-        // @include mobile {
-        //   max-width: $minSize;
-        // }
-        #{$parent}__image {
-          width: $defaultSize;
-          min-width: $defaultSize;
-          height: $defaultSize;
-          // @include mobile {
-          //   width: $minSize;
-          //   min-width: $minSize;
-          //   height: $minSize;
-          // }
-        }
+    .allowMedia & {
+      @include mobile {
+        max-width: 100%;
+        min-width: 100%;
       }
-      &-museum {
-        max-width: $overSize;
-        #{$parent}__image {
-          width: $overSize;
-          min-width: $overSize;
-          height: $minSize;
-          height: $defaultSize;
-        }
-      }
+    }
+    @include mobile {
+      max-width: $eventSizeMobile;
+      min-width: $eventSizeMobile;
+    }
+    @include tablet {
+      max-width: $eventSizeTablet;
+      min-width: $eventSizeTablet;
+    }
+    @include laptop {
+      max-width: $eventSizeLaptop;
+      min-width: $eventSizeLaptop;
+    }
+    @include desktop {
+      max-width: $eventSizeDesktop;
+      min-width: $eventSizeDesktop;
     }
   }
   &__image {
-    $self: &;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: $border-radius-small;
-    mask-image: -webkit-radial-gradient(white, black);
-    filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
+    height: $eventSizeDefault;
+    border-color: $tint-light-100!important;
+    cursor: pointer;
+    @include toned-half('::before', 0);
+    .minify & {
+      height: $eventSizeMobile;
+    }
     @include mobile {
-      width: 100%!important;
+      height: $eventSizeMobile;
+    }
+    @include tablet {
+      height: $eventSizeTablet;
+    }
+    @include laptop {
+      height: $eventSizeLaptop;
+    }
+    @include desktop {
+      height: $eventSizeDesktop;
     }
     &:hover {
-      cursor: pointer;
+      @include toned-half('::before', .75);
       #{$parent}__context {
         visibility: visible;
         opacity: 1;
       }
-      #{$self}__inner {
-        @include toned('::before', .75);
-      }
     }
-    &__inner {
+    a {
       position: absolute;
-      border-radius: $border-radius-small;
       width: 100%;
       height: 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-      transition: $fast;
-      @include toned('::before', 0);
+      left: 0;
+      top: 0;
+    }
+    &__text {
+      font-family: "Segoe Script";
+      font-size: 18pt;
+      font-weight: 600;
+      z-index: -1;
+      animation: fadeInWithTransform $slowly forwads;
+    }
+    &.isEmpty {
+      background-color: $tint-light-100;
     }
   }
   &__context {
@@ -108,41 +143,29 @@
     top: 0;
     @extend .hidden;
   }
-  &__text {
-    bottom: 0;
-    box-sizing: border-box;
-    filter: blur(0)!important;
-    transition: filter $average;
-    z-index: z("main");
-    width: 100%;
-
-    & > * {
-      cursor: pointer;
-      display: block;
-      width: fit-content;
-      max-width: 75%;
-      border-radius: $border-radius-small;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      color: $primary;
-      transition: $fast;
-      &:active {
-        opacity: .8;
-        transition: $fast;
-      }
+  &__title, &__subtitle {
+    cursor: pointer;
+    display: block;
+    transition: $fast;
+    border-radius: $border-radius-small;
+    &:active {
+      @extend %simple-active-effect;
     }
-    &__title {
-      @extend %header-3;
-      padding-top: 3px;
-      // font-weight: 600;
-
-    }
-    &__subtitle {
-      @extend %simple-text;
-      &:hover {
-        max-width: 100%;
-      }
+  }
+  &__title {
+    font-size: 12pt;
+    font-weight: 600;
+    margin-top: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &__subtitle {
+    @extend .simple-text;
+    color: $dark-500;
+    font-weight: 500;
+    &:hover {
+      max-width: 100%;
     }
   }
 }

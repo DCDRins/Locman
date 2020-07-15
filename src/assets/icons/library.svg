@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg enable-background="new 0 0 48 48" height="48px" version="1.1" viewBox="0 0 48 48" width="48px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<rect height="7.104" width="9.707" x="3.237" y="0.013"/>
+<rect height="2.494" width="9.707" x="3.237" y="11.921"/>
+<rect height="31.022" width="9.707" x="3.237" y="16.927"/>
+
+<rect height="9.699" width="7.506" x="17.648" y="4.716"/>
+<rect height="28.621" width="7.506" x="17.648" y="19.329"/>
+
+<rect height="12.11" transform="matrix(0.127 0.9919 -0.9919 0.127 38.652 -25.6267)" width="9.698" x="29.035" y="3.09"/>
+<rect height="12.11" transform="matrix(-0.1269 -0.9919 0.9919 -0.1269 8.8745 73.8547)" width="28.622" x="22.63" y="26.967"/>
+
+</svg>

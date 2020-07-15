@@ -2,35 +2,25 @@ import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
 
 import { AuthResponse, IUserDTO } from '../models';
-import { Message, Nullable, ErrorReply } from '../.types/types';
+import { Nullable } from '../.types/types';
 import { clientActions } from '../actions';
-import { user } from '../services/api';
+import { ReducerBaseState } from './types';
+import { initialNullableState } from './subroutines/states';
+import { makeDefault, errorHandling, store } from './subroutines/cases';
 
-export interface UserState {
-  user: Nullable<IUserDTO>;
-  userList?: Nullable<IUserDTO[]>;
-  isUserLoading: boolean;
-  userError?: Nullable<Message>;
-}
-export interface AuthState {
-  data?: AuthResponse;
-  isLoading: boolean;
-  error?: ErrorReply;
-}
+export interface UserBaseState extends ReducerBaseState<Nullable<IUserDTO>> { }
+export interface AuthState extends ReducerBaseState<Nullable<AuthResponse>> { }
+
 export type ClientState = {
   readonly auth: AuthState;
-  readonly user: UserState;
+  readonly user: UserBaseState;
 };
 
-export const initialAuthState = Object.freeze({
+export const initialAuthState = {
+  ...initialNullableState,
   isLoading: false,
-})
-export const initialUserState = Object.freeze({
-  user: null,
-  userError: null,
-  userList: null,
-  isUserLoading: true,
-})
+};
+export const initialUserState = initialNullableState;
 
 export type ClientAction = ActionType<typeof clientActions>;
 
@@ -46,11 +36,7 @@ export default combineReducers<ClientState, ClientAction>({
           isLoading: false,
         }
       case getType(clientActions.authAsync.failure):
-        return {
-          ...state,
-          error: action.payload,
-          isLoading: false,
-        }
+        return errorHandling(state, action.payload)
       default:
         return state;
     }
@@ -58,27 +44,18 @@ export default combineReducers<ClientState, ClientAction>({
   user: (state = initialUserState, action) => {
     switch (action.type) {
       case getType(clientActions.fetchUserData.request):
-        return {
-          ...state,
-          isUserLoading: true,
-          userError: null,
-        };
+        return makeDefault(state)
+
       case getType(clientActions.fetchUserData.success):
-        return {
-          ...state,
-          user: action.payload,
-          isUserLoading: false,
-        }
+        return store(state, action.payload)
+
       case getType(clientActions.fetchUserData.failure):
-        return {
-          ...state,
-          isUserLoading: false,
-          userError: action.payload,
-        }
+        return errorHandling(state, action.payload)
+
       case getType(clientActions.editUserData.request):
         return {
           ...state,
-          userError: null,
+          error: null,
         };
       case getType(clientActions.editUserData.success):
         return {
@@ -87,19 +64,19 @@ export default combineReducers<ClientState, ClientAction>({
       case getType(clientActions.editUserData.failure):
         return {
           ...state,
-          userError: action.payload,
+          error: action.payload,
         }
       case getType(clientActions.uploadUserImage.request):
         return {
           ...state,
-          userError: null,
+          error: null,
         };
       case getType(clientActions.uploadUserImage.success):
         return {
           ...state,
-          user: state.user && {
-            ...state.user,
-            photo: action.payload,
+          data: state.data && {
+            ...state.data,
+            image: action.payload,
           }
         }
       case getType(clientActions.logout):
@@ -107,7 +84,7 @@ export default combineReducers<ClientState, ClientAction>({
       default:
         return state
     }
-  }
+  },
 });
 
 // export const routeReducer = createReducer({})

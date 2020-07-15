@@ -1,11 +1,15 @@
 import api from '../agent';
-import { AuthResponse, AuthParams, IUserDTO, IUser } from '../../../models';
+import { AuthResponse, AuthParams, IUserDTO, IUser, IRegistrationModel } from '../../../models';
 import { responseLogger, transformResponse } from '../utils';
 import { Message } from '../../../.types/types';
 
 export const client = {
   auth: (payload: AuthParams) =>
     api.post<AuthResponse>('/auth', payload).then(r => transformResponse<AuthResponse>(r)),
+  register: (payload: IRegistrationModel) =>
+    api.post<Message>('/reg', payload).then(r => transformResponse<Message>(r)),
+  confirm: (token: string) =>
+    api.post<Message>('/reg/confirm', { token }).then(r => transformResponse<Message>(r)),
   refresh: () =>
     api.post<AuthResponse>('/refresh').then(responseLogger),
   fetchUserData: () =>

@@ -4,40 +4,58 @@
   position: relative;
   animation: fadeInWithTransform $slowly forwards;
   z-index: z("main");
-  padding: 0 $margin-default $margin-large;
-
+  margin-bottom: $margin-large;
+  // contain: layout style;
   @include mobile {
-    // padding-left: 0!important;
-    // padding-right: 0!important;
-    padding-bottom: $margin-default;
+    margin-bottom: $margin;
   }
 
   &__header {
-    max-width: $lowScreen;
+    max-width: $large-desktop;
     margin: 0 auto;
-    margin-bottom: $margin-default;
+    padding: $margin-default 0;
     text-align: start;
     user-select: text;
-    @extend %header-1;
+    @extend .header-1;
+    @include mobile {
+      max-width: $mobileContainerWidth;
+    }
+    @include tablet {
+      max-width: $tabletContainerWidth;
+    }
+    @include laptop {
+      max-width: $laptop;
+    }
+    @include desktop {
+      max-width: $desktop;
+    }
     &--minify {
-      @extend %header-3;
+      @extend .header-3;
       font-weight: 400;
       margin: 0 auto;
     }
   }
   &__subtitle {
     margin-left: 10px;
-    @extend %small-text;
+    @extend .small-text;
     color: $highlight;
   }
   &__in {
     display: flex;
-    max-width: $lowScreen;
-    margin: 0 auto;
-    padding: 10px 0;
+    max-width: $large-desktop;
+    margin: $margin auto $margin-default;
+    @include TM {
+      max-width: 100%;
+    }
+    @include laptop {
+      max-width: $laptop;
+    }
+    @include desktop {
+      max-width: $desktop;
+    }
   }
   &__content {
-    width: 50%;
+    width: 40%;
     @include mobile {
       width: 100%;
     }
@@ -45,13 +63,6 @@
       width: 100%;
     }
   }
-  // &--stretch {
-  //   .Scrolled {
-  //     &__button {
-        
-  //     }
-  //   }
-  // }
   &--stretch &__in,
   &--stretch &__header {
     max-width: 100%;
@@ -71,7 +82,7 @@
     }
   }
   &__side {
-    width: 50%;
+    width: 60%;
     padding-left: $margin-large;
     box-sizing: border-box;
     z-index: 1000;
@@ -82,7 +93,7 @@
     }
   }
   &__after {
-    max-width: $lowScreen;
+    max-width: $laptop;
     margin: 0 auto;
   }
 }

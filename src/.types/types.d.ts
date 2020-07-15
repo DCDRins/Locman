@@ -1,21 +1,31 @@
 
 
-export type Nullable<T> = T | null
+export type Modify<T, R> = Omit<T, keyof R> & R;
+export type Nullable<T> = T | null | undefined
 export interface Dictionary<T> {
   [id: string]: T;
 }
-export interface HasStringParams<T> {
+export interface HasCodeParams<T> {
   data: T;
   code: string | number;
+}
+export interface HasNameParams {
+  name?: string;
 }
 export interface HasSearchParams {
   search?: string;
 }
+// export interface HasFilterParams<T> {
+//   filters?: Array<T>;
+// }
 export interface HasCategoryParams {
   category?: Array<number>;
 }
+// export interface HasSortParams<T> {
+//   sort?: Array<T>;
+// }
 export interface HasPaginationParams {
-  page: number;
+  page?: number;
   onPage?: number;
 }
 export interface HasTypeParams {
@@ -24,6 +34,10 @@ export interface HasTypeParams {
 export interface NamedType {
   id: number;
   name: string;
+}
+export interface ImageType {
+  id: number;
+  path: string;
 }
 export interface Errors {
   errors?: any;
@@ -40,8 +54,5 @@ export interface Pagination<T> {
   currentPage?: number;
   totalPages?: number;
   totalItems?: number;
-}
-export interface ImageReply {
-  path: string;
 }
 export interface IFetchParams extends HasCategoryParams, HasPaginationParams, HasSearchParams { }

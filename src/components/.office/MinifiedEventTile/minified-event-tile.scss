@@ -1,0 +1,63 @@
+.Minified-Event-Tile {
+  position: relative;
+  width: 100%;
+  border: 1px solid $highlight;
+  box-sizing: border-box;
+  &:nth-child(odd) {
+    background-color: $highlight-2;
+  }
+  &:hover {
+    background-color: $highlight;
+  }
+  &__group {
+    width: 85%;
+    font-size: 10pt;
+    font-weight: 500;
+    & > * {
+      flex: .3 0 50px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      @include mobile {
+        display: none;
+      }
+      &:first-child {
+        flex: unset;
+        @include mobile {
+          display: block;
+        }
+      }
+    }
+  }
+  &__title {
+    font-size: 11pt;
+    font-weight: 700;
+    @include mobile {
+      display: block;
+      max-width: 120px;
+      flex: unset;
+    }
+  }
+
+  &__rotate-icon {
+    transform: rotateZ(90deg);
+    transition: $slow;
+    .active & {
+      transform: rotateZ(270deg);
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  &__requests {
+    max-height: 0;
+    // transform: scaleY(0);
+    transition: $slow;
+    // display: none;
+    animation: fadeInWithTransform $slowly forwards;
+    .active & {
+      max-height: 100px;
+      // display: block;
+    }
+  }
+}

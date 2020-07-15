@@ -9,6 +9,7 @@ import MasterProvider from './common/context';
 import './assets/styles/.main.scss';
 import { appRoutes } from './common/dictionaries/routes';
 import SystemState from './components/SystemState';
+import FixedLayout from './components/FixedLayout';
 
 // import './utils/Extends';
 // import './styles/main.scss';
@@ -23,6 +24,7 @@ function render(component) {
       <ConnectedRouter history={history}>
         <MasterProvider>
           {component}
+          <FixedLayout />
           {modal && ReactDOM.createPortal((
             <SystemState />
           ), modal)}
@@ -30,9 +32,8 @@ function render(component) {
       </ConnectedRouter>
     </Provider>,
     root,
-    );
-    return 
-  }
+  );
+}
 
 render(<Root routes={appRoutes} />);
 

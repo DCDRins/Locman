@@ -1,13 +1,24 @@
-import { NamedType } from "../.types/types";
+import { NamedType, ImageType } from "../.types/types";
 import { IOrganizationDTO } from "./organization";
 import cuid from "cuid";
 import uid from "uid";
-
 import 'moment/locale/ru'
 import moment from 'moment'
 
-export interface Tag extends NamedType { }
+export interface EventFilters {
+  started?: boolean;
+  eventType?: number;
+  notFinished?: boolean;
+  educationProgram?: number;
+}
 
+export interface ClosestEvent {
+  route: {
+    characterCode: string;
+    name: string;
+  };
+  event: IEventDTO;
+}
 export interface IEventDTO {
   id: number;
   name: string;
@@ -21,16 +32,19 @@ export interface IEventDTO {
   eventDuration?: string;
   characterCode: string;
   wwwLink?: string;
-  eventType: NamedType;
   level: NamedType;
   format: NamedType;
-  organization: IOrganizationDTO;
-  image?: string;
+  organization?: IOrganizationDTO;
+  image?: ImageType;
   participationType: number;
   educationProgramm?: number;
-  ageLimit?: number;
-  tags?: number | number[];
+  minClass?: number;
+  maxClass?: number;
+  tags: NamedType[];
+  images: Array<ImageType>;
   isOwner: boolean;
+  published: boolean;
+  needApprove: boolean;
   started: boolean;
   finished: boolean;
   costGroup?: string;
@@ -47,17 +61,17 @@ export interface IEvent {
   finishDate?: string;
   requestStartDate?: string;
   requestFinishDate?: string;
-  // eventDuration: string;
   wwwLink?: string;
-  eventType: number;
   level: number;
   format: number;
   organization?: number;
-  image?: File;
+  published: boolean;
+  needApprove: boolean;
+  tags?: number[];
   participationType: number;
   educationProgramm?: number;
-  ageLimit?: number;
-  tags?: number[];
+  minClass?: number;
+  maxClass?: number;
   costGroup?: string;
   costPerson?: string;
 }
@@ -71,29 +85,22 @@ export class Event implements IEventDTO {
   finished: boolean = false;
   started: boolean = false;
   status: string = '';
-
-  imageFile?: File;
   
-  set file(image: File | undefined) {
-    this.imageFile = image;
-  }
-  get file(): File | undefined {
-    return this.imageFile;
-  }
-  
-  constructor(public name: string, public location: string, public startDate: string, public eventType: NamedType,
-    public level: NamedType, public format: NamedType, public organization: IOrganizationDTO, public participationType: number, public educationProgramm?: number,
-    public ageLimit?: number, public tags?: number[], public description?: string, public finishDate?: string,
-    public wwwLink?: string, public image?: string, public requestStartDate?: string, public requestFinishDate?: string,
-    public costPerson?: string, public costGroup?: string, public eventDuration?: string,
-  ) {  }
+  constructor(public name: string, public location: string, public startDate: string,
+    public level: NamedType, public format: NamedType, public participationType: number, public tags: NamedType[],
+    public images: Array<ImageType>, public published: boolean, public needApprove: boolean,
+    public organization?: IOrganizationDTO, public educationProgramm?: number, public description?: string, public finishDate?: string,
+    public wwwLink?: string, public image?: ImageType, public requestStartDate?: string, public requestFinishDate?: string,
+    public costPerson?: string, public costGroup?: string, public eventDuration?: string, public minClass?: number, public maxClass?: number,
+  ) { }
 
   static deserialize(dto: IEventDTO): Event {
-    const tags = typeof dto.tags === 'number' ? [dto.tags] : dto.tags;
-    const model = new Event(dto.name, dto.location, dto.startDate, dto.eventType,
-      dto.level, dto.format, dto.organization, dto.participationType, dto.educationProgramm,
-      dto.ageLimit, tags, dto.description, dto.finishDate, dto.wwwLink, dto.image,
-      dto.requestStartDate, dto.requestFinishDate, dto.costPerson, dto.costGroup, dto.eventDuration,
+    const model = new Event(dto.name, dto.location, dto.startDate,
+      dto.level, dto.format, dto.participationType, dto.tags,
+      dto.images, dto.published, dto.needApprove,
+      dto.organization, dto.educationProgramm, dto.description, dto.finishDate,
+      dto.wwwLink, dto.image, dto.requestStartDate, dto.requestFinishDate,
+      dto.costPerson, dto.costGroup, dto.eventDuration, dto.minClass, dto.maxClass,
     )
     model.id = dto.id;
     model.characterCode = dto.characterCode;
@@ -101,30 +108,41 @@ export class Event implements IEventDTO {
     model.started = dto.started;
     model.finished = dto.finished;
     model.status = dto.status;
-    model.ageLimit = dto.ageLimit === null ? 1 : dto.ageLimit;
-    model.tags = dto.tags === null ? [] : tags;
+
+    model.tags = dto.tags === null ? [] : dto.tags;
+    model.minClass = model.minClass === null ? 1 : model.minClass;
+    model.maxClass = model.maxClass === null ? 11 : model.maxClass;
+    
     Array.prototype.forEach.call(Object.entries(dto), arg => {
       const [key, value] = arg;
       const _value = '';
       if (value === null)
         model[key] = !model[key] ? _value : model[key];
     })
+    
+    model.finishDate = model.finishDate || undefined;
+    model.requestStartDate = model.requestStartDate || undefined;
+    model.requestFinishDate = model.requestFinishDate || undefined;
+    
     return model;
   }
-  static new = (location = 'Санкт-Петербург') => ({
-    id: 1,
-    charCode: '',
-    name: `Мероприятие-${uid()}`,
-    location,
-    eventType: 1, 
-    level: 1,
-    format: 1,
-    participationType: 1,
-    // startDate: `${today()} ${timeNow()}`,
-    startDate: moment().format('YYYY-MM-DD'),
-  })
+  static new = (level: NamedType, format: NamedType, location: string = 'Санкт-Петербург',
+  participationType: number = 1, needApprove: boolean = true, published: boolean = false): Event => {
+    return new Event(
+      `Мероприятие-${uid()}`, // name
+      location,
+      moment().format('YYYY-MM-DD HH:mm:ss'), // start date
+      level,
+      format,
+      participationType,
+      [],
+      [],
+      published,
+      needApprove,
+    );
+  }
+
   serialize(): IEvent {
-    console.log(this.ageLimit)
     return {
       id: this.id,
       charCode: this.characterCode,
@@ -133,17 +151,18 @@ export class Event implements IEventDTO {
       description: this.description,
       startDate: this.startDate,
       finishDate: this.finishDate,
-      requestStartDate: this.requestStartDate,
-      requestFinishDate: this.requestFinishDate,
-      // eventDuration: this.eventDuration,
+      requestStartDate: this.needApprove ? this.requestStartDate : undefined,
+      requestFinishDate: this.needApprove ? this.requestFinishDate : undefined,
       wwwLink: this.wwwLink,
-      eventType: this.eventType.id,
       level: this.level.id,
       format: this.format.id,
+      published: this.published,
+      needApprove: this.needApprove,
       participationType: this.participationType,
       educationProgramm: this.educationProgramm,
-      // ageLimit: this.ageLimit,
-      tags: this.tags && this.tags.length > 0 ? this.tags : undefined,
+      minClass: this.minClass,
+      maxClass: this.maxClass,
+      tags: this.tags.length > 0 ? this.tags.map(tag => tag.id) : undefined,
       costGroup: this.costGroup,
       costPerson: this.costPerson,
     };

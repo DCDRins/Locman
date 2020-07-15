@@ -1,0 +1,35 @@
+.User {
+  animation: fadeInWithTransform $slowly forwards;
+  &__image {
+    border-radius: $border-radius-large $border-radius-large 0 0;
+  }
+  &__content {
+    max-width: $mobile * .75;
+    background: $primary;
+    border: 1px solid $highlight;
+    border-radius: $border-radius-large;
+    // padding: 20px;
+    .Field, .ISelect {
+      max-width: 250px;
+      @include mobile {
+        max-width: unset;
+      }
+      &:only-child {
+        max-width: 500px;
+      }
+    }
+  }
+  
+  &--readonly {
+    font-size: 8pt;
+    font-weight: 600;
+    & > * {
+      &.alert {
+        color: $red-light;
+      }
+    }
+  }
+  &__school {
+    max-width: 500px!important;
+  }
+}

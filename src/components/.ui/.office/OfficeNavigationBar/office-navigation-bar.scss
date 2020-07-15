@@ -1,0 +1,25 @@
+.Office-Navigation-Bar {
+  margin: 0 auto;
+  margin-top: $headerHeight * 2;
+  background-color: $tint-light-800;
+  max-width: fit-content;
+  border-radius: $border-radius;
+  transition: $slow;
+  &:hover {
+    background-color: $primary;
+  }
+  & > * {
+    opacity: .75;
+    font-weight: 500;
+    transition: opacity $fast;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &--current {
+    user-select: none;
+    font-size: 1.8em;
+    font-weight: 600;
+    opacity: 1;
+  }
+}

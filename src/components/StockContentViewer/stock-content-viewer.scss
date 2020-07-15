@@ -4,9 +4,9 @@
     & > * {
       vertical-align: middle;
     }
-    @include both {
-      display: none;
-    }
+    // @include both {
+    //   display: none;
+    // }
   }
   &__content {
     position: absolute;
@@ -17,19 +17,19 @@
       visibility: visible;
       opacity: 1;
       transition: $slowly;
-      @include both {
-        position: absolute;
-        visibility: hidden;
-        opacity: 0;
-      }
+      // @include both {
+      //   position: absolute;
+      //   visibility: hidden;
+      //   opacity: 0;
+      // }
     }
   }
   &__list {
-    @include both {
-      position: relative;
-      visibility: visible;
-      opacity: 1;
-    }
+    // @include both {
+    //   position: relative;
+    //   visibility: visible;
+    //   opacity: 1;
+    // }
   }
   &__group {
     & > * {

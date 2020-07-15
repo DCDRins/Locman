@@ -1,6 +1,7 @@
-import React, { HTMLAttributes, Component } from 'react';
+import React, { HTMLAttributes, Component, ReactNode } from 'react';
+import ReactDOM from 'react-dom';
 import classNames from '../../../lib/classNames';
-import { HasChildren } from '../../../.types/props';
+import { HasChildren, ObjectClassNames } from '../../../.types/props';
 import Group from '../Group';
 import Button, { ButtonProps } from '../Button';
 import Icon from '../Icon';
@@ -9,27 +10,30 @@ import { ReactComponent as NextIcon } from '../../../assets/icons/next.svg';
 import { ReactComponent as PreviousIcon } from '../../../assets/icons/previous.svg';
 import easeInOutQuad from '../../../lib/easeInOutQuad';
 import Div from '../Div';
+import cuid from 'cuid';
 
 type State = typeof initialState 
 type Props = HTMLAttributes<HTMLDivElement> & HasChildren & {
   orientation?: 'vertical' | 'horizontal';
+  buttonProps: ButtonProps;
+  isContentLoading?: boolean;
   loop?: boolean;
   autoscroll?: number;
-  // allowMedia: boolean;
-  fit: boolean;
-  buttonSize?: 's' | 'm' | 'l';
+  stretched?: boolean;
+  minify?: boolean;
+  contentClassName?: string;
 }
 
 const defaultProps = Object.freeze({
   orientation: 'vertical',
-  // allowMedia: false,
-  fit: false,
-  buttonSize: 's',
+  isContentLoading: true,
+  minify: false,
+  buttonProps: {
+    level: 'primary',
+    size: 'l'
+  }
 })
-const initialState = Object.freeze({
-  atStartPoint: true,
-  onEndPoint: false,
-})
+const initialState = Object.freeze({ })
 
 
 export default class ScrolledContent extends Component<Props, State> {
@@ -38,53 +42,116 @@ export default class ScrolledContent extends Component<Props, State> {
 
   _intervalId?: NodeJS.Timeout
   _isMounted: boolean = true
-  _moveDistance = 500
-  _moveDuration = 350
+  _isProcessing: boolean = false
+  _moveDistance = 650
+  _moveDuration = 450
+  _movementCoeff = 1
   scroll = React.createRef<HTMLDivElement>()
+  forwardButton = React.createRef<HTMLButtonElement>()
+  backwardButton = React.createRef<HTMLButtonElement>()
   
   componentDidMount() {
-    this._startScrolling()
+    const { orientation } = this.props
+    if (orientation === "horizontal")
+      window.addEventListener('resize', () => this.moveForward(0));
+    // this.startScrolling()
     this._handleScroll()
+  }
+  
+  componentDidUpdate(prevProps) {
+    const { isContentLoading, orientation } = this.props
+    if (isContentLoading === prevProps.isContentLoading) return false;
+    orientation === "horizontal" && this.moveForward(0);
+    this._handleScroll();
   }
   
   componentWillUnmount() {
     this._isMounted = false
+    window.removeEventListener('resize', () => this.moveForward(0));
     if (this._intervalId) clearInterval(this._intervalId)
+  }
+  
+  _setDistance = (direction: "backward" | "forward" = "forward", coeff = this._movementCoeff) => {
+    const $_this = ReactDOM.findDOMNode(this)
+    const { current: scroll } = this.scroll
+    if (!$_this || !($_this instanceof Element)) return false;
+    if (!scroll) return false;
+    const { width: containerWidth, left: containerLeft, right: containerRight } = $_this.getBoundingClientRect()
+    const defaultMovement = containerWidth * coeff;
+    const widthRemaining = direction === "forward"
+      ? Math.ceil(scroll.scrollWidth - scroll.scrollLeft - containerWidth)
+      : Math.ceil(scroll.scrollLeft);
+    if (defaultMovement > widthRemaining) {
+      return widthRemaining;
+    }
+    const refs = Object.values(this.refs);
+    let eps = 99999;
+    let epsDirection = 1;
+    Array.prototype.forEach.call(refs, ref => {
+      const node = ReactDOM.findDOMNode(ref)
+      if (!node || !(node instanceof Element)) return false;
+      const { right, left } = node.getBoundingClientRect()
+      const leftRule = Math.round(left - defaultMovement - containerLeft)
+      const rightRule = Math.round(right + defaultMovement - containerRight)
+      const abs = direction === "forward"
+        ? Math.abs(leftRule)
+        : Math.abs(rightRule)
+      if (abs < eps) {
+        eps = abs;
+        epsDirection = direction === "forward"
+          ? leftRule < 0 ? - 1 : + 1
+          : rightRule < 0 ? + 1 : - 1
+      }
+    })
+    return Math.round(defaultMovement + eps * epsDirection);
   }
 
   _backwardClick = () => {
-    const { scroll: { current }, _moveDistance, _moveDuration, move } = this
-    if (!current) return
-    move(current, _moveDistance, _moveDuration)
+    this.moveBackward();
   }
-
+  
   _forwardClick = () => {
-    const { scroll: { current }, _moveDistance, _moveDuration, move } = this
-    if (!current) return
-    move(current, - _moveDistance, _moveDuration)
+    this.moveForward();
   }
 
-  _startScrolling = () => {
-    const { autoscroll, loop } = this.props
-    if (autoscroll) this.autoscroll(autoscroll)
+  moveForward = (coeff?) => {
+    const { scroll: { current }, _moveDuration, move } = this
+    if (!current || this._isProcessing) return
+    const distance = this._setDistance("forward", coeff)
+    move(current, - distance, _moveDuration)
   }
 
-  _stopScrolling = () => {
-    if (this._intervalId) clearInterval(this._intervalId)
+  moveBackward = (coeff?) => {
+    const { scroll: { current }, _moveDuration, move } = this
+    if (!current || this._isProcessing) return
+    const distance = this._setDistance("backward", coeff)
+    move(current, distance, _moveDuration)
   }
 
-  _mouseMoving = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { scroll: { current } } = this
-    if (!current || !this._isMounted || e.buttons !== 1) return
-    current.scrollTop -= e.movementY
-  }
+  // startScrolling = () => {
+  //   const { autoscroll, loop } = this.props
+  //   if (autoscroll) this.autoscroll(autoscroll)
+  // }
+
+  // stopScrolling = () => {
+  //   if (this._intervalId) clearInterval(this._intervalId)
+  // }
+
+  // _mouseMoving = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const { scroll: { current } } = this
+  //   if (!current || !this._isMounted || e.buttons !== 1) return
+  //   current.scrollTop -= e.movementY
+  // }
 
   _handleScroll = () => {
-    const { scroll: { current } } = this
-    if (!current) return
+    const { scroll: { current }, forwardButton: { current: forward }, backwardButton: { current: backward } } = this
+    if (!current || !forward || !backward) return
     const { scrollLeft } = current
-    scrollLeft === 0 ?  this.setState({ atStartPoint: true }) : this.setState({ atStartPoint: false })
-    scrollLeft === current.scrollWidth - current.offsetWidth ?  this.setState({ onEndPoint: true }) : this.setState({ onEndPoint: false })
+    if (scrollLeft <= 0) backward.classList.remove('active')
+    else if (!backward.classList.contains('active')) backward.classList.add('active')
+
+    if (scrollLeft >= current.scrollWidth - current.offsetWidth) forward.classList.remove('active')
+    else if (!forward.classList.contains('active')) forward.classList.add('active')
   }
 
   move = (element, distance, duration) => {
@@ -94,81 +161,96 @@ export default class ScrolledContent extends Component<Props, State> {
     let currentTime = 0
     const increment = 10
     const foo = () => {
-      // this.processing = true;
+      this._isProcessing = true;
       currentTime += increment
       const offset = easeInOutQuad(currentTime, scrollLeft, change, duration)
       if (currentTime < duration) setTimeout(foo, increment)
-      // else this.processing = false;
+      else this._isProcessing = false;
       element.scrollLeft = offset
     };
     foo();
   }
 
-  autoscroll = (speed) => {
-    const { scroll: { current } } = this
-    if (!current || !this._isMounted) return
-    this._intervalId = setInterval(() => {
-      current.scrollTop += speed
-    }, 20)
-  }
+  // autoscroll = (speed) => {
+  //   const { scroll: { current } } = this
+  //   if (!current || !this._isMounted) return
+  //   this._intervalId = setInterval(() => {
+  //     current.scrollTop += speed
+  //   }, 20)
+  // }
 
   render() {
     const base = 'Scrolled';
     const {
       orientation,
       className = '',
+      contentClassName = '',
       children,
       autoscroll,
-      fit,
-      buttonSize,
+      buttonProps,
+      stretched = false,
+      minify = false,
     } = this.props
-    const { atStartPoint, onEndPoint } = this.state
     return (
-
-      <Group {...{ orientation }} className={`${base}__wrapper`}>
+      <Group {...{ orientation }} className={classNames(`${base}__wrapper`, className)}>
         {!autoscroll && orientation === 'horizontal' && (
-          <Div both className={`${base}__buttons`}>
-            <Group justify="space-between" content="center" stretched>
-              <Button
-                className={classNames(`${base}__button`, {
-                  [`${base}__button--active`]: !atStartPoint,
-                })}
-                before={<Icon svg={PreviousIcon} size="s" />}
-                level="primary"
-                onClick={this._backwardClick}
-                size={buttonSize}
-              />
-              <Button 
-                className={classNames(`${base}__button`, {
-                  [`${base}__button--active`]: !onEndPoint,
-                })}
-                before={<Icon svg={NextIcon} size="s" />} level="primary"
-                onClick={this._forwardClick}
-                size={buttonSize}
-              />
-            </Group>
-          </Div>
+          <Group
+            className={classNames(`${base}__buttons`, {
+              'atMiddle': stretched,
+              'minify': minify,
+            })}
+            justify="space-between"
+            content="center"
+            {...{ stretched }}
+          >
+            <Button
+              {...buttonProps}
+              getRef={this.backwardButton}
+              onClick={this._backwardClick}
+              className={classNames(`${base}__button`)}
+              before={(
+                <Icon svg={PreviousIcon} noFill />
+              )}
+            />
+            <Button 
+              {...buttonProps}
+              getRef={this.forwardButton}
+              onClick={this._forwardClick}
+              className={classNames(`${base}__button`)}
+              before={(
+                <Icon svg={NextIcon} noFill />
+              )}
+            />
+          </Group>
         )}
         <div
           ref={this.scroll}
-          onMouseDown={autoscroll ? this._stopScrolling : () => {}}
-          onTouchStart={autoscroll ? this._stopScrolling : () => {}}
-          onMouseMove={autoscroll ? this._mouseMoving : () => {}}
-          onMouseUp={autoscroll ? this._startScrolling : () => {}}
-          onTouchEnd={autoscroll ? this._startScrolling : () => {}}
-          onScroll={this._handleScroll}
+          // onMouseDown={autoscroll ? this.stopScrolling : () => {}}
+          // onTouchStart={autoscroll ? this.stopScrolling : () => {}}
+          // onMouseMove={autoscroll ? this._mouseMoving : () => {}}
+          // onMouseUp={autoscroll ? this.startScrolling : () => {}}
+          // onTouchEnd={autoscroll ? this.startScrolling : () => {}}
+          onScroll={orientation === 'horizontal' ? this._handleScroll : () => {}}
           className={
             classNames(
               base,
-              className,
-              `${base}--orientation-${orientation}`, {
-                // [`${base}--media`]: allowMedia,
-                [`${base}--fit`]: fit,
-              }
+              // className,
+              `${base}--orientation-${orientation}`,
             )
           }
         >
-          {children}
+          <Group className={contentClassName} {...{ orientation }} content="stretch">
+            {orientation === 'vertical' && children}
+            {orientation === 'horizontal' && (
+              React.Children.map(children, (child, idx) => {
+                if (React.isValidElement(child)) {
+                  return React.cloneElement(child, {
+                    ref: idx,
+                  });
+                }
+              })
+            )}
+          </Group>
         </div>
       </Group>
     )

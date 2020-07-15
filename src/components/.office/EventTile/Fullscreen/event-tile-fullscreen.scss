@@ -1,0 +1,46 @@
+.Event-Tile-Fullscreen {
+  animation: fadeInWithTransform $slowly forwards;
+
+  &__image {
+    border-radius: $border-radius-large $border-radius-large 0 0;
+  }
+  &__content {
+    position: relative;
+    max-width: $laptop;
+    background: $primary;
+    border: 1px solid $highlight;
+    border-radius: $border-radius-large;
+
+    .Field, .ISelect, .Date-Field, .Numeric-Up-Down {
+      max-width: 350px;
+      @include mobile {
+        max-width: unset;
+      }
+      &:only-child {
+        max-width: 700px;
+      }
+    }
+  }
+  
+  .Image {
+    &:not(:only-child) {
+      margin-right: $margin;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
+  &__image-list {
+    .Image {
+      $count: 8;
+      $size: ($laptop - $margin-default * ($count - 1)) / $count;
+      width: $size;
+      height: $size;
+      margin-right: $margin-default;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

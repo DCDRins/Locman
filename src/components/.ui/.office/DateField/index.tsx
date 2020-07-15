@@ -4,7 +4,7 @@ import Button from '../../Button';
 import DateTimePicker from '../../DateTImePicker';
 import Icon from '../../Icon';
 import { ReactComponent as DateIcon } from '../../../../assets/icons/date.svg';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import 'moment/locale/ru';
 import Input from '../../Input';
 import Group from '../../Group';
@@ -14,37 +14,41 @@ type Props = typeof defaultProps & HTMLAttributes<HTMLDivElement> & {
   title?: string;
   readonly?: boolean;
   required?: boolean;
+  dateFormat?: string;
   field: {
-    [key: string]: string
+    [key: string]: string | undefined
   }
   handleChange: (field: string, value?: string) => void
 }
-const defaultProps = Object.freeze({ })
+const defaultProps = Object.freeze({
+  dateFormat: 'DD.MM.YYYY HH:mm',
+})
 
-type State = typeof initialState
+type State = typeof initialState & {
+  m?: Moment
+}
 const initialState = Object.freeze({
-  m: moment(),
   datePickerClosed: true,
   enabled: false,
 })
 
 export default class DateField extends Component<Props, State> {
-  state: State = {
-    ...initialState,
-    m: moment(Object.values(this.props.field)[0] || undefined)
-  }
-  dateFormat = 'YYYY-MM-DD HH:mm'
+  state: State = initialState
+  static readonly defaultProps = defaultProps
 
   componentDidMount() {
-    const { field } = this.props
+    const { field, dateFormat } = this.props
     const property = Object.values(field)[0]
-    property.length > 0 && this.setState({ enabled: true })
+    property ? (
+      this.setState({ m: moment(property, dateFormat) }),
+      this.setState({ enabled: true })
+    ) : this.setState({ m: moment() })
   }
 
   handleMomentChange = m => {
-    const { handleChange, field } = this.props
+    const { handleChange, field, dateFormat } = this.props
     this.setState({ m }, () => {
-      const value = m.locale('ru').format(this.dateFormat)
+      const value = m.locale('ru').format(dateFormat)
       const property = Object.keys(field)[0];
       handleChange && handleChange(property, value);
     })
@@ -57,6 +61,7 @@ export default class DateField extends Component<Props, State> {
       if (enabled) {
         const property = Object.keys(field)[0];
         handleChange && handleChange(property, '');
+        this.setState({ datePickerClosed: true })
       } else this.handleMomentChange(m);
     })
   }
@@ -67,7 +72,7 @@ export default class DateField extends Component<Props, State> {
 
   render() {
     const base = 'Date-Field';
-    const { field, title, required } = this.props;
+    const { field, title, required, dateFormat } = this.props;
     const { m, datePickerClosed, enabled } = this.state;
     const key = Object.keys(field)[0]
     return (  
@@ -79,10 +84,10 @@ export default class DateField extends Component<Props, State> {
           {!required && (
             <Switch
               name={`${key}-switch`}
-              defaultChecked={enabled}
-              size="s"
+              switchSize="s"
               level="office"
               onChange={this.handleStateTrigger}
+              checked={enabled}
             />
           )}
         </Group>
@@ -92,20 +97,21 @@ export default class DateField extends Component<Props, State> {
           disabled={!enabled}
           angular
           stretched="x"
-          level="office-secondary"
+          level={datePickerClosed ? 'office-tertiary' : 'office-primary'}
           before={<Icon svg={DateIcon} />}
           onClick={this.datePickerTrigger}
         >
-          {m.format(this.dateFormat)}
+          {m && m.format(dateFormat)}
         </Button>
-        <DateTimePicker
-          onChange={this.handleMomentChange}
-          className={`${base}__date-picker`}
-          moment={m.locale('ru')}
-          minStep={5}
-          isClosed={datePickerClosed}
-          onClose={this.datePickerTrigger}
-        />
+        {m && (
+          <DateTimePicker
+            onChange={this.handleMomentChange}
+            className={`${base}__date-picker`}
+            moment={m.locale('ru')}
+            minStep={5}
+            isClosed={datePickerClosed}
+          />
+        )}
       </Div>
     )
   }

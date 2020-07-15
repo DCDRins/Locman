@@ -36,6 +36,7 @@ const Button = ({
   align = 'center',
   title,
   className = '',
+  getRef,
   permanent = false,
   allowMedia = false,
   showIcon = false,
@@ -50,6 +51,7 @@ const Button = ({
         {...{ disabled }}
         type="submit"
         role="button"
+        ref={getRef}
         tabIndex={route ? -1 : 0}
         className={classNames('Button', className, {
           [`Button--level-${level}`]: true,
@@ -78,7 +80,7 @@ const Button = ({
         >
           {route && route.icon ? (
             <div className="Button__before">
-              <Icon svg={route.icon} />
+              <Icon {...route.icon}  />
             </div>
           ) : (
             before && <div className="Button__before">{before}</div>

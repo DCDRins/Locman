@@ -1,7 +1,6 @@
 .GMap {
   &__map {
-    height: $defaultSize!important;
     position: relative!important;
-    background-color: $tint-light;
+    background-color: $tint-light-100;
   }
 }

@@ -1,0 +1,6 @@
+.Fixed-Layout {
+  & > * {
+    position: fixed;
+    z-index: z('overoverlay');
+  }
+}

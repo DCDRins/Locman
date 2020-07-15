@@ -1,0 +1,103 @@
+.Route-Editor {
+  position: relative;
+  margin: 0 auto;
+  &__tags {
+    .Button {
+      background-color: $tint-hard-900;
+      &.custom {
+        background-color: rgba(255, 99, 72, 0.75);
+      }
+    }
+  }
+  .Ground {
+    border-radius: $border-radius-small;
+    box-shadow: 0 5px 20px -5px $dark-500;
+  }
+  // .asd {
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   height: 100%;
+  //   width: 30%;
+  // }
+  &__title {
+    width: fit-content;
+    @extend .header-1;
+    color: $primary;
+  }
+  &__group {
+    display: inline-flex;
+    position: relative;
+    animation: fadeInWithTransform $slowly forwards;
+    padding: $margin 0;
+  }
+  &__edit {
+    flex: 1 0 0;
+    min-width: 250px;
+    border: 1px solid $highlight;
+    border-radius: 10px;
+    @include mobile {
+      border: 1px solid $highlight-2;
+    }
+  }
+  &__content {
+    position: relative;
+    flex: 1 0 0;
+    width: 55%;
+    @include mobile {
+      width: 100%;
+      margin-top: $margin;
+    }
+  }
+  &__events {
+    & > * {
+      &:first-child {
+        padding-left: $margin-default;
+      }
+      &:last-child {
+        padding-right: $margin-default;
+      }
+    }
+  }
+  &__users {
+    position: relative;
+    flex: .75 0 0;
+    max-height: 280px;
+    overflow-y: auto;
+    transition: none;
+    border: 1px solid $highlight;
+    border-radius: 10px;
+    @include mobile {
+      border: 1px solid $highlight-2;
+      margin-top: $margin;
+    }
+    .user {
+      position: relative;
+      background-color: $primary;
+      border-collapse: collapse;
+      border-radius: 2px;
+      border: 1px solid $highlight-2;
+      border-left: none;
+      border-right: none;
+      &__number {
+        font-weight: 600;
+        color: $dark-500;
+      }
+      &__name {
+        font-size: 10pt;
+        text-transform: capitalize;
+        font-weight: 600;
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      &__discard {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

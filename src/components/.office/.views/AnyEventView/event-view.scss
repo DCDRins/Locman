@@ -1,0 +1,35 @@
+.Event-View {
+  // &__add {
+  //   margin-bottom: $margin-default;
+  //   .Icon {
+  //     fill: $highlight;
+  //   }
+  //   &:active {
+  //     @extend %simple-active-effect;
+  //   }
+  //   &:hover {
+  //     .Icon {
+  //       fill: $tint-hard-900;
+  //     }
+  //   }
+  // }
+  &__list {
+    display: block;
+    max-height: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding-bottom: 100px;
+    mask-image: $text-overflow-mask;
+    opacity: .65;
+    border-right: none;
+    border-left: none;
+    transition: $fast;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $dark;
+    border-radius: 5px;
+  }
+}

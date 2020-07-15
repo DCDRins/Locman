@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+// import * as AxiosLogger from 'axios-logger'
 const URL = 'http://10.0.4.134/api/';
 
 const getToken = () => {
@@ -29,4 +29,7 @@ const agentInstance = axios.create({
     },
   },
 });
+
+// agentInstance.interceptors.response.use(AxiosLogger.responseLogger);
+
 export default agentInstance;

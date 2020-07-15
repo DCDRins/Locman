@@ -41,7 +41,7 @@
 
   &__week-day {
     color: $accent-blue;
-    @extend %simple-text;
+    @extend .simple-text;
     font-weight: 400;
   }
   &__toolbar {

@@ -1,0 +1,28 @@
+.Footer {
+  position: relative;
+  animation: fadeInWithTransform $slowly forwards;
+  background-color: $accent;
+  margin-bottom: 0;
+  font-size: 8pt;
+  .Section__in {
+    margin: 0 auto;
+  }
+  // font-family: "SF Text";
+  &__group {
+    @include mobile {
+      text-align: center;
+    }
+  }
+  &__fasie {
+    flex: 1 0 0;
+    a {
+      text-decoration: underline;
+    }
+  }
+  &__buttons {
+    flex: 1 0 0;
+  }
+  &__meta {
+    flex: 1 0 0;
+  }
+}

@@ -1,0 +1,66 @@
+.Any-Event-Page {
+  .Ground {
+    padding-top: $headerHeight;
+  }
+  .Section {
+    @include mobile {
+      max-width: $mobileContainerWidth;
+      margin: 0 auto;
+    }
+    @include tablet {
+      max-width: $tabletContainerWidth;
+      margin: 0 auto;
+    }
+  }
+  &__date {
+    font-size: 14pt;
+    font-weight: 800;
+    .Icon {
+      fill: $primary;
+      stroke: $primary;
+    }
+  }
+  &__title {
+    display: inline-block;
+    // padding: $margin-default 0;
+    @extend .godzilla;
+    font-weight: 700;
+    vertical-align: middle;
+    animation: fadeInWithTransform $slowly forwards;
+    @include mobile {
+      font-size: 32pt;
+    }
+  }
+  &__description {
+    &__text {
+      position: relative;
+      max-height: 100px;
+      overflow: hidden;
+      @include text-overflow;
+      &.isVisible {
+        max-height: unset;
+        overflow: unset;
+        &::after {
+          content: none;
+        }
+      }
+    }
+    .Button {
+      &.rotated {
+        margin-top: $margin-default;
+        .Icon {
+          transform: rotateX(180deg);
+        }
+      }
+    }
+  }
+  &__status {
+    vertical-align: middle;
+  }
+
+  &__buttons {
+    & > * {
+      margin-right: 10px;
+    }
+  }
+}

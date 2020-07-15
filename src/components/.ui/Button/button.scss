@@ -1,8 +1,8 @@
 .Button {
   cursor: pointer;
   display: inline-block;
+  position: relative;
   padding: 0;
-  // border: 1px solid transparent;
   text-decoration: none;
   user-select: none;
   white-space: nowrap;
@@ -23,22 +23,16 @@
     transition: padding $fast;
     &--size {
       &-s {
-        @extend %small-text;
-        // font-weight: 400;
         padding: $button-s-padding;
       }
       &-m {
-        @extend %small-text;
-        // font-weight: 500;
         padding: $button-m-padding;
       }
       &-l {
-        @extend %simple-text;
-        // font-weight: 500;
         padding: $button-l-padding;
       }
       &-xl {
-        padding: $button-l-padding;
+        padding: $button-xl-padding;
       }
     }
   }
@@ -54,6 +48,7 @@
   &__before {
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
     margin-right: 10px;
     .Icon {
@@ -84,13 +79,13 @@
   &--media &__before {
     display: none;
     @include mobile {
-      display: inline-block!important;
+      display: flex;
       margin-right: 0;
     }  
   }
   // Show only icon
   &--show-icon &__before {
-    display: inline-block;
+    display: flex;
   }
   &--only-icon &__before {
     margin-right: 0;
@@ -134,15 +129,15 @@
       color: $primary;
       border: 1px solid $primary;
       &:hover {
-        background-color: $tint-light;
+        background-color: $tint-light-100;
       }
     }
     &-office-secondary {
       color: $main;
-      background-color: $tint-light;
+      background-color: $tint-light-100;
       .Icon {
-        fill: $tint;
-        stroke: $tint;
+        fill: $tint-hard-300;
+        stroke: $tint-hard-300;
       }
       &:hover {
         background-color: $highlight-2;
@@ -150,12 +145,17 @@
     }
     &-tertiary {
       color: $primary;
-      background-color: $tint-light;
+      background-color: $tint-light-100;
+      .Icon {
+        fill: $primary;
+        stroke: $primary;
+      }
       &:hover {
         background-color: $primary;
         color: $main;
         .Icon {
           fill: $main;
+          stroke: $main;
         }
       }
       &--permanent {
@@ -165,20 +165,20 @@
     }
     &-office-tertiary {
       color: $main;
-      background-color: $highlight;
-      filter: contrast(120%);
-      &:hover {
-        filter: contrast(100%);
-        color: $main;
-        .Icon {
-          fill: $primary;
-        }
+      background-color: $highlight-2;
+      .Icon {
+        fill: $tint-hard-300;
+        stroke: $tint-hard-300;
       }
     }
     &-simple {
       color: $primary;
+      .Icon {
+        fill: $primary;
+        stroke: $primary;
+      }
       &:hover {
-        background: $tint-light;
+        background: $tint-light-100;
       }
       &--permanent {
         user-select: text;
@@ -187,7 +187,15 @@
     }
     &-tag {
       color: $primary;
-      background-color: $tint-light;
+      background-color: $tint-light-200;
+      margin-right: $margin;
+      &:last-child {
+        margin-right: 0;
+      }
+      &--permanent {
+        user-select: text;
+        pointer-events: none;
+      }
     }
     &-alert {
       color: $primary;
@@ -198,6 +206,9 @@
       .Icon {
         fill: $red;
         stroke: $red;
+      }
+      &:hover {
+        background-color: $tint-red;
       }
     }
   }

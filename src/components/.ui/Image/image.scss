@@ -1,27 +1,59 @@
 .Image {
+  position: relative;
   width: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: transparent;
-  animation: fadeInWithTransform $slowly forwards;
+  box-sizing: border-box;
+  border-radius: $border-radius-small;
   color: $primary;
   transition: color $average;
   overflow: hidden;
   filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
   cursor: pointer;
+  border: 1px solid transparent;
 
-  &--bordered {
-    border: 1px solid $tint;
+  &.bordered {
+    border: 1px solid $tint-hard-300;
   }
-  &--editable {
-    color: $tint;
-    background-color: $highlight;
+  &.editable {
+    color: $tint-hard-300;
+    &.empty {
+      background-color: $highlight;
+    }
     &:hover {
-      color: $tint-hard;
+      color: $tint-hard-900;
     }
   }
-
+  &__source {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    box-sizing: border-box;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    animation: fadeInWithTransform $slowly forwards;
+    backface-visibility: hidden;
+    will-change: transform;
+    &.active {
+      display: block;
+    }
+  }
+  &__children {
+    &.editable {
+      background-color: $highlight;
+      color: $tint-hard-300;
+      font-weight: 300;
+      &--photo {
+        opacity: 0;
+        transition: $fast;
+      }
+      &--empty {
+        transition: $fast;
+      }
+    }
+  }
   input {
     position: absolute;
     top: 0;
@@ -48,33 +80,11 @@
       + .editable {
         &--photo {
           opacity: .75;
-          color: $tint-hard;
+          color: $tint-hard-900;
         }
         &--empty {
-          color: $tint-hard;
+          color: $tint-hard-900;
         }
-      }
-    }
-  }
-  &__children {
-    &.editable {
-      background-color: $highlight;
-
-      color: $tint;
-      font-weight: 300;
-      &--photo {
-        opacity: 0;
-        transition: $fast;
-        // &:hover {
-        //   opacity: .75;
-        //   color: $tint-hard;
-        // }
-      }
-      &--empty {
-        transition: $fast;
-        // &:hover {
-        //   color: $tint-hard;
-        // }
       }
     }
   }

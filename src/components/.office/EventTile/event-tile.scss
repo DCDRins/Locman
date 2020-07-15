@@ -1,0 +1,84 @@
+
+.Event-Tile {
+  position: relative;
+  min-height: 200px;
+  animation: fadeInWithTransform $slow forwards;
+  margin-right: $margin-default;
+  background: $primary;
+  overflow: hidden;
+  border-radius: $border-radius;
+  border: 1px solid $highlight-2;
+
+  $itemCount: 4;
+  $eventSize: (
+    $desktop // section size
+    - $margin-default * ($itemCount - 1) // remove margins
+    - 2 * $itemCount // remove borders (border-size * 2 * items)
+    ) / $itemCount; // calculate width for 1 item
+
+  &__isModerating {
+    position: absolute;
+    top: 0;
+    background-color: rgba(255, 0, 0, 0.55);
+    margin: 10px;
+    font-size: 8pt;
+    font-weight: 500;
+  }
+  &__main {
+    width: $defaultSize * 1.4;
+    width: $eventSize;
+    height: fit-content;
+    flex-shrink: 1;
+  }
+  &__image-list {
+    .Image {
+      $count: 4;
+      $size: ($eventSize - $margin * ($count - 1) - $margin * 4) / $count;
+      width: $size;
+      height: $size;
+      margin-right: $margin;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $dark;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: $dark-500;
+  }
+  &__optional {
+    width: $eventSize + $margin-default + 2;
+    max-width: $eventSize + $margin-default + 2;
+    max-height: 527px;
+    transition: width $fast, opacity $slow;
+    border-left: 1px solid $highlight;
+    &.closed {
+      border: none;
+      width: 0;
+      padding: 0;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity $fast, width $average;
+    }
+  }
+  &__optional-trigger {
+    .Icon {
+      transition: $average;
+    }
+    &.reverse {
+      .Icon {
+        transform: rotateZ(180deg);
+      }
+    }
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+  &__name {
+    @extend .header-2;
+    font-weight: 700;
+  }
+}

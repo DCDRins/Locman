@@ -1,0 +1,52 @@
+.Auth {
+  &__content {
+    position: relative;
+  }
+  &__input {
+    font-size: 14pt;
+  }
+  &__title {
+    text-align: center;
+    font-size: 0;
+    padding: 0;
+    opacity: 0;
+    transition: $slow;
+    color: $dark-300;
+    &--active {
+      @extend .header-2;
+      padding: 10px 0;
+      opacity: 1;
+    }
+  }
+  &__subtitle {
+    display: block;
+    width: fit-content;
+    margin: 10px auto;
+    text-align: center;
+    cursor: pointer;
+    @extend .small-text;
+    color: $dark-300;
+    opacity: .75;
+    transition: $fast;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &__button {
+    margin-left: 10px;
+    font-size: 8pt;
+    color: $dark-600;
+    font-weight: 500;
+  }
+  &__route {
+    padding: 10px;
+    opacity: $text-transparency;
+    &--active {
+      opacity: 1;
+
+    }
+    &-container {
+      padding: $margin-default;
+    }
+  }
+}

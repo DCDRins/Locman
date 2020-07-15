@@ -1,5 +1,5 @@
 
-.page {
+.Page {
   z-index: z('main');
   min-height: 100vh;
   height: 100%;
@@ -7,20 +7,20 @@
   background-color: $main;
   transition: background-color $fast, color $fast;
   overflow: hidden;
-  &--office {
+  &.move-first {
+    &:first-child {
+      padding-top: $headerHeight * 2;
+    }
+  }
+  &.theme-light {
     background-color: $primary;
     color: $dark;
     ::selection {
       background-color: $dark;
       color: $primary;
     }
-    ::-webkit-scrollbar-track {
-      background-color: red;
-    }
-    ::-webkit-scrollbar-thumb {
-      background-color: red;
-    }
   }
+
   &:nth-child(2) {
     position: fixed;
     transition: $average;
@@ -31,7 +31,7 @@
   }
   ::-webkit-scrollbar-thumb {
     background-color: grey;
-    background-color: $tint-light;
+    background-color: $tint-light-100;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: darkgrey;

@@ -2,18 +2,15 @@ import React, { ReactNode, InputHTMLAttributes } from 'react'
 import classNames from '../../../lib/classNames'
 import { HasFormStatus, HasRef } from '../../../.types/props';
 import Group from '../Group';
-import cuid from 'cuid';
 
 
-type Props = HasFormStatus
+export type InputProps = HasFormStatus
 & InputHTMLAttributes<HTMLInputElement>
 & HasRef<HTMLInputElement> & {
   level?: 'default' | 'light';
-  button?: ReactNode;
   hidden?: boolean;
   bordered?: boolean;
-  // before?: ReactNode;
-  // after?: ReactNode;
+  after?: ReactNode;
 }
 
 const Input = ({
@@ -22,14 +19,11 @@ const Input = ({
   level = 'default',
   hidden = false,
   bordered = false,
-  name = '',
-  button,
   onKeyDown,
-  // before,
-  // after,
+  after,
   getRef,
   ...restProps
-}: Props) => {
+}: InputProps) => {
   const base = 'Input';
   const _onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode !== 13 || !onKeyDown) return false;
@@ -38,22 +32,19 @@ const Input = ({
   return (
     <label
       className={classNames(base, className, 
-        `${base}--level-${level}`, {
+        `level-${level}`, {
         [`${base}--disabled`]: disabled,
         [`${base}--hidden`]: hidden,
         [`${base}--bordered`]: bordered,
       })}
     >
-      <Group content="center">
+      <Group content="center" stretched>
         <input
-          ref={getRef}
-          autoComplete="off"
-          {...{ name }}
-          id={cuid()}
           onKeyDown={_onKeyDown}
+          ref={getRef}
           {...restProps}
         />
-        {button && button}
+        {after && after}
       </Group>
     </label>
   )

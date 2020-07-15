@@ -2,41 +2,45 @@
 .Input {
   display: block;
   position: relative;
-  padding-left: 10px;
   height: 100%;
-  border-radius: $border-radius-small;
+  border-radius: 2px;
   box-sizing: border-box;
-  // transition: opacity $fast;
-  // overflow: hidden;
+  animation: fadeInWithTransform $slowly forwards;
   input {
     display: block;
     position: relative;
     width: 100%;
+    margin-left: 10px;
     border: none;
     background-color: transparent;
     color: inherit;
     outline: none;
-    @include mobile {
-      // width: unset;
-    }
+    font-size: 11pt;
   }
   &--hidden {
-    // display: none;
     opacity: 0;
     visibility: hidden;
   }
-  &--level {
-    &-default {
-      color: $primary;
-      background-color: $tint-light;
+  &--bordered {
+    &.level-default {
+      border: 1px solid $highlight-2;
     }
-    &-light {
-      color: $main;
-      background-color: $primary;
-      // transition: $fast;
-      .Icon {
-        fill: $highlight;
-      }
+    &.level-light {
+      border: 1px solid $highlight-2;
+    }
+  }
+  &.level-default {
+    color: $primary;
+    background-color: $dark-200;
+    ::-webkit-input-placeholder {
+      color: $dark-500;
+    }
+  }
+  &.level-light {
+    color: $main;
+    background-color: $primary;
+    .Icon {
+      fill: $highlight;
     }
   }
 }

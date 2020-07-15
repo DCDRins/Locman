@@ -1,0 +1,19 @@
+.Registration {
+  &__content {
+    margin: 0 auto;
+    max-width: $mobile;
+    padding: $margin-default;
+    // border: 1px solid $highlight-2;
+    border-radius: $border-radius;
+    background-color: $dark-200;
+  }
+  
+  // .Input {
+  //   padding: 5px 0;
+  //   border: 1px solid $highlight-2;
+  //   box-shadow: inset 0px 0px 10px 0px $highlight;
+  //   background-color: $primary;
+  //   border-radius: 2px;
+  //   width: 100%;
+  // }
+}

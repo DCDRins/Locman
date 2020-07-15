@@ -45,12 +45,11 @@ export default class DateTimePicker extends Component {
       isClosed,
       ...props
     } = this.props;
-
     return (
       <Div both className={classNames(base, className, {
         'closed': isClosed,
       })} {...props}>
-        <Group content="center" justify="center">
+        {onClose && (
           <Button
             level="office-tertiary"
             size="s"
@@ -60,7 +59,7 @@ export default class DateTimePicker extends Component {
           >
             Закрыть
           </Button>
-        </Group>
+        )}
         <Group content="stretch" justify="center">
           <Div both>
             <Button

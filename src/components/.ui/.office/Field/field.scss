@@ -7,10 +7,16 @@
   // max-width: 400px;
   &__title {
     display: none;
-    color: $tint;
+    color: $tint-hard-300;
     font-weight: 600;
+    .light & {
+      color: white;
+    }
     &.show {
       display: block;
+    }
+    .error & {
+      @include alert($tint-hard-300);
     }
   }
   &__group {
@@ -18,12 +24,21 @@
       border: 1px solid $highlight;
       border-radius: $border-radius;
     }
+    .light & {
+      color: $primary;
+    }
   }
   &__main {
     max-width: 80%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    .light & {
+      color: $primary;
+    }
+    .readonly & {
+      max-width: 100%;
+    }
   }
   &__input {
     position: absolute;
@@ -34,6 +49,7 @@
     max-width: 80%;
     height: fit-content;
     padding: 10px;
+    padding-left: 0;
     border: 1px solid $highlight;
     box-shadow: inset 0px 0px 10px 0px $highlight;
     background-color: $primary;
@@ -42,5 +58,8 @@
   &__empty-string {
     color: $highlight;
     font-weight: 400;
+    .error & {
+      @include alert($highlight);
+    }
   }
 }

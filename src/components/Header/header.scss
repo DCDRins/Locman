@@ -1,31 +1,22 @@
 .Header {
   position: relative;
-  + * { padding-top: $headerHeight *2; } // moves element after header down
-
-  &__nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: $headerHeight;
-    z-index: z('overlay');
-    background-color: $dark;
-    transition: background-color $fast;
-    // animation: fadeInWithTransform $slowly forwards;
-    &--office {
-      background-color: $accent!important;
-    }
-    &--hidden {
-      background-color: transparent;
-    }
-    & > * {
-      flex: 1 0 0;
-      &:last-child {
-        text-align: right;
-      }
-    }
+  animation: fadeInWithTransform $slowly forwards;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $headerHeight;
+  background-color: $accent;
+  transition: background-color $slow;
+  &.transparent {
+    background-color: transparent;
+  }
+  &.office {
+    background-color: $accent;
   }
   &__logo {
+    &-wrapper {
+      z-index: z('main');
+    }
     margin: 0 10px;
     @include mobile {
       display: none;
@@ -38,26 +29,46 @@
     }
   }
   &__links {
-    width: $minScreen;
-    transition: width $fast;
-    align-items: center;
-    margin: 0 auto;
-    @include mobile {
-      width: 200px;
+    position: absolute;
+  }
+  &__button {
+    font-size: 12pt;
+    font-weight: 600;
+    color: $tint-light-500;
+    .Icon {
+      fill: $tint-light-500;
     }
+    &.active {
+      color: $primary;
+      .Icon {
+        fill: $primary;
+      }
+    }
+  }
+  &__search {
+    position: absolute;
+    animation: fadeInWithTransformCenter $slowly forwards;
+    width: 65%;
+    border: 1px solid $tint-light-200;
+    height: $headerHeight * 0.75;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: $tablet;
+    z-index: z('foreground');
   }
   &__user {
     padding-right: $margin-default;
     & > * {
       white-space: nowrap;
         &:last-child {
-          @extend %small-text;
+          @extend .small-text;
           color: $highlight;
         }
     }
     &.loading {
       & > * {
-        background-color: $tint-light;
+        background-color: $tint-light-100;
         padding: 5px 30px;
         border-radius: $border-radius-small;
         &:first-child {
@@ -69,8 +80,5 @@
   }
   &__sign-in {
     margin: 0 10px;
-    @include mobile {
-      // padding: 6px 12px;
-    }
   }
 }

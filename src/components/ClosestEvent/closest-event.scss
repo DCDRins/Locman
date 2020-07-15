@@ -1,0 +1,37 @@
+.Current-Event {
+  &__content {
+    height: 100%;
+    @include mobile {
+      max-width: $mobileContainerWidth;
+      margin: 0 auto;
+    }
+    @include tablet {
+      max-width: $tabletContainerWidth;
+      margin: 0 auto;
+    }
+  }
+  &__title {
+    font-size: 24pt;
+    font-weight: 700;
+    text-align: center;
+  }
+  &__date {
+    font-size: 14pt;
+    font-weight: 300;
+  }
+  &__address {
+    font-size: 9pt;
+    font-size: 400;
+    color: $tint-light-500;
+    text-align: center;
+    a {
+      font-size: 11pt;
+      font-weight: 600;
+      color: $primary;
+      transition: $fast;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}

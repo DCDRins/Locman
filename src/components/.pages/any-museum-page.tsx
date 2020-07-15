@@ -4,8 +4,11 @@ import UIPage from '../.ui/UIPage'
 import StockContentViewer from '../StockContentViewer'
 import AnyMuseumGround from '../AnyMuseumGround'
 import GoogleApiWrapper from '../.ui/GMap'
-import ScrolledContentViewer from '../ScrolledContentViewer'
+import GroundImage1 from '../../assets/fake_content/ground_images/6.jpg'
 import Section from '../.ui/Section'
+import ScrolledContent from '../.ui/ScrolledContent'
+import Group from '../.ui/Group'
+import Event from '../.ui/Event'
 
 export class AnyMuseumPage extends React.Component {
   render() {
@@ -13,10 +16,19 @@ export class AnyMuseumPage extends React.Component {
       <UIPage>
         <AnyMuseumGround />
         <Section header="Расположение на карте" unfollow>
-          <GoogleApiWrapper  />
+          <GoogleApiWrapper />
         </Section>
         <Section>
-          <ScrolledContentViewer header="Мероприятия" />
+          <ScrolledContent orientation="horizontal">
+            <Group>
+              {[...Array(6)].map((_, idx) => <Event key={idx} name="Эрмитаж" image={GroundImage1} title="Test" description="test" /> )}
+            </Group>
+        </ScrolledContent>
+        <ScrolledContent orientation="horizontal">
+          <Group>
+            {[...Array(6)].map((_, idx) => <Event key={idx} name="Эрмитаж" image={GroundImage1} title="Test" description="test" /> )}
+          </Group>
+        </ScrolledContent>
         </Section>
         <StockContentViewer />
       </UIPage>

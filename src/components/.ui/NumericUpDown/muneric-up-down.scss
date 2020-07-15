@@ -1,9 +1,9 @@
 
 .Numeric-Up-Down {
-
+  width: 100%;
   &__title {
     font-weight: 600;
-    color: $tint;
+    color: $tint-hard-300;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -7,5 +7,9 @@ export default function* rootSaga() {
     fork(sagas.clientSaga),
     fork(sagas.knowledgeSaga),
     fork(sagas.eventSaga),
+    fork(sagas.organizationSaga),
+    fork(sagas.catalogSaga),
+    fork(sagas.newsSaga),
+    fork(sagas.routeSaga),
   ])
 }

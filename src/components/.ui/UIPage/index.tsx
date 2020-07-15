@@ -1,33 +1,55 @@
 import React, { ReactElement } from 'react'
 import { withRouter } from 'react-router-dom'
-import { HasChildren, HasRouterProps } from '../../../.types/props'
+import { HasChildren, HasRouterProps, HasClassName } from '../../../.types/props'
 import Header from '../../Header'
 import classNames from '../../../lib/classNames'
 import useLocation from '../../../lib/useLocation'
-import { appRoutes } from '../../../common/dictionaries/routes'
-import Tester from '../../../connected/request-tester-connected'
+import { appRoutes, officeAppRoutes } from '../../../common/dictionaries/routes'
+import { projectName } from '../../../common/constants'
 
-type Props = HasChildren & HasRouterProps
-const defaultProps = Object.freeze({ })
+type Props = HasChildren & HasRouterProps & HasClassName & {
+  theme: 'light' | 'dark';
+  moveFirst?: boolean;
+}
+const defaultProps = Object.freeze({
+  theme: 'dark',
+})
 
 class UIPage extends React.Component<Props, {}> {
   static readonly defaultProps = defaultProps
 
   componentDidMount() {
+    const { match: { path } } = this.props
+    console.log(this.props)
     window.scrollTo(0, 0)
+    const title = Object.values(appRoutes)
+      .concat(Object.values(officeAppRoutes))
+      .find(route => {
+        const _route = route.param
+          ? route.absolutePath.replace(route.param, '')
+          : route.absolutePath
+        return _route.split('/').join('') === path.split('/').join('')
+      });
+    if (!title) return false;
+    document.title = `${projectName.lang.ru} :: ${title.lang.ru}`;
   }
 
-  render() {  
-    const { children, location: { pathname } } = this.props
-    const isOnOfficePage = useLocation(pathname, appRoutes.OFFICE_PAGE.absolutePath)
-    const base = 'page'
+  render() {
+    const {
+      children,
+      location: { pathname },
+      theme,
+      moveFirst = false,
+      className = '',
+    } = this.props
+    const base = "Page"
     return (
-      <main className={classNames(base, {
-        [`${base}--office`]: isOnOfficePage,
-      })}>
-        {/* <FixedLayout /> */}
-        <Tester />
-        <Header {...{ isOnOfficePage }} />
+      <main
+        className={classNames(base, className,
+        `theme-${theme}`, {
+          'move-first': moveFirst,
+        },
+      )}>
         {children}
       </main>
     )

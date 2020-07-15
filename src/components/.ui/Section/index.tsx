@@ -15,7 +15,6 @@ type Props = HasChildren
   before?: ReactNode;
   side?: ReactNode;
   after?: ReactNode;
-  // subsection: boolean;
 }
 const defaultProps = Object.freeze({
   rotateOnMedia: true,

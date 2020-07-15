@@ -1,15 +1,13 @@
 import { IRouteDTO } from '../../../models';
 import api from '../agent';
-import { ServerResponse } from '../types';
-import { responseLogger } from '../utils';
+import { transformResponse, responseLogger } from '../utils';
+import { Pagination } from '../../../.types/types';
 
 export const routes = {
-  get: (id: string) =>
-    api.get<IRouteDTO>(`/user/route/${id}`, {
-      transformResponse: (r: ServerResponse<IRouteDTO>) => r && r.data
-    }).then(responseLogger),
-  getAll: (pageNumber?: number  ) =>
-    api.get<IRouteDTO[]>('/user/route', {
-      transformResponse: (r: ServerResponse<IRouteDTO[]>) => r && r.data
-    }).then(responseLogger),
+  fetchRouteList: (params) =>
+    api.get<Pagination<IRouteDTO>>('/route', {
+      params,
+    }).then(r => transformResponse<Pagination<IRouteDTO>>(r)),
+  fetchCurrentRoute: () =>
+    api.get<IRouteDTO>('/route/main').then(r => transformResponse<IRouteDTO>(r)),
 };

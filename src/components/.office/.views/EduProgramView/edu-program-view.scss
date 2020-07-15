@@ -1,0 +1,38 @@
+.Edu-Program-View {
+
+  animation: fadeInWithTransform $slowly forwards;
+  // &.isEmpty { }
+
+  &__isEmpty {
+    &-string {
+      @extend .header-3;
+      color: $highlight;
+      animation: fadeInWithTransform $slowly forwards;
+    }
+  }
+  &__form {
+    position: relative;
+    border: 1px solid $highlight-2;
+    border-radius: $border-radius;
+  }
+  &__program {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    border: 1px solid $highlight-2;
+    border-radius: $border-radius;
+    max-width: 300px;
+    min-width: 200px;
+    margin: 0 10px 10px 0;
+    .Field {
+      font-weight: 400;
+      &:first-child {
+        font-weight: 700;
+      }
+    }
+    .Button {
+      background-color: $tint-hard-300;
+      margin: 0 0 10px 10px;
+    }
+  }
+}

@@ -66,14 +66,14 @@ export default class Calendar extends Component {
           <Button
             size="s"
             level="office-secondary"
-            before={<Icon svg={PreviousIcon} isRect size="s" />}
+            before={<Icon svg={PreviousIcon} noFill size="s" />}
             onClick={this.prevMonth}
           />
           <span className={`${base}__current-date`}>{moment.format('MMMM YYYY')}</span>
           <Button
             size="s"
             level="office-secondary"
-            before={<Icon svg={NextIcon} isRect size="s" />}
+            before={<Icon svg={NextIcon} noFill size="s" />}
             onClick={this.nextMonth}
           />
         </Group>

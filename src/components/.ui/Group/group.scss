@@ -3,6 +3,9 @@
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  &.inline {
+    display: inline-flex;
+  }
   &--orientation {
     &-horizontal {
       flex-direction: row;

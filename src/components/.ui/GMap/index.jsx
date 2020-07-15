@@ -13,22 +13,23 @@ export class MapContainer extends Component {
   }
   render() {
     const base = 'GMap'
-    const { google } = this.props
+    const {
+      google,
+      latitude,
+      longitude,
+      height = 200,
+    } = this.props
     const { onMarkerClick, onInfoWindowClose } = this
     const { selectedPlace: { name } } = this.state
     return (
-      <Div
-        className={base}
-        // header={terms.GMAP_LOCATION}
-        // unfollow
-      >
+      <Div className={base} style={{ height }}>
         <Map
           {...{ google }}
           className={`${base}__map`}
           zoom={14}
           initialCenter={{
-            lat: 59.938480,
-            lng: 30.31248, // props here
+            lat: latitude || 59.938480,
+            lng: longitude || 30.31248,
           }}
         >
           <Marker onClick={onMarkerClick} name={'Санкт Петербург'} />
@@ -41,23 +42,18 @@ class MapLoaderContainer extends Component {
   render() {
     const base = 'GMap'
     return (
-      <Section
-        className={base}
-        header={terms.GMAP_LOCATION}
-        unfollow
-      >
-        <Div className={`${base}__map`} />
-      </Section>
+      <Div className={`${base}__map`} />
     );
   }
 }
 
-
- 
 export default GoogleApiWrapper(
   (props) => ({
+    ...props,
     apiKey: ('AIzaSyCm2VhF0SLUamHg7YlFZC1NK0xpslO_jrE'),
-    language: props.language,
     LoadingContainer: MapLoaderContainer,
+    // language: props.language,
+    // latitude: props.latitude,
+    // longitude: props.longitude,
   })
 )(MapContainer)
