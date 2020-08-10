@@ -6,7 +6,7 @@ import Group from '../../../.ui/Group';
 import { ReactComponent as Ico } from '../../../../assets/icons/add.svg';
 import { TagsBaseState } from '../../../../reducers/catalog-reducer';
 import * as actions from '../../../../actions';
-import { AcceptedRouteListBaseState } from '../../../../reducers/route-reducer';
+import { AcceptedRouteListBaseState, UserRouteListBaseState } from '../../../../reducers/route-reducer';
 import Image from '../../../.ui/Image';
 import classNames from '../../../../lib/classNames';
 import Div from '../../../.ui/Div';
@@ -14,12 +14,17 @@ import RouteEditor from '../../../.office/RouteEditor';
 import Preloader from '../../../.ui/Preloader';
 import Button from '../../../.ui/Button';
 import Icon from '../../../.ui/Icon';
+import { Route } from '../../../../models';
+import { onPageItemsCount } from '../../../../common/constants';
 
 export interface DispatchedRouterViewProps {
   fetchAcceptedRouteList: typeof actions.routeActions.fetchAcceptedRouteList.request;
+  fetchUserRouteList: typeof actions.routeActions.fetchUserRouteList.request;
+  createRoute: typeof actions.routeActions.createRoute.request,
 }
 export interface StoredRouterViewProps {
   acceptedRouteList: AcceptedRouteListBaseState;
+  userRouteList: UserRouteListBaseState;
 }
 export type InjectedRouterViewProps = DispatchedRouterViewProps
 & StoredRouterViewProps
@@ -32,8 +37,9 @@ export class RouterView extends Component<InjectedRouterViewProps, State> {
   readonly state: State = initialState
 
   componentDidMount() {
-    const { fetchAcceptedRouteList } = this.props;
+    const { fetchAcceptedRouteList, fetchUserRouteList } = this.props;
     fetchAcceptedRouteList({ })
+    fetchUserRouteList({ page: 1, onPage: onPageItemsCount })
   }
 
   componentDidUpdate() {
@@ -47,8 +53,9 @@ export class RouterView extends Component<InjectedRouterViewProps, State> {
         data,
         isLoading,
       },
+      createRoute,
     } = this.props;
-    const { list } = { ...data }
+    const { list: routeList } = { ...data }
     const { } = this.state;
     return (
       <Section className={base}>
@@ -57,17 +64,32 @@ export class RouterView extends Component<InjectedRouterViewProps, State> {
             <Button
               level="office-tertiary"
               angular
+              onClick={() => {
+                createRoute(Route.deserialize(Route.new()).serialize())
+              }}
               before={<Icon noStroke svg={Ico} />}
             >
               Создать маршрут
             </Button>
-            {/* <Preloader {...{ isLoading }} size={30} /> */}
+            <Preloader {...{ isLoading }} size={30} />
           </Group>
         </Div>
-        <RouteEditor />
-        <RouteEditor />
-        <RouteEditor />
-        <RouteEditor />
+        {!routeList && !isLoading && (
+          <Div className={`${base}__isEmpty-string`}>
+            Вы пока не создали ни одного маршрута
+          </Div>
+        )}
+        {routeList && routeList.map(item => (
+          <RouteEditor
+            key={item.characterCode}
+            data={Route.deserialize(item)}
+            // {...{ deleteRoute }}
+            // {...{ editRoute }}
+            // {...{ fetchTagList }}
+            // {...{ uploadImage }}
+            // {...{ catalog }}
+          />
+        ))}
       </Section>
     )
   }

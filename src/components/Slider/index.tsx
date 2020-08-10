@@ -9,21 +9,23 @@ import Group from '../.ui/Group';
 
 type State = {
   currentSlideId: number;
+  readyState: boolean;
 }
 type Props = typeof defaultProps & HasChildren & {
   actualData: SliderBaseState;
 }
 const defaultProps = Object.freeze({
-  timeDuration: 5000,
+  timeDuration: 5000, // after this changed -> change CSS animation time duration >>> animation: progress 5s linear forwards; <<<
 })
 
 export default class Slider extends Component<Props, State> {
   static readonly defaultProps = defaultProps
   readonly state: State = {
-    currentSlideId: 0
+    currentSlideId: 0,
+    readyState: false,
   }
   _intervalId?: NodeJS.Timeout
-  _isMounted: boolean = true
+  _isMounted: boolean = true;
 
   componentDidUpdate(prevProps) {
     const { actualData: { data } } = this.props
@@ -60,11 +62,19 @@ export default class Slider extends Component<Props, State> {
   }
 
   render() {
-    const { currentSlideId } = this.state
+    const { currentSlideId, readyState } = this.state
     const { actualData: { data } } = this.props
     const base = "Slider";
     return (
-      <Ground stretch limit src={data ? data[currentSlideId].previewImage.path : ''} className={base}>
+      <Ground
+        solid
+        mask="dark-left"
+        stretch
+        limit
+        src={data ? data[currentSlideId].previewImage.path : ''}
+        className={base}
+        onClick={this.handleClick}
+      >
         {data && data.map(({ title, anons }, idx) => (
           <Section
             key={title}
@@ -83,6 +93,24 @@ export default class Slider extends Component<Props, State> {
             </Group>
           </Section>
         ))}
+        {data && (
+          <Section>
+            <Div className={`${base}__pointers`}>
+              {data.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={classNames(
+                    `${base}__pointers__in`, {
+                      'active': idx === currentSlideId,
+                    }
+                  )}
+                >
+                  <div className={`${base}__pointers__in--progress`} />
+                </div>
+              ))}
+            </Div>
+          </Section>
+        )}
       </Ground>
     )
   }

@@ -24,9 +24,12 @@ import classNames from '../../../lib/classNames'
 import moment from 'moment'
 import 'moment/locale/ru'
 import Div from '../../.ui/Div'
+import Field from '../../.ui/.office/Field'
+import GMap from '../../.ui/GMap'
 
 export interface DispatchedAnyEventPageProps {
   fetchEvent: typeof actions.eventActions.fetchEventAsync.request;
+  createRoute: typeof actions.routeActions.createRoute.request;
 }
 export interface StoredAnyEventPageProps {
   event: CurrentEventBaseState;
@@ -69,13 +72,14 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
       status,
       startDate,
       finishDate,
+      tags,
       needApprove,
       requestStartDate,
       requestFinishDate,
     } = { ...data } as IEventDTO
     return (
       <UIPage className={base}>
-        <Ground stretch limit src={image && image.path} layout="bottom">
+        <Ground stretch mask="dark-left" limit src={image && image.path} layout="bottom">
           {data && (
             <Section>
               {status === "Подтверждено" && (
@@ -132,6 +136,22 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
             </Section>
           )}
         </Ground>
+        {tags && (
+          <Section header=" " unfollow>
+            {tags.map(({ id, name }) => (
+              <Button
+                key={id}
+                className={`${base}__tag`}
+                showIcon
+                size="s"
+                level="tag"
+                angular
+              >
+                {`#${name}`}
+              </Button>
+            ))}
+          </Section>
+        )}
         {/* {data && (
           <Section>
             <Div className={`${base}__date`}>
@@ -152,36 +172,32 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
             </Div>
           </Section>
         )} */}
-        <Section
-          header="Описание"
-          unfollow
-          className={`${base}__description`}
-        >
-          <div className={classNames(`${base}__description__text`, {
-              'isVisible': isVisibleDescription,
-            })}
+        {description && (
+          <Section
+            header="Описание"
+            unfollow
+            className={`${base}__description`}
           >
-            {description && description}
-            {description && <br />}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, explicabo placeat quo veniam exercitationem architecto minima esse vitae officiis quam expedita necessitatibus porro dolor rerum voluptas magnam laudantium unde. Voluptates!
-          </div>
-          <Button
-            className={classNames({ 'rotated': isVisibleDescription })}
-            stretched="x"
-            angular
-            align="center"
-            level="tertiary"
-            before={<Icon svg={DownIcon} noFill />}
-            onClick={this.toggleDesc}
-          />
-        </Section>
+            <div className={classNames(`${base}__description__text`, {
+                'isVisible': isVisibleDescription,
+                'large-text': description.length > 200,
+              })}
+            >
+              {description}
+            </div>
+            <Button
+              className={classNames({
+                'rotated': isVisibleDescription,
+              })}
+              stretched="x"
+              angular
+              align="center"
+              level="tertiary"
+              before={<Icon svg={DownIcon} noFill />}
+              onClick={this.toggleDesc}
+            />
+          </Section>
+        )}
         {images && images.length > 0 && (
           <Section>
             <ScrolledContent orientation="horizontal">
@@ -197,18 +213,51 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
           </Section>
         )}
         {organization && (
-          <Section>
-            <Museum
-              stretched
-              data={{
-                ...organization,
-                image: {
-                  path: Img,
-                  id: 1,
-                }
-              }}
+          <Section
+            align="align-center"
+            key={organization.id}
+            header="Организатор"
+            side={
+             <div className={`${base}__side`}>
+               {organization.city && (
+                 <Field
+                   readonly
+                   title="Город"
+                   showTitle
+                   field={{ city: organization.city.name }}
+                 />
+               )}
+               {organization.category && (
+                 <Field
+                   readonly
+                   title="Категория организации"
+                   showTitle
+                   field={{ category: organization.category.name }}
+                 />
+               )}
+               {organization.phone && (
+                 <Field
+                   readonly
+                   title="Телефон"
+                   showTitle
+                   field={{ phone: `${organization.phone}` }}
+                 />
+               )}
+             </div>
+           }
+           after={organization.latitude && organization.longitude && (
+            <Group stretched="x" className={`${base}__map`}>
+              <GMap latitude={organization.latitude} longitude={organization.longitude} />
+            </Group>
+           )}
+         >
+           <Museum
+            data={{
+              ...organization,
+              organization: organization,
+             }}
             />
-          </Section>
+         </Section>
         )}
       </UIPage>
     )

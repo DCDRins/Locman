@@ -1,0 +1,9 @@
+.Main-Page {
+  &__follow {
+    padding-top: $margin-default;
+    .Button {
+      font-size: 12pt;
+      font-weight: 500;
+    }
+  }
+}

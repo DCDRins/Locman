@@ -26,6 +26,7 @@ export type EventProps = HTMLAttributes<HTMLElement> & Partial<SideProps> & HasR
   exaggerate?: boolean;
   minify?: boolean;
   name: string;
+  date?: string;
   charCode?: string;
   subtitle?: string;
   image?: string;
@@ -60,6 +61,7 @@ export default class Event extends Component<InjectedProps, {}> {
       allowMedia = false,
       isLoading = false,
       charCode,
+      date,
       subtitle,
       title,
       image,
@@ -112,8 +114,8 @@ export default class Event extends Component<InjectedProps, {}> {
                 />
               </Div>
             </Image>
-            {!isLoading ? (
-              <Link to={`${appRoutes.ANY_MUSEUM_PAGE.absolutePath}/${name}`} className={`${base}__title`}>
+            {!isLoading && charCode ? (
+              <Link to={`${appRoutes.ANY_EVENT_PAGE.absolutePath}/${charCode}`} className={`${base}__title`}>
                 {name}
               </Link>
             ) : (
@@ -122,6 +124,7 @@ export default class Event extends Component<InjectedProps, {}> {
               </div>
             )}
             <div className={`${base}__subtitle`}>{subtitle}</div>
+            {date && <div className={`${base}__subtitle`}>{date}</div>}
           </div>
           {title && description && exaggerate && <Side {...{ title, description, tagList }} />}
         </Group>

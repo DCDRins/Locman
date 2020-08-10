@@ -7,13 +7,11 @@ import getHashCode from '../../../lib/getHashCode'
 export type SwitchProps = InputHTMLAttributes<HTMLInputElement> & {
   level?: 'office';
   switchSize?: 's' | 'm' | 'l';
-  align?: 'left' | 'center' | 'right';
 }
 
 const Switch = ({
   switchSize = "m",
   level = 'office',
-  align = 'center',
   onChange,
   ...restProps
 }: SwitchProps) => {
@@ -25,11 +23,9 @@ const Switch = ({
     })}>
       <input
         {...restProps}
+        {...{ onChange }}
         type="checkbox"
         id={name}
-        onChange={e => {
-          onChange && onChange(e);
-        }}
       />
     </label>
   )

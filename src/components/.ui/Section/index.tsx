@@ -5,16 +5,20 @@ import LangContext from '../../../common/context/lang/lang.context'
 import { withLanguage } from '../../../common/dictionaries/lang'
 import terms from '../../../common/dictionaries/terms'
 import classNames from '../../../lib/classNames'
+import Icon from '../Icon'
 
 type Props = HasChildren
 & HTMLAttributes<HTMLElement>
-& HasRouterProps
+// & HasRouterProps
 & typeof defaultProps
 & {
   header?: withLanguage | string;
   before?: ReactNode;
   side?: ReactNode;
   after?: ReactNode;
+  type?: 'secondary' | 'accent' | 'accent-content' | 'dev';
+  align?: 'align-center';
+  pattern?: ReactNode;
 }
 const defaultProps = Object.freeze({
   rotateOnMedia: true,
@@ -23,7 +27,7 @@ const defaultProps = Object.freeze({
   stretch: false,
 })
 
-class Section extends Component<Props, {}> {
+export default class Section extends Component<Props, {}> {
   static readonly defaultProps = defaultProps
 
   render() {
@@ -37,20 +41,30 @@ class Section extends Component<Props, {}> {
       rotateOnMedia,
       unfollow,
       stretch,
-      match: { params },
+      type,
+      pattern,
+      align,
+      // match: { params },
     } = this.props
     const base = 'Section'
-    const minifyHeader = Object.entries(params).length !== 0 && params.constructor === Object
+    // const minifyHeader = Object.entries(params).length !== 0 && params.constructor === Object
 
     return (
       <div className={classNames(base, className, {
         [`${base}--stretch`]: stretch,
+        [`${type}`]: type !== undefined,
+        [`${align}`]: align !== undefined,
       })}>
+        {pattern && (
+          <div className={`${base}__pattern`}>
+            {pattern}
+          </div>
+        )}
         {header && (
           <LangContext.Consumer>
             {({ getActual }) => (
               <div className={classNames(`${base}__header`, {
-                [`${base}__header--minify`]: minifyHeader,
+                // [`${base}__header--minify`]: minifyHeader,
               })}>
                 {getActual && typeof header !== 'string' && getActual<withLanguage>(header)}
                 {typeof header === 'string' && header}
@@ -84,4 +98,4 @@ class Section extends Component<Props, {}> {
   }
 }
 
-export default withRouter(Section)
+// export default withRouter(Section)

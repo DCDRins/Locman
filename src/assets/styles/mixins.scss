@@ -49,7 +49,7 @@
     opacity: #{$amount};
     background-color: $main;
     transition: $average;
-    background: linear-gradient(to bottom, $main, transparent);
+    background: linear-gradient(to bottom, rgba($tone, $alpha: .65), transparent);
   }
 }
 @mixin toned-full($pseudo, $amount: .1) {
@@ -59,7 +59,7 @@
     width: 100%;
     height: 100%;
     opacity: #{$amount};
-    background-color: $main;
+    background-color: rgba($tone, $alpha: .65);
     transition: $average;
   }
 }

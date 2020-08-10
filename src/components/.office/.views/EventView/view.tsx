@@ -17,7 +17,7 @@ import Div from '../../../.ui/Div';
 import Field from '../../../.ui/.office/Field';
 import { StoredEventTileProps, DispatchedEventTileProps } from '../../EventTile';
 import classNames from '../../../../lib/classNames';
-import { onPageItemsCount } from '../../../../common/constants';
+import { previewItemsCount } from '../../../../common/constants';
 
 export interface DispatchedEventViewProps extends DispatchedEventTileProps {
   fetchUserEvents: typeof actions.eventActions.fetchManagedEventListAsync.request;
@@ -31,10 +31,8 @@ export type InjectedEventViewProps = DispatchedEventViewProps
 & { }
 
 export type State = typeof initialState
+const initialState = Object.freeze({ })
 
-const initialState = Object.freeze({
-  started: false,
-})
 export class EventView extends Component<InjectedEventViewProps, State> {
   readonly state: State = initialState
 
@@ -45,20 +43,10 @@ export class EventView extends Component<InjectedEventViewProps, State> {
       fetchEventFormatList,
       fetchEventLevelList,
     } = this.props;
-    fetchUserEvents({ page: 1, onPage: onPageItemsCount })
+    fetchUserEvents({ page: 1, onPage: previewItemsCount })
     fetchTagList({ })
     fetchEventFormatList({ })
     fetchEventLevelList({ })
-  }
-
-  filter = () => {
-    const { fetchUserEvents } = this.props
-    const { started } = this.state
-    this.setState(prevState => ({ started: !prevState.started }), () => {
-      this.state.started
-        ? fetchUserEvents({ started })
-        : fetchUserEvents({ page: 1, onPage: 20 });
-    })
   }
 
   render() {
@@ -137,20 +125,6 @@ export class EventView extends Component<InjectedEventViewProps, State> {
             ))}
           </ScrolledContent>
         )}
-        {/* {eventList && (
-          <Div>
-            <Div both className={'Filter'}>
-              <Group justify="center" content="center" stretched="x">
-                <Field
-                  field={{ started }}
-                  onChange={this.filter}
-                >
-                  Только начавшиеся мероприятия
-                </Field>
-              </Group>
-            </Div>
-          </Div>
-        )} */}
         {eventList && (
           <ScrolledContent orientation="vertical" className={`${base}__list`}>
             {eventList.map(item => (

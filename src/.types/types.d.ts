@@ -31,6 +31,9 @@ export interface HasPaginationParams {
 export interface HasTypeParams {
   type?: 'tree' | string;
 }
+export interface NeedRestore {
+  resetStore?: boolean;
+}
 export interface NamedType {
   id: number;
   name: string;
@@ -56,3 +59,5 @@ export interface Pagination<T> {
   totalItems?: number;
 }
 export interface IFetchParams extends HasCategoryParams, HasPaginationParams, HasSearchParams { }
+
+export type IFetchParamsExtended<T extends any> = T & HasPaginationParams & HasSearchParams & NeedRestore

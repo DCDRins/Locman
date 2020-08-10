@@ -6,10 +6,13 @@ import { RouterView, DispatchedRouterViewProps, StoredRouterViewProps } from './
 
 const mapStateToProps = ({ route }: Types.RootState): StoredRouterViewProps => ({
   acceptedRouteList: route.acceptedRouteList,
+  userRouteList: route.userRouteList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Types.RootAction>): DispatchedRouterViewProps => bindActionCreators({
   fetchAcceptedRouteList: actions.routeActions.fetchAcceptedRouteList.request,
+  fetchUserRouteList: actions.routeActions.fetchUserRouteList.request,
+  createRoute: actions.routeActions.createRoute.request,
 }, dispatch);
 
 

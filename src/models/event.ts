@@ -6,10 +6,11 @@ import 'moment/locale/ru'
 import moment from 'moment'
 
 export interface EventFilters {
-  started?: boolean;
-  eventType?: number;
-  notFinished?: boolean;
+  location?: string;
+  // eventType?: number;
   educationProgram?: number;
+  started?: boolean;
+  notFinished?: boolean;
 }
 
 export interface ClosestEvent {
@@ -126,8 +127,10 @@ export class Event implements IEventDTO {
     
     return model;
   }
+
   static new = (level: NamedType, format: NamedType, location: string = 'Санкт-Петербург',
-  participationType: number = 1, needApprove: boolean = true, published: boolean = false): Event => {
+    participationType: number = 1, needApprove: boolean = true, published: boolean = false): Event => {
+      
     return new Event(
       `Мероприятие-${uid()}`, // name
       location,

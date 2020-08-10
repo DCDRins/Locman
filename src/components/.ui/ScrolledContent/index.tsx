@@ -45,7 +45,7 @@ export default class ScrolledContent extends Component<Props, State> {
   _isProcessing: boolean = false
   _moveDistance = 650
   _moveDuration = 450
-  _movementCoeff = 1
+  _movementCoeff = .5
   scroll = React.createRef<HTMLDivElement>()
   forwardButton = React.createRef<HTMLButtonElement>()
   backwardButton = React.createRef<HTMLButtonElement>()

@@ -63,6 +63,9 @@
     position: relative;
     max-width: $eventSizeDefault;
     min-width: $eventSizeDefault;
+    background-color: rgba($main, $alpha: 1.0);
+    border-radius: $border-radius-small;
+    border: 1px solid $primary;
     .minify & {
       max-width: $eventSizeMobile;
       min-width: $eventSizeMobile;
@@ -92,9 +95,9 @@
   }
   &__image {
     height: $eventSizeDefault;
-    border-color: $tint-light-100!important;
+    // border: none!important;
     cursor: pointer;
-    @include toned-half('::before', 0);
+    @include toned-full('::before', 0);
     .minify & {
       height: $eventSizeMobile;
     }
@@ -111,7 +114,7 @@
       height: $eventSizeDesktop;
     }
     &:hover {
-      @include toned-half('::before', .75);
+      @include toned-full('::before', .75);
       #{$parent}__context {
         visibility: visible;
         opacity: 1;
@@ -132,7 +135,7 @@
       animation: fadeInWithTransform $slowly forwads;
     }
     &.isEmpty {
-      background-color: $tint-light-100;
+      // background-color: $main;
     }
   }
   &__context {
@@ -147,7 +150,6 @@
     cursor: pointer;
     display: block;
     transition: $fast;
-    border-radius: $border-radius-small;
     &:active {
       @extend %simple-active-effect;
     }
@@ -156,14 +158,20 @@
     font-size: 12pt;
     font-weight: 600;
     margin-top: 5px;
+    color: $accent;
+    padding: $margin;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
   }
   &__subtitle {
     @extend .simple-text;
-    color: $dark-500;
+    color: $highlight;
     font-weight: 500;
+    padding: 2px $margin;
+    &:last-child {
+      padding-bottom: $margin;
+    }
     &:hover {
       max-width: 100%;
     }

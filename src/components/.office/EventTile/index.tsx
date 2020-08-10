@@ -64,7 +64,6 @@ export default class EventTile extends Component<Props, State> {
 
   componentDidMount() {
     const { data } = this.props
-    // fetchTagList({ });
     this.setState(prevState => ({
       ...prevState,
       data,
@@ -141,7 +140,7 @@ export default class EventTile extends Component<Props, State> {
       }
     }))
   };
-
+  
   handleSelect = (selectedOption, { name }) => this.setState(({ data }) => ({
     data: {
       ...data,
@@ -361,6 +360,7 @@ export default class EventTile extends Component<Props, State> {
               showTitle
               field={{ description }}
               justify="space-between"
+              isTextBox
               onChange={this.handleChange}
             />
             <DateField
@@ -421,7 +421,7 @@ export default class EventTile extends Component<Props, State> {
               onChange={this.handleTagSelect}
               options={tagList && tagList.map(({ id, name }) => ({ value: id, label: name }))}
               isMulti
-              // isSearchable
+              isSearchable
               isLoading={isTagsLoading}
               defaultValue={tags.map(({ id, name }) => ({ value: id, label: name }))}
             />

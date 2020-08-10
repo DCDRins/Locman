@@ -6,15 +6,19 @@ import { routeActions } from '../actions';
 import { ReducerBaseState, HasLifeTime } from './types';
 import { Pagination, Nullable } from '../.types/types';
 import moment from 'moment';
+import { initialNullableState } from './subroutines/states';
 
-export interface AcceptedRouteListBaseState extends ReducerBaseState<Pagination<IRouteDTO>> { }
+export interface UserRouteListBaseState extends ReducerBaseState<Nullable<Pagination<IRouteDTO>>> { }
+export interface AcceptedRouteListBaseState extends ReducerBaseState<Nullable<Pagination<IRouteDTO>>> { }
 export interface CurrentRouteBaseState extends ReducerBaseState<Nullable<IRouteDTO>> { }
 
 export interface RouteState {
+  readonly userRouteList: UserRouteListBaseState;
   readonly acceptedRouteList: AcceptedRouteListBaseState;
   readonly current: CurrentRouteBaseState & HasLifeTime;
 };
 
+export const initialUserRouteListState = initialNullableState;
 export const initialAcceptedRouteListState = Object.freeze({
   data: { list: [] },
   isLoading: false,
@@ -30,6 +34,30 @@ export const initialCurrentRouteState = Object.freeze({
 export type RoutesAction = ActionType<typeof routeActions>;
 
 export default combineReducers<RouteState, RoutesAction>({
+  userRouteList: (state = initialUserRouteListState, action) => {
+    switch (action.type) {
+      case getType(routeActions.fetchAcceptedRouteList.request):
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+        }
+      case getType(routeActions.fetchAcceptedRouteList.success):
+        return {
+          ...state,
+          data: action.payload,
+          isLoading: false,
+        }
+      case getType(routeActions.fetchAcceptedRouteList.failure):
+        return {
+          ...state,
+          error: action.payload,
+          isLoading: false,
+        }
+      default:
+        return state;
+    }
+  },
   acceptedRouteList: (state = initialAcceptedRouteListState, action) => {
     switch (action.type) {
       case getType(routeActions.fetchAcceptedRouteList.request):

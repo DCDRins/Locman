@@ -8,7 +8,7 @@ export class PersonalOfficePage extends React.Component {
 
   render() {
     return (
-      <UIPage theme="light">
+      <UIPage theme="light" moveFirst>
         <OfficeNavigationBar />
         <Root routes={officeAppRoutes} />
       </UIPage>

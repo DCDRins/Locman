@@ -5,12 +5,14 @@ import * as actions from '../../../actions';
 import RouterEditor, { DispatchedRouterEditorProps, StoredRouterEditorProps } from './view';
 
 const mapStateToProps = ({ route }: Types.RootState): StoredRouterEditorProps => ({
-  acceptedRouteList: route.acceptedRouteList,
+  
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Types.RootAction>): DispatchedRouterEditorProps => bindActionCreators({
   openContext: actions.systemActions.openContext,
   closeContext: actions.systemActions.closeContext,
+  editRoute: actions.routeActions.editRoute.request,
+  deleteRoute: actions.routeActions.deleteRoute.request,
 }, dispatch);
 
 

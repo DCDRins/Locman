@@ -4,7 +4,7 @@ import { Dictionary } from '../../.types/types'
 export interface TermDictionary extends Dictionary<withLanguage> { }
 
 const terms: TermDictionary = { 
-  PARTNERS: { lang: { ru: 'Партнеры', en: 'Partners' } },
+  PARTNERS: { lang: { ru: 'Партнеры проекта', en: 'Partners' } },
   STOCK_SEARCH: { lang: { ru: 'Поиск', en: 'Search' } },
   SHARE: { lang: { ru: 'Поделиться', en: 'Share' } },
   VIEW: { lang: { ru: 'Просмотреть', en: 'View' } },

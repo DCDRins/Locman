@@ -1,18 +1,19 @@
 .Organization-View {
+
   &__title {
     @extend .header-3;
   }
   
   &__empty-string {
     @extend .header-3;
-    color: $highlight;
+    color: $tint-hard-300;
     text-align: center;
     animation: fadeInWithTransform $slowly forwards;
   }
 
   &__search {
     width: $mobile * .5;
-    border: 1px solid $tint-light-200;
+    border: 1px solid $tint-hard-100;
     z-index: z('foreground');
     padding: 10px;
     input {

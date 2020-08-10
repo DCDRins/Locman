@@ -5,13 +5,13 @@ import Icon, { IconProps } from '../Icon'
 import Group from '../Group'
 import { ReactComponent as PreloaderIcon } from '../../../assets/icons/preloader.svg'
 import Div from '../Div'
+import { HasRef } from '../../../.types/props'
 
 
 type Props = HTMLAttributes<HTMLDivElement> & Partial<IconProps> & {
   isLoading: boolean;
   global?: boolean;
 }
-
 
 const Preloader = ({
   size = 100,

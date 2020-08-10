@@ -10,6 +10,7 @@ const mapStateToProps = ({ event }: Types.RootState): StoredAnyEventPageProps =>
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchedAnyEventPageProps => bindActionCreators({
   fetchEvent: actions.eventActions.fetchEventAsync.request,
+  createRoute: actions.routeActions.createRoute.request,
 }, dispatch);
 
 

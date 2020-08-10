@@ -11,16 +11,12 @@
     }
   }
   &__list {
-    display: block;
-    max-height: 300px;
-    margin: 0 auto;
+    height: 502px;
     margin-top: 50px;
     margin-bottom: 150px;
     padding-bottom: 150px;
     mask-image: $text-overflow-mask;
     opacity: .65;
-    border-right: none;
-    border-left: none;
     transition: $fast;
     overflow: hidden;
     &:hover {

@@ -9,7 +9,7 @@ import Event from '../../.ui/Event'
 import { StockEventListBaseState } from '../../../reducers/event-reducer'
 import * as actions from '../../../actions'
 import cuid from 'cuid'
-import { onPageItemsCount } from '../../../common/constants'
+import { previewItemsCount } from '../../../common/constants'
 
 export interface DispatchedLibraryPageProps {
   fetchEventList: typeof actions.eventActions.fetchStockEventListAsync.request;
@@ -24,7 +24,7 @@ export default class LibraryPage extends React.Component<InjectedLibraryPageProp
     const { fetchEventList, eventList: { data } } = this.props;
     // const { currentPage } = { ...data }
     // const page = currentPage ? currentPage + 1 : 1;
-    fetchEventList({ page: 1, onPage: onPageItemsCount });
+    fetchEventList({ page: 1, onPage: previewItemsCount });
   }
 
   render() {
@@ -44,7 +44,7 @@ export default class LibraryPage extends React.Component<InjectedLibraryPageProp
           <Section header="Новые мероприятия">
             <ScrolledContent orientation="horizontal" isContentLoading={isLoading}>
               {isLoading
-                ? [...Array(onPageItemsCount)].map(() => <Event key={cuid()} name="" subtitle="" image="loader" isLoading />)
+                ? [...Array(previewItemsCount)].map(() => <Event key={cuid()} name="" subtitle="" image="loader" isLoading />)
                 : eventList.map(({ id, image, name, description, location }) => <Event key={id} {...{ name }} subtitle={location} {...{ description }} image={image && image.path} />)
               }
             </ScrolledContent>

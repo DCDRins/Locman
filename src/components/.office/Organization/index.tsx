@@ -11,8 +11,9 @@ import GoogleApiWrapper from '../../.ui/GMap'
 import classNames from '../../../lib/classNames';
 import { CitiesBaseState, OrganizationTypesBaseState, OrganizationCategoriesBaseState } from '../../../reducers/catalog-reducer';
 import ISelect from '../../.ui/ISelect';
-import { onPageItemsCount } from '../../../common/constants';
+import { previewItemsCount } from '../../../common/constants';
 import { Message } from '../../../.types/types';
+import Section from '../../.ui/Section';
 
 export interface DispatchedOrganizationProps {
   fetchCitiesList: typeof actions.catalogActions.fetchCitiesListAsync.request,
@@ -147,8 +148,147 @@ export default class Organization extends Component<InjectedProps, State> {
       image,
     } = { ...data };
     return (
-      <Group className={base} justify="center">
-        <Group className={`${base}__content`} content="center" orientation="vertical" stretched="x">
+      <Section
+        side={(
+          <div className={`${base}__content`}>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              <Field
+                onChange={this.handleChange}
+                field={{ fullName }}
+                error={error && error['fullName']}
+                showTitle
+                title="Полное название"
+              />
+              <Field
+                onChange={this.handleChange}
+                field={{ shortName }}
+                error={error && error['shortName']}
+                showTitle
+                title="Короткое название"
+              />
+            </Group>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              <Field
+                onChange={this.handleChange}
+                field={{ headFio }}
+                error={error && error['headFio']}
+                showTitle
+                title="Руководитель"
+              />
+              <Field
+                onChange={this.handleChange}
+                field={{ headPosition }}
+                error={error && error['headPosition']}
+                showTitle
+                title="Должность"
+              />
+            </Group>
+            <Group justify="center" content="end" rotateOnMedia stretched>
+              <Field
+                onChange={this.handleChange}
+                field={{ state }}
+                error={error && error['state']}
+                showTitle
+                title="Страна"
+              />
+              <ISelect
+                title="Город"
+                onInputChange={this.updateCitiesList}
+                onClick={this.updateCitiesList}
+                onChange={this.handleSelect}
+                name="city"
+                isLoading={isCitiesLoading}
+                options={citiesList.map(({ id, city }) => ({ value: id, label: city }) )}
+                defaultValue={(({ id, name }) => ({ value: id, label: name }))(city)}
+              />
+            </Group>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              <Field
+                onChange={this.handleChange}
+                field={{ address }}
+                error={error && error['address']}
+                showTitle
+                title="Адресс"
+              />
+              <Field
+                onChange={this.handleChange}
+                field={{ site }}
+                error={error && error['site']}
+                showTitle
+                title="Сайт"
+              />
+            </Group>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              <Field
+                onChange={this.handleChange}
+                field={{ email }}
+                error={error && error['email']}
+                showTitle
+                title="Почта"
+              />
+              <Field
+                onChange={this.handleChange}
+                field={{ phone: `${phone}` }}
+                error={error && error['phone']}
+                showTitle
+                title="Телефон"
+              />
+            </Group>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              {openTime && (
+                <Field
+                  onChange={this.handleChange}
+                  field={{ openTime }}
+                  showTitle
+                  readonly
+                  title="Время открытия"
+                />
+              )}
+              {closeTime && (
+                <Field
+                  onChange={this.handleChange}
+                  field={{ closeTime }}
+                  showTitle
+                  readonly
+                  title="Время закрытия"
+                />
+              )}
+            </Group>
+            <Group justify="center" content="center" rotateOnMedia stretched>
+              <ISelect
+                title="Тип организации"
+                onChange={this.handleSelect}
+                name="organizationType"
+                isLoading={isOrganizationTypesLoading}
+                options={organizationTypes.map(({ id, name }) => ({ value: id, label: name }) )}
+                defaultValue={(({ id, name }) => ({ value: id, label: name }))(organizationType)}
+              />
+              <ISelect
+                title="Категория организации"
+                onChange={this.handleSelect}
+                name="category"
+                isLoading={isOrganizationCategoriesLoading}
+                options={organizationCategories.map(({ id, name }) => ({ value: id, label: name }) )}
+                defaultValue={(({ id, name }) => ({ value: id, label: name }))(category)}
+              />
+            </Group>
+            <Div both className={`${base}__save`}>
+              <Button
+                level="office-primary"
+                angular
+                onClick={() => {
+                  onSave && onSave(OrganizationModel.deserialize(data).serialize())
+                  onCreate && onCreate(OrganizationRegistration.deserialize(data).serialize())
+                }}
+              >
+                {onSave && "Сохранить"}
+                {onCreate && "Зарегистрировать организацию"}
+              </Button>
+            </Div>
+          </div>
+        )}
+      >
+        <Div both>
           {onSave && (
             <Image
               className={`${base}__image`}
@@ -168,127 +308,6 @@ export default class Organization extends Component<InjectedProps, State> {
                   : 'Сейчас закрыто'
                 : 'Нет сведений о расписании'}
             </Div>
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              onChange={this.handleChange}
-              field={{ fullName }}
-              error={error && error['fullName']}
-              showTitle
-              title="Полное название"
-            />
-            <Field
-              onChange={this.handleChange}
-              field={{ shortName }}
-              error={error && error['shortName']}
-              showTitle
-              title="Короткое название"
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              onChange={this.handleChange}
-              field={{ headFio }}
-              error={error && error['headFio']}
-              showTitle
-              title="Руководитель"
-            />
-            <Field
-              onChange={this.handleChange}
-              field={{ headPosition }}
-              error={error && error['headPosition']}
-              showTitle
-              title="Должность"
-            />
-          </Group>
-          <Group justify="center" content="end" rotateOnMedia stretched>
-            <Field
-              onChange={this.handleChange}
-              field={{ state }}
-              error={error && error['state']}
-              showTitle
-              title="Страна"
-            />
-            <ISelect
-              title="Город"
-              onInputChange={this.updateCitiesList}
-              onClick={this.updateCitiesList}
-              onChange={this.handleSelect}
-              name="city"
-              isLoading={isCitiesLoading}
-              options={citiesList.map(({ id, city }) => ({ value: id, label: city }) )}
-              defaultValue={(({ id, name }) => ({ value: id, label: name }))(city)}
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              onChange={this.handleChange}
-              field={{ address }}
-              error={error && error['address']}
-              showTitle
-              title="Адресс"
-            />
-            <Field
-              onChange={this.handleChange}
-              field={{ site }}
-              error={error && error['site']}
-              showTitle
-              title="Сайт"
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              onChange={this.handleChange}
-              field={{ email }}
-              error={error && error['email']}
-              showTitle
-              title="Почта"
-            />
-            <Field
-              onChange={this.handleChange}
-              field={{ phone: `${phone}` }}
-              error={error && error['phone']}
-              showTitle
-              title="Телефон"
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            {openTime && (
-              <Field
-                onChange={this.handleChange}
-                field={{ openTime }}
-                showTitle
-                readonly
-                title="Время открытия"
-              />
-            )}
-            {closeTime && (
-              <Field
-                onChange={this.handleChange}
-                field={{ closeTime }}
-                showTitle
-                readonly
-                title="Время закрытия"
-              />
-            )}
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <ISelect
-              title="Тип организации"
-              onChange={this.handleSelect}
-              name="organizationType"
-              isLoading={isOrganizationTypesLoading}
-              options={organizationTypes.map(({ id, name }) => ({ value: id, label: name }) )}
-              defaultValue={(({ id, name }) => ({ value: id, label: name }))(organizationType)}
-            />
-            <ISelect
-              title="Категория организации"
-              onChange={this.handleSelect}
-              name="category"
-              isLoading={isOrganizationCategoriesLoading}
-              options={organizationCategories.map(({ id, name }) => ({ value: id, label: name }) )}
-              defaultValue={(({ id, name }) => ({ value: id, label: name }))(category)}
-            />
           </Group>
           <Group stretched="x" className={`${base}__map`}>
             <GoogleApiWrapper {...{ latitude }} {...{ longitude }} />
@@ -313,22 +332,8 @@ export default class Organization extends Component<InjectedProps, State> {
             <div className="simple-text">Эти параметры необходимы для отображения организации на карте</div>
             <a className="simple-text green-link" href="https://www.latlong.net/" target="_blank">Как узнать эти параметры?</a>
           </Group>
-          <Group stretched justify="center" content="center">
-            <Div both>
-              <Button
-                level="office-primary"
-                onClick={() => {
-                  onSave && onSave(OrganizationModel.deserialize(data).serialize())
-                  onCreate && onCreate(OrganizationRegistration.deserialize(data).serialize())
-                }}
-              >
-                {onSave && "Сохранить"}
-                {onCreate && "Зарегистрировать организацию"}
-              </Button>
-            </Div>
-          </Group>
-        </Group>
-      </Group>
+        </Div>
+      </Section>
     )
   }
 }

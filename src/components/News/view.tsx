@@ -22,16 +22,18 @@ export type NewsProps = typeof defaultProps & HasChildren & INewsDTO & { }
 export interface InjectedProps extends NewsProps, DispatchedNewsProps { }
 const defaultProps = Object.freeze({ })
 
-export default class Slider extends Component<InjectedProps, {}> {
+export default class News extends Component<InjectedProps, {}> {
   static readonly defaultProps = defaultProps
   
-  contextMenu: IContextMenu = [{
+  contextMenu: IContextMenu = [
+    {
       icon: {
         svg: ShareIcon,
         noStroke: true,
       },
       term: terms.SHARE,
-    }, {
+    },
+    {
       icon: {
         svg: NewsIcon,
         noStroke: true,
@@ -63,32 +65,30 @@ export default class Slider extends Component<InjectedProps, {}> {
             'isEmpty': !previewImage,
           })}
         >
-          <Group content="center">
-            <Div both className={`${base}__title`}>
-              {title}
-            </Div>
-            <Div both>
-              <Button
-                before={<Icon svg={MenuIcon} size="s" />}
-                level="simple"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  e.preventDefault();
-                  closeContext();
-                  openContext({
-                    pinned: true,
-                    fields: this.contextMenu,
-                    meta: {
-                      boundings: e.currentTarget.getBoundingClientRect() 
-                    }
-                  });
-                }}
-              />
-            </Div>
-          </Group>
-          <Div both half className={`${base}__subtitle`}>
-            {anons}
+          <Div both>
+            <Button
+              before={<Icon svg={MenuIcon} size="s" />}
+              level="simple"
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                closeContext();
+                openContext({
+                  pinned: true,
+                  fields: this.contextMenu,
+                  meta: {
+                    boundings: e.currentTarget.getBoundingClientRect() 
+                  }
+                });
+              }}
+            />
           </Div>
         </Image>
+        <Div both className={`${base}__title`}>
+          {title}
+        </Div>
+        <Div both half className={`${base}__subtitle`}>
+          {anons}
+        </Div>
       </div>
     </div>
     )

@@ -11,6 +11,14 @@ export class MapContainer extends Component {
       name: ''
     }
   }
+
+  fetchPlaces(mapProps, map) {
+    const { google } = mapProps;
+    const service = new google.maps.places.PlacesService(map);
+    console.log(service)
+    // ...
+  }
+
   render() {
     const base = 'GMap'
     const {
@@ -18,21 +26,24 @@ export class MapContainer extends Component {
       latitude,
       longitude,
       height = 200,
+      zoom = 14,
     } = this.props
     const { onMarkerClick, onInfoWindowClose } = this
     const { selectedPlace: { name } } = this.state
+    
     return (
       <Div className={base} style={{ height }}>
         <Map
           {...{ google }}
+          {...{ zoom }}
           className={`${base}__map`}
-          zoom={14}
+          onReady={this.fetchPlaces}
           initialCenter={{
             lat: latitude || 59.938480,
             lng: longitude || 30.31248,
           }}
         >
-          <Marker onClick={onMarkerClick} name={'Санкт Петербург'} />
+          <Marker name={'Санкт Петербург'} />
         </Map>
       </Div>
     );

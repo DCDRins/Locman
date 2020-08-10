@@ -3,7 +3,7 @@
   z-index: z('main');
   min-height: 100vh;
   height: 100%;
-  color: $primary;
+  color: $dark;
   background-color: $main;
   transition: background-color $fast, color $fast;
   overflow: hidden;
@@ -13,12 +13,17 @@
     }
   }
   &.theme-light {
-    background-color: $primary;
+    background-color: $main;
     color: $dark;
-    ::selection {
-      background-color: $dark;
-      color: $primary;
+    &.move-first {
+      &:first-child {
+        padding-top: $headerHeight * 3;
+      }
     }
+    // ::selection {
+    //   background-color: $accent;
+    //   color: $main;
+    // }
   }
 
   &:nth-child(2) {

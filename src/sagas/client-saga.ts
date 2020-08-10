@@ -117,6 +117,7 @@ function* logoutFlow() {
     yield take(getType(actions.clientActions.logout))
     yield forget('client')
     history.push(appRoutes.MAIN_PAGE.absolutePath)
+    window.location.reload()
   }
 }
 function* watchRegisterWorker() {

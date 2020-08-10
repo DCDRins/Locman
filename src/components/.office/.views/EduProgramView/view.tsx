@@ -10,7 +10,7 @@ import Button from '../../../.ui/Button';
 import Div from '../../../.ui/Div';
 import Field from '../../../.ui/.office/Field';
 import classNames from '../../../../lib/classNames';
-import { onPageItemsCount, paginationLimit } from '../../../../common/constants';
+import { previewItemsCount, paginationLimit } from '../../../../common/constants';
 import { UserEduProgramListBaseState, SubjectListBaseState, TagsBaseState } from '../../../../reducers/catalog-reducer';
 import ISelect from '../../../.ui/ISelect';
 import { EducationProgram } from '../../../../models';

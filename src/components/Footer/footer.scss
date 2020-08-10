@@ -1,7 +1,8 @@
 .Footer {
   position: relative;
   animation: fadeInWithTransform $slowly forwards;
-  background-color: $accent;
+  background-color: $dark-100;
+  color: $main;
   margin-bottom: 0;
   font-size: 8pt;
   .Section__in {

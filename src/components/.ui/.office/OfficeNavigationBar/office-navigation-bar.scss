@@ -1,16 +1,28 @@
 .Office-Navigation-Bar {
-  margin: 0 auto;
-  margin-top: $headerHeight * 2;
-  background-color: $tint-light-800;
-  max-width: fit-content;
-  border-radius: $border-radius;
-  transition: $slow;
+  animation: fadeInWithTransformCenter $slowly forwards;
+  position: fixed;
+  min-width: 30%;
+  padding: 0 $margin-large;
+  left: 50%;
+  top: $headerHeight * .9;
+  transform: translateX(-50%);
+  background: $dark;
+  border-radius: 0 0 10px 10px;
+  color: $main;
+  z-index: z('overoverlay');
+  border-top: 2px solid $tint-light-200;
+  font-weight: 500;
+  font-size: 10pt;
+  opacity: .75;
+  transition: $fast;
+
   &:hover {
-    background-color: $primary;
+    top: $headerHeight;
+    opacity: 1;
   }
-  & > * {
+
+  a {
     opacity: .75;
-    font-weight: 500;
     transition: opacity $fast;
     &:hover {
       opacity: 1;
@@ -18,7 +30,7 @@
   }
   &--current {
     user-select: none;
-    font-size: 1.8em;
+    // font-size: 1.8em;
     font-weight: 600;
     opacity: 1;
   }

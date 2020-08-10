@@ -3,6 +3,20 @@ import cuid from 'cuid'
 
 import { NamedType, ImageType } from "../.types/types";
 
+export interface OrganizationFilters {
+  
+}
+
+export interface IOrganizationDTOExtended {
+  id: number;
+  characterCode: string;
+  image?: ImageType;
+  isOpen: boolean;
+  isOwner: boolean;
+  category?: NamedType;
+  organization: IOrganizationDTO;
+}
+
 export interface IOrganizationDTO {
   id: number;
   characterCode: string;

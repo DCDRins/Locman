@@ -1,6 +1,6 @@
 import Types from 'MyTypes'
 // import getActualData from './subroutines/getActualData';
-import { onPageItemsCount } from '../common/constants';
+import { previewItemsCount } from '../common/constants';
 import { IFetchParams, Nullable, Pagination } from '../.types/types';
 import { getValidData } from './subroutines/getValidData';
 import { INewsDTO } from '../models';

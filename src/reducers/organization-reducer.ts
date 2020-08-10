@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
 
-import { IOrganizationDTO, IUserDTO } from '../models';
+import { IOrganizationDTO, IUserDTO, IOrganizationDTOExtended } from '../models';
 import { Nullable, Pagination } from '../.types/types';
 import { organizationActions } from '../actions';
 import { ReducerBaseState } from './types';
-import { initialNullableState, initialArrayState } from './subroutines/states';
+import { initialNullableState } from './subroutines/states';
 import { makeDefault, storeList, errorHandling } from './subroutines/cases';
 
 export interface CurrentOrganizationBaseState extends ReducerBaseState<Nullable<IOrganizationDTO>> { }
 export interface NewOrganizationBaseState extends ReducerBaseState<Nullable<IOrganizationDTO>> { }
-export interface OrganizationListBaseState extends ReducerBaseState<Nullable<IOrganizationDTO[]>> { }
+export interface OrganizationListBaseState extends ReducerBaseState<Nullable<Pagination<IOrganizationDTOExtended>>> { }
 export interface OrganizationUserListBaseState extends ReducerBaseState<Nullable<Pagination<IUserDTO>>> { }
 
 export interface OrganizationState {
@@ -24,7 +24,7 @@ export const initialCurrentOrganizationState = {
   isLoading: false,
 }
 export const initialNewOrganizationState = initialNullableState;
-export const initialOrganizationListState = initialArrayState;
+export const initialOrganizationListState = initialNullableState;
 export const initialOrganizationUserListState = initialNullableState;
 
 export type OrganizationAction = ActionType<typeof organizationActions>;
@@ -105,6 +105,26 @@ export default combineReducers<OrganizationState, OrganizationAction>({
     },
     list: (state = initialOrganizationListState, action) => {
       switch (action.type) {
+        case getType(organizationActions.fetchOrganizationList.request):
+          return makeDefault(state);
+  
+        case getType(organizationActions.fetchOrganizationList.success):
+          return {
+            ...state,
+            isLoading: false,
+            data: action.payload && {
+              ...action.payload,
+              list: state.data
+                ? [...state.data.list, ...action.payload.list]
+                : action.payload.list,
+            },
+          };
+  
+        case getType(organizationActions.fetchOrganizationList.failure):
+          return errorHandling(state, action.payload)
+  
+        case getType(organizationActions.fetchOrganizationList.cancel):
+          return initialOrganizationListState;
         default:
           return state;
       }

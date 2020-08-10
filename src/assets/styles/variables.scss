@@ -3,33 +3,45 @@ $fontFamily: "Gilroy";
 $sfText: "SF Text";
 $sfDisplay: "SF Display";
 $sfMono: "SF Mono";
+$times: 'Times New Roman', Times, serif;
 
 //colors
-$main: #101018;
-$primary: #fff;
-$highlight: #ddd;
+// $main: #101018;
+// $primary: #fff;
+// $highlight: #ddd;
+// $highlight-2: #eee;
+// $highlight-3: #efefef;
+// $accent-blue: rgb(54, 117, 219); // maybe change this
+// $accent: rgb(41, 43, 46); // maybe change this
+$main: #fff;
+$primary: #ECDFD1;
+$accent: #320A0B;
+$highlight: #906F51;
 $highlight-2: #eee;
 $highlight-3: #efefef;
-// ---
 $accent-blue: rgb(54, 117, 219); // maybe change this
-// $accent: rgb(56, 56, 63); // maybe change this
-$accent: rgb(41, 43, 46); // maybe change this
+// $accent: rgb(41, 43, 46); // maybe change this
+// ---
 $light: #eef;
-$dark: #161616;
-$dark-100: #242424;
-$dark-200: #323232;
-$dark-300: #484848;
-$dark-400: #646464;
-$dark-500: #929292;
-$dark-600: #c0c0c0;
-$dark-700: #eeeeee;
+$light-2: #ddd;
+$dark: #101018;
+$tone: #181010;
+
+$dark-100: #242428;
+$dark-200: #323238;
+$dark-300: #484854;
+$dark-400: #646470;
+$dark-500: #9292a0;
+$dark-600: #c0c0c8;
+$dark-700: #eeeeef;
 $red: red;
 $cyan: DarkCyan;
 $pink: DeepPink;
 $orange: OrangeRed;
 $blue: MidnightBlue;
 $red-light: rgba(255, 150, 150, 1);
-$tint-red: rgba(255, 0, 0, .3);
+$tint-red-100: rgba(255, 0, 0, .1);
+$tint-red-300: rgba(255, 0, 0, .3);
 $tint-hard-100: rgba(22, 22, 22, .1);
 $tint-hard-200: rgba(22, 22, 22, .2);
 $tint-hard-300: rgba(22, 22, 22, .3);

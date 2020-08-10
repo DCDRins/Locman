@@ -1,4 +1,6 @@
 .Current-Event {
+  padding-top: $headerHeight * 2;
+  background-color: $dark;
   &__content {
     height: 100%;
     @include mobile {
@@ -11,11 +13,13 @@
     }
   }
   &__title {
+    color: $main;
     font-size: 24pt;
     font-weight: 700;
     text-align: center;
   }
   &__date {
+    color: $main;
     font-size: 14pt;
     font-weight: 300;
   }

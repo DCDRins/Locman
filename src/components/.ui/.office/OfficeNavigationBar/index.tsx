@@ -31,7 +31,7 @@ class OfficeNavigationBar extends Component<Props, State> {
     const base = "Office-Navigation-Bar";
     const { location: { pathname } } = this.props
     return (
-      <Section>
+      // <Section>
         <Group content="center" justify="center" rotateOnMedia className={base}>
           {Object.values(officeAppRoutes).map(({ absolutePath, lang, credentials, visibleInHeader }) => (
             visibleInHeader && isSatisfied(credentials) && (
@@ -53,7 +53,7 @@ class OfficeNavigationBar extends Component<Props, State> {
             )
           ))}
         </Group>
-      </Section>
+      // </Section>
     )
   }
 }

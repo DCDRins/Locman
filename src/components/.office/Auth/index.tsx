@@ -105,12 +105,12 @@ export default class Auth extends Component<InjectedProps, State> {
                   type={!loginValidated ? 'login' : 'password'}
                   name={!loginValidated ? 'login' : 'password'}
                   id={!loginValidated ? 'login' : 'password'}
-                  level="light"
                   bordered
                   onChange={_handleChange}
                   value={!loginValidated ? login : password}
                   placeholder={!loginValidated ? getActual(terms.LOGIN) : getActual(terms.PASSWORD)}
                   onKeyDown={validate}
+                  level="light"
                   className={`${base}__input`}
                   after={
                     <Group content="center" justify="center">

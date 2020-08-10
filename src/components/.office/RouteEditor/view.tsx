@@ -24,7 +24,7 @@ import { IRouteDTO } from '../../../models';
 import Section from '../../.ui/Section';
 import Ground from '../../.ui/Ground';
 import Event from '../../.ui/Event';
-import { onPageItemsCount } from '../../../common/constants';
+import { previewItemsCount } from '../../../common/constants';
 import cuid from 'cuid';
 import uid from 'uid';
 import ISelect from '../../.ui/ISelect';
@@ -35,6 +35,8 @@ import terms from '../../../common/dictionaries/terms';
 export interface DispatchedRouterEditorProps {
   openContext: typeof actions.systemActions.openContext;
   closeContext: typeof actions.systemActions.closeContext;
+  editRoute: typeof actions.routeActions.editRoute.request,
+  deleteRoute: typeof actions.routeActions.deleteRoute.request,
 }
 export interface StoredRouterEditorProps { }
 export type InjectedRouterEditorProps = DispatchedRouterEditorProps
@@ -103,7 +105,7 @@ export default class RouteEditor extends Component<InjectedProps, State> {
       <Section className={classNames(base, {
         'isOpen': details,
       })}>
-        <Ground src={Img} stretch limit layout="bottom" solid minHeight={250}>
+        <Ground src={Img} stretch limit mask="dark-left" layout="bottom" solid minHeight={250}>
           <Group justify="start">
             <Div both half className={`${base}__title`}>Название</Div>
             <Div both className={`${base}__context`}>
@@ -128,19 +130,18 @@ export default class RouteEditor extends Component<InjectedProps, State> {
           <Group content="end">
             <Div both>
               <Group justify="start" className={`${base}__tags`}>
-                <Button before={<Icon svg={FlashIcon} />} className="custom" level="tag" size="s" angular>
+                {/* <Button before={<Icon svg={FlashIcon} />} className="custom" level="tag" size="s" angular>
                   Текущий маршрут
-                </Button>
+                </Button> */}
                 {[...Array(4)].map((_, idx) => (
                   <Button key={idx} before="#" level="tag" size="s" angular>
-                    Новый маршрут
+                    {`Тэг ${idx + 1}`}
                   </Button>
                 ))}
               </Group>
             </Div>
             <Button
               level="simple"
-              // className="asd"
               angular
               stretched
               before={<Icon svg={DownIcon} noFill size={30} />}
@@ -169,7 +170,7 @@ export default class RouteEditor extends Component<InjectedProps, State> {
             </div>
             <Group content="center" className={`${base}__content`}>
               <ScrolledContent orientation="horizontal" minify contentClassName={`${base}__events`}>
-                {[...Array(onPageItemsCount)].map((_, idx) => <Event key={idx} name={field} title={field} subtitle={field} image={Img} description={field} minify /> )}
+                {[...Array(previewItemsCount)].map((_, idx) => <Event key={idx} name={field} title={field} subtitle={field} image={Img} description={field} minify /> )}
               </ScrolledContent>
             </Group>
             <div className={`${base}__users`}>

@@ -10,14 +10,12 @@ export interface ManagedEventListBaseState extends ReducerBaseState<Nullable<Pag
 export interface StockEventListBaseState extends ReducerBaseState<Nullable<Pagination<IEventDTO>>> { }
 export interface CurrentEventBaseState extends ReducerBaseState<Nullable<IEventDTO>> { }
 export interface ClosestEventBaseState extends ReducerBaseState<Nullable<ClosestEvent>> { }
-// export interface FreshEventBaseState extends ReducerBaseState<Nullable<Pagination<IEventDTO>>> { }
 
 export interface EventState {
   readonly managedList: ManagedEventListBaseState;
   readonly stockList: StockEventListBaseState;
   readonly current: CurrentEventBaseState;
   readonly closest: ClosestEventBaseState;
-  // readonly fresh: FreshEventBaseState;
 };
 
 export const initialManagedEventListState = Object.freeze({
@@ -40,12 +38,6 @@ export const initialClosestEventState = Object.freeze({
   isLoading: true,
   error: null,
 })
-// export const initialFreshEventState = Object.freeze({
-//   data: null,
-//   isLoading: true,
-//   error: null,
-// })
-
 
 export type EventAction = ActionType<typeof eventActions>;
 
@@ -167,6 +159,9 @@ export default combineReducers<EventState, EventAction>({
       case getType(eventActions.fetchStockEventListAsync.failure):
         return errorHandling(state, action.payload)
 
+      case getType(eventActions.fetchStockEventListAsync.cancel):
+        return initialStockEventState;
+
         default:
             return state;
     }
@@ -251,32 +246,4 @@ export default combineReducers<EventState, EventAction>({
         return state;
     }
   },
-  // fresh: (state = initialFreshEventState, action) => {
-  //   switch (action.type) {
-  //     case getType(eventActions.fetchFreshEventList.request):
-  //       return {
-  //         ...state,
-  //         isLoading: true,
-  //         error: null,
-  //         data: null,
-  //       }
-  //     case getType(eventActions.fetchFreshEventList.success):
-  //       return {
-  //         ...state,
-  //         isLoading: false,
-  //         data: action.payload,
-  //       }
-  //     case getType(eventActions.fetchFreshEventList.failure):
-  //       return {
-  //         ...state,
-  //         isLoading: false,
-  //         error: action.payload,
-  //       }
-  //     default:
-  //       return state;
-  //   }
-  // },
 })
-
-// export const routeReducer = createReducer({})
-//     .handleAction(routes.fetchRouteListAsync.success, (state, action) => ({ ...state, todos: action.payload }));

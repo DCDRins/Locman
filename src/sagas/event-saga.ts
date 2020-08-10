@@ -1,7 +1,7 @@
 import { select, call, put, take, fork, all } from 'redux-saga/effects'
 import { getType } from 'typesafe-actions';
-import { Pagination, IFetchParams, Message, MessageReply, ErrorReply, HasCodeParams, Nullable } from '../.types/types';
-import { IEventDTO, IEvent, ClosestEvent } from '../models';
+import { Pagination, IFetchParams, Message, MessageReply, ErrorReply, HasCodeParams, Nullable, IFetchParamsExtended } from '../.types/types';
+import { IEventDTO, IEvent, ClosestEvent, EventFilters } from '../models';
 import { event as api } from '../services/api';
 import handleErrors from './subroutines/handleErrors';
 import * as actions from '../actions';
@@ -11,6 +11,7 @@ import {
   selectStockEventList,
   stockEventListComparison,
   managedEventListComparison,
+  selectClosestEvent,
 } from '../selectors/event-selectors';
 import {
   somethingIsLoading,
@@ -18,7 +19,7 @@ import {
   somethingIsThrowException,
 } from '../actions/system-actions';
 import { ServerResponse } from '../services/api/types';
-import { onPageItemsCount } from '../common/constants';
+import { previewItemsCount } from '../common/constants';
 
 // Here we use `redux-saga` to trigger actions asynchronously. `redux-saga` uses something called a
 // "generator function", which you can read about here:
@@ -35,8 +36,11 @@ function* loadEvent(charCode: string | number): Generator {
     yield put(actions.eventActions.fetchEventAsync.failure(data));
   }
 }
-function* loadStockEventList(params: IFetchParams): Generator {
+function* loadStockEventList(params: IFetchParamsExtended<EventFilters>): Generator {
   try {
+    if (params.resetStore) {
+      yield put(actions.eventActions.fetchStockEventListAsync.cancel({ }));
+    }
     const response = (yield call(api.fetchEventList, params)) as Nullable<Pagination<IEventDTO>>;
     const data = (yield select(stockEventListComparison, response)) as Nullable<Pagination<IEventDTO>>;
     yield put(actions.eventActions.fetchStockEventListAsync.success(data));
@@ -62,7 +66,7 @@ function* createEvent(params: IEvent): Generator {
     yield put(somethingIsLoading())
     const response = (yield call(api.createEvent, params)) as MessageReply<IEventDTO>;
     yield put(actions.eventActions.createEventAsync.success(response));
-    yield put(actions.eventActions.fetchManagedEventListAsync.request({ onPage: onPageItemsCount }));
+    yield put(actions.eventActions.fetchManagedEventListAsync.request({ onPage: previewItemsCount }));
     yield put(somethingIsSuccessfullyLoaded(response))
   } catch ({ response }) {
     const { status, data } = response as ServerResponse<ErrorReply>
@@ -174,7 +178,7 @@ function* watchLoadEvent() {
 }
 function* watchLoadStockEventList() {
   while (true) {
-    const { payload: params }: { payload: IFetchParams } = yield take(getType(actions.eventActions.fetchStockEventListAsync.request));
+    const { payload: params }: { payload: IFetchParamsExtended<EventFilters> } = yield take(getType(actions.eventActions.fetchStockEventListAsync.request));
     const data = (yield select(selectStockEventList, params)) as Nullable<Pagination<IEventDTO>>
     if (data) yield put(actions.eventActions.fetchStockEventListAsync.success(data))
     else yield fork(loadStockEventList, params);
@@ -227,7 +231,9 @@ function* watchDeleteImageFromRange() {
 function* watchLoadClosestEvent() {
   while (true) {
     yield take(getType(actions.eventActions.fetchClosestEvent.request));
-    yield fork(loadClosestEvent);
+    const data = (yield select(selectClosestEvent)) as Nullable<ClosestEvent>
+    if (data) yield put(actions.eventActions.fetchClosestEvent.success(data))
+    else yield fork(loadClosestEvent);
   }
 }
 

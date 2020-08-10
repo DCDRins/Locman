@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 import MuseumPage, { DispatchedMuseumPageProps, StoredMuseumPageProps } from './view';
 
-const mapStateToProps = ({ event }: Types.RootState): StoredMuseumPageProps => ({
+const mapStateToProps = ({ organization, catalog }: Types.RootState): StoredMuseumPageProps => ({
+  organizationList: organization.list,
+  catalog,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchedMuseumPageProps => bindActionCreators({
+  fetchOrganizationList: actions.organizationActions.fetchOrganizationList.request,
+  fetchCitiesList: actions.catalogActions.fetchCitiesListAsync.request,
 }, dispatch);
 
 

@@ -91,9 +91,10 @@ export default class CurrentRoute extends Component<InjectedProps, State> {
     return data && (     
       <Section
         className={`${base}`}
+        unfollow
         side={
           <div className={`${base}__in`}>
-            {events && events.map(({ id, image, name, startDate }, idx) => (
+            {events && events.map(({ id, image, name, startDate, location }, idx) => (
               <Image
                 onClick={this.handleClick}
                 key={id}
@@ -103,10 +104,11 @@ export default class CurrentRoute extends Component<InjectedProps, State> {
                   [`${`${base}__in-image--passed`}`]: idx < currentId,
                 })}
               >
-                <Group orientation="vertical" justify="space-between" stretched content="center" className={`${base}__in-text-content`}>
+                <div className={`${base}__in-text-content`}>
                   <div className={`${base}__in-title`}>{name}</div>
+                  <div className={`${base}__in-description`}>{location}</div>
                   <div className={`${base}__in-description`}>{moment(startDate, 'HH:mm:ss DD.MM.YYYY').format('LLLL')}</div>
-                </Group>
+                </div>
               </Image>
             ))}
           </div>

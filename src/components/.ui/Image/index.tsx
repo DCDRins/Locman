@@ -9,6 +9,7 @@ import { Nullable } from '../../../.types/types';
 export type ImageProps = HTMLAttributes<HTMLDivElement>
 & HasChildren
 & HasStyleObject
+& HasRef<HTMLImageElement>
 & {
   src?: string;
   height?: number;
@@ -71,6 +72,7 @@ export default class Image extends Component<ImageProps, State>{
       keepAspectRatio = false,
       className = '',
       onChange,
+      getRef,
       ...restProps
     } = this.props;
     const { aspectHeight, aspectWidth, imageLoaded } = this.state;
@@ -100,7 +102,7 @@ export default class Image extends Component<ImageProps, State>{
           'empty': !imageLoaded,
         })}
       >
-        <img {...{ src }} onLoad={this.handleImageLoad} style={{ display: 'none' }} />
+        <img {...{ src }} onLoad={this.handleImageLoad} style={{ display: 'none' }} ref={getRef} />
         <div
           className={classNames(`${base}__source`, {
             'active': imageLoaded

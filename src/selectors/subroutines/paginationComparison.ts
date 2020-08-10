@@ -1,5 +1,5 @@
 import { HasPaginationParams, Pagination, Nullable } from '../../.types/types';
-import { onPageItemsCount } from '../../common/constants';
+import { previewItemsCount } from '../../common/constants';
 /**
  * 
  * @param data 
@@ -8,13 +8,12 @@ import { onPageItemsCount } from '../../common/constants';
  * functions for pagination data
  */
 
-export const paginationComparison = (data: Nullable<Pagination<any>>, response: Nullable<Pagination<any>>): Nullable<Pagination<any>> => {
+export const paginationComparison = (data: Nullable<Pagination<any & { id: number }>>, response: Nullable<Pagination<any & { id: number }>>): Nullable<Pagination<any>> => {
 
   if (!data) return response;
   if (!response) return null;
-  
   return {
     ...response,
-    list: response.list.filter(item => data.list.indexOf(item) !== -1),
+    list: response.list.filter(({ id }) => data.list.find(({ id: _id }) => _id === id ) === undefined),
   };
 }

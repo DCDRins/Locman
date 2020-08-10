@@ -1,27 +1,20 @@
 .User {
   animation: fadeInWithTransform $slowly forwards;
   &__image {
-    border-radius: $border-radius-large $border-radius-large 0 0;
+    border-radius: $border-radius;
+    border-color: $tint-hard-100;
   }
   &__content {
-    max-width: $mobile * .75;
-    background: $primary;
-    border: 1px solid $highlight;
-    border-radius: $border-radius-large;
-    // padding: 20px;
     .Field, .ISelect {
-      max-width: 250px;
+      max-width: 50%;
       @include mobile {
         max-width: unset;
-      }
-      &:only-child {
-        max-width: 500px;
       }
     }
   }
   
   &--readonly {
-    font-size: 8pt;
+    font-size: 10pt;
     font-weight: 600;
     & > * {
       &.alert {
@@ -29,7 +22,14 @@
       }
     }
   }
-  &__school {
-    max-width: 500px!important;
+  &__save {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(to left, $main, $light-2);
+    opacity: .85;
+    $border: 3px;
+    background-clip: padding-box;
+    border: $border solid transparent;
+    border-radius: $border-radius;
   }
 }

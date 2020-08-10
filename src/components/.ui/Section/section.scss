@@ -4,19 +4,51 @@
   position: relative;
   animation: fadeInWithTransform $slowly forwards;
   z-index: z("main");
-  margin-bottom: $margin-large;
+  padding-bottom: $margin;
+  margin-bottom: $margin-default;
   // contain: layout style;
   @include mobile {
     margin-bottom: $margin;
   }
-
+  &.accent {
+    background-color: $primary;
+  }
+  &.dev {
+    
+  }
+  &__pattern {
+    position: absolute;
+    opacity: .25;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    .Icon {
+      fill: $highlight;
+      stroke: $highlight;
+    }
+  }
   &__header {
     max-width: $large-desktop;
     margin: 0 auto;
     padding: $margin-default 0;
     text-align: start;
     user-select: text;
+    color: $accent;
     @extend .header-1;
+    .secondary & {
+      color: $highlight;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 400;
+      font-family: $times;
+      @extend .header-3;
+    }
+    .dev & {
+      color: $accent;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14pt!important;
+    }
     @include mobile {
       max-width: $mobileContainerWidth;
     }
@@ -37,13 +69,31 @@
   }
   &__subtitle {
     margin-left: 10px;
-    @extend .small-text;
+    @extend .simple-text;
     color: $highlight;
   }
   &__in {
     display: flex;
     max-width: $large-desktop;
     margin: $margin auto $margin-default;
+    .accent-content & {
+      background-color: $primary;
+      border-radius: $border-radius-small * 2;
+    }
+    .align-center & {
+      @include mobile {
+        max-width: $mobileContainerWidth;
+      }
+      @include tablet {
+        max-width: $tabletContainerWidth;
+      }
+      @include laptop {
+        max-width: $laptop;
+      }
+      @include desktop {
+        max-width: $desktop;
+      }
+    }
     @include TM {
       max-width: 100%;
     }
@@ -93,7 +143,16 @@
     }
   }
   &__after {
-    max-width: $laptop;
-    margin: 0 auto;
+    max-width: $large-desktop;
+    margin: $margin auto $margin-default;
+    @include TM {
+      max-width: 100%;
+    }
+    @include laptop {
+      max-width: $laptop;
+    }
+    @include desktop {
+      max-width: $desktop;
+    }
   }
 }

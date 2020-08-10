@@ -19,6 +19,7 @@
 @import "../../components/.ui/Context/context";
 @import "../../components/.ui/UIPage/ui-page";
 @import "../../components/.ui/Input/input";
+@import "../../components/.ui/Textarea/textarea";
 @import "../../components/.ui/GMap/gmap";
 @import "../../components/.ui/Switch/switch";
 @import "../../components/.ui/RadioButton/radio-button";
@@ -44,6 +45,9 @@
 @import "../../components/AboutService/about-service";
 @import "../../components/FixedLayout/fixed-layout";
 @import "../../components/.pages/AnyEventPage/any-event-page";
+@import "../../components/.pages/MainPage/main-page";
+@import "../../components/.pages/EventPage/event-page";
+@import "../../components/.pages/MuseumPage/museum-page";
 // Components / Office
 @import "../../components/.ui/.office/OfficeNavigationBar/office-navigation-bar";
 @import "../../components/.office/.views/AuthenticateView/authenticate-view";

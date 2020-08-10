@@ -3,7 +3,8 @@
   margin: 0 auto;
   &__tags {
     .Button {
-      background-color: $tint-hard-900;
+      background-color: $tint-light-200;
+      color: $main;
       &.custom {
         background-color: rgba(255, 99, 72, 0.75);
       }
@@ -11,7 +12,7 @@
   }
   .Ground {
     border-radius: $border-radius-small;
-    box-shadow: 0 5px 20px -5px $dark-500;
+    // box-shadow: 0 5px 20px -5px $dark-500;
   }
   // .asd {
   //   position: absolute;
@@ -23,7 +24,7 @@
   &__title {
     width: fit-content;
     @extend .header-1;
-    color: $primary;
+    color: $main;
   }
   &__group {
     display: inline-flex;
@@ -34,7 +35,7 @@
   &__edit {
     flex: 1 0 0;
     min-width: 250px;
-    border: 1px solid $highlight;
+    border: 1px solid $light-2;
     border-radius: 10px;
     @include mobile {
       border: 1px solid $highlight-2;
@@ -65,7 +66,7 @@
     max-height: 280px;
     overflow-y: auto;
     transition: none;
-    border: 1px solid $highlight;
+    border: 1px solid $light-2;
     border-radius: 10px;
     @include mobile {
       border: 1px solid $highlight-2;
@@ -73,7 +74,7 @@
     }
     .user {
       position: relative;
-      background-color: $primary;
+      background-color: $main;
       border-collapse: collapse;
       border-radius: 2px;
       border: 1px solid $highlight-2;

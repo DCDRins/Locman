@@ -44,21 +44,21 @@ export const appRoutes: RouteDictionary = {
       en: 'Main',
     }
   },
-  STOCK_PAGE: {
-    absolutePath: '/event',
-    visibleInHeader: true,
-    component: pages.StockPage,
-    exact: true,
-    credentials: EVERYBODY,
-    icon: {
-      svg: TicketIcon,
-      noStroke: true,
-    },
-    lang: {
-      ru: 'Навигатор',
-      en: 'Navigator',
-    }
-  },
+  // STOCK_PAGE: {
+  //   absolutePath: '/event',
+  //   visibleInHeader: true,
+  //   component: pages.StockPage,
+  //   exact: true,
+  //   credentials: EVERYBODY,
+  //   icon: {
+  //     svg: TicketIcon,
+  //     noStroke: true,
+  //   },
+  //   lang: {
+  //     ru: 'Навигатор',
+  //     en: 'Navigator',
+  //   }
+  // },
   // NEWS_PAGE: {
   //   absolutePath: '/news',
   //   visibleInHeader: true,
@@ -74,9 +74,24 @@ export const appRoutes: RouteDictionary = {
   //     en: 'News',
   //   }
   // },
+  EVENT_PAGE: {
+    absolutePath: '/events',
+    visibleInHeader: true,
+    component: pages.EventPage,
+    exact: true,
+    credentials: EVERYBODY,
+    icon: {
+      svg: TicketIcon,
+      noStroke: true,
+    },
+    lang: {
+      ru: 'Мероприятия',
+      en: 'Events',
+    }
+  },
   ANY_EVENT_PAGE: {
     param: ':id',
-    absolutePath: '/event',
+    absolutePath: '/events',
     component: pages.AnyEventPage,
     credentials: EVERYBODY,
     lang: {
@@ -84,21 +99,21 @@ export const appRoutes: RouteDictionary = {
       en: 'Events',
     }
   },
-  LIBRARY_PAGE: {
-    absolutePath: '/library',
-    visibleInHeader: true,
-    component: pages.LibraryPage,
-    icon: {
-      svg: LibraryIcon,
-      noStroke: true,
-    },
-    credentials: insteadOf(roles.GUEST),
-    exact: true,
-    lang: {
-      ru: 'Библиотека',
-      en: 'Library',
-    }
-  },
+  // LIBRARY_PAGE: {
+  //   absolutePath: '/library',
+  //   visibleInHeader: true,
+  //   component: pages.LibraryPage,
+  //   icon: {
+  //     svg: LibraryIcon,
+  //     noStroke: true,
+  //   },
+  //   credentials: insteadOf(roles.GUEST),
+  //   exact: true,
+  //   lang: {
+  //     ru: 'Библиотека',
+  //     en: 'Library',
+  //   }
+  // },
   // ABOUT_PAGE: {
   //   // param: 'about',
   //   absolutePath: '/about',
@@ -112,6 +127,20 @@ export const appRoutes: RouteDictionary = {
   //     en: 'About',
   //   }
   // },
+  MUSEUM_PAGE: {
+    absolutePath: '/museums',
+    visibleInHeader: true,
+    component: pages.MuseumPage,
+    icon: {
+      svg: MuseumIcon,
+      noStroke: true,
+    },
+    credentials: EVERYBODY,
+    lang: {
+      ru: 'Организации',
+      en: 'Organizations',
+    }
+  },
   ANY_MUSEUM_PAGE: {
     param: ':id',
     absolutePath: '/museums',

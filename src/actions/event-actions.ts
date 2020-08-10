@@ -1,6 +1,6 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { IEventDTO, IEvent, ClosestEvent } from '../models';
-import { IFetchParams, Pagination, MessageReply, Message, ErrorReply, HasCodeParams, Nullable, ImageType } from '../.types/types';
+import { IEventDTO, IEvent, ClosestEvent, EventFilters } from '../models';
+import { IFetchParams, Pagination, MessageReply, Message, ErrorReply, HasCodeParams, Nullable, ImageType, IFetchParamsExtended } from '../.types/types';
 
 
 export const fetchEventAsync = createAsyncAction(
@@ -15,7 +15,7 @@ export const fetchStockEventListAsync = createAsyncAction(
   '@@event/stock list/success',
   '@@event/stock list/failure',
   '@@event/stock list/cancel',
-)<IFetchParams, Nullable<Pagination<IEventDTO>>, ErrorReply>();
+)<IFetchParamsExtended<EventFilters>, Nullable<Pagination<IEventDTO>>, ErrorReply, {}>();
 
 export const fetchManagedEventListAsync = createAsyncAction(
   '@@event/managed list/request',

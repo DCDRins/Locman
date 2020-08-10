@@ -4,7 +4,7 @@
   border-radius: $border-radius-small;
   background-color: $dark-100;
   box-sizing: border-box;
-  color: $primary;
+  color: $main;
   
   &.pinned {
     position: absolute!important;
@@ -28,6 +28,9 @@
     &__email {
       font-size: 10pt;
       font-weight: 300;
+    }
+    .Image.empty {
+      background-color: $main;
     }
   }
   &__main {

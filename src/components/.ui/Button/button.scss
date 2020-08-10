@@ -110,48 +110,53 @@
   }
   &--level {
     &-primary {
-      background-color: $primary;
-      color: $main;
+      background-color: $main;
+      color: $dark;
       .Icon {
-        fill: $main;
-        stroke: $main;
+        fill: $dark;
+        stroke: $dark;
       }
     }
     &-office-primary {
-      background-color: $accent;
-      color: $primary;
+      background-color: $main;
+      color: $main;
+      background: $dark;
       .Icon {
         fill: $primary;
         stroke: $primary;
       }
     }
     &-secondary {
-      color: $primary;
-      border: 1px solid $primary;
+      color: $accent;
+      font-weight: 600;
+      border: 1px solid $highlight;
+      background-color: $primary;
       &:hover {
-        background-color: $tint-light-100;
+        background-color: $main;
       }
     }
     &-office-secondary {
-      color: $main;
+      color: $tint-hard-400;
+      font-weight: 500;
       background-color: $tint-light-100;
       .Icon {
         fill: $tint-hard-300;
         stroke: $tint-hard-300;
       }
       &:hover {
-        background-color: $highlight-2;
+        color: $tint-hard-800;
+        background-color: $tint-hard-100;
       }
     }
     &-tertiary {
-      color: $primary;
-      background-color: $tint-light-100;
+      color: $accent;
+      background-color: $main;
       .Icon {
-        fill: $primary;
-        stroke: $primary;
+        fill: $accent;
+        stroke: $accent;
       }
       &:hover {
-        background-color: $primary;
+        background-color: $accent;
         color: $main;
         .Icon {
           fill: $main;
@@ -164,7 +169,8 @@
       }
     }
     &-office-tertiary {
-      color: $main;
+      color: $tint-hard-500;
+      font-weight: 600;
       background-color: $highlight-2;
       .Icon {
         fill: $tint-hard-300;
@@ -172,10 +178,10 @@
       }
     }
     &-simple {
-      color: $primary;
+      color: $light;
       .Icon {
-        fill: $primary;
-        stroke: $primary;
+        fill: $light;
+        stroke: $light;
       }
       &:hover {
         background: $tint-light-100;
@@ -186,11 +192,16 @@
       }
     }
     &-tag {
-      color: $primary;
-      background-color: $tint-light-200;
+      color: $dark;
+      background-color: $tint-light-300;
       margin-right: $margin;
+      font-weight: 300;
       &:last-child {
         margin-right: 0;
+      }
+      .Icon {
+        fill: $main;
+        stroke: $main;
       }
       &--permanent {
         user-select: text;
@@ -199,7 +210,7 @@
     }
     &-alert {
       color: $primary;
-      background-color: $tint-red;
+      background-color: $tint-red-300;
     }
     &-office-alert {
       color: $red;
@@ -208,7 +219,7 @@
         stroke: $red;
       }
       &:hover {
-        background-color: $tint-red;
+        background-color: $tint-red-300;
       }
     }
   }

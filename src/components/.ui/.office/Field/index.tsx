@@ -8,6 +8,7 @@ import Icon from '../../Icon';
 import { ReactComponent as EditIcon } from '../../../../assets/icons/edit.svg';
 import { ReactComponent as CrossIcon } from '../../../../assets/icons/cross.svg';
 import Input from '../../Input';
+import Textarea from '../../Textarea';
 import Switch from '../../Switch';
 import NumericUpDown from '../../NumericUpDown';
 
@@ -22,6 +23,7 @@ type Props = HTMLAttributes<HTMLDivElement>
   readonly?: boolean;
   lightMode?: boolean;
   custom?: boolean;
+  isTextBox?: boolean;
   autoComplete?: string;
   error?: boolean;
   field?: {
@@ -41,6 +43,7 @@ export default class Field extends Component<Props, State> {
   _intervalId?: NodeJS.Timeout
   _isMounted: boolean = true
   inputRef = React.createRef<HTMLInputElement>()
+  textareaRef = React.createRef<HTMLTextAreaElement>()
 
   componentWillUnmount() {
     const { _intervalId } = this
@@ -51,8 +54,8 @@ export default class Field extends Component<Props, State> {
   editOff = () => this.setState({ editMode: false })
 
   editOn = () => {
-    const { readonly } = this.props
-    const { current } = this.inputRef
+    const { readonly, isTextBox } = this.props
+    const { current } = isTextBox ? this.textareaRef : this.inputRef
     this.setState({ editMode: !readonly }, () => {
       this._intervalId = setInterval(() => {
         current && current.focus()
@@ -60,9 +63,8 @@ export default class Field extends Component<Props, State> {
       }, 100)
     })
   }
-  handleFocus = (e: React.FormEvent<HTMLInputElement>) => {
-    e.currentTarget.select()
-  }
+
+  handleFocus = e => e.currentTarget.select()
 
   render() {
     const {
@@ -76,6 +78,7 @@ export default class Field extends Component<Props, State> {
       showTitle = false,
       readonly = false,
       custom = false,
+      isTextBox = false,
       lightMode = false,
       error = false,
       title,
@@ -122,6 +125,8 @@ export default class Field extends Component<Props, State> {
           'light': lightMode,
           'readonly': readonly,
           'error': error,
+          'active': property === true,
+          'textbox': isTextBox,
         })}
       >
         {title && (
@@ -132,7 +137,7 @@ export default class Field extends Component<Props, State> {
           </Div>
         )}
         <Group
-          content="center"
+          content={isTextBox ? 'start' : 'center'}
           {...{ justify }}
           onDoubleClick={this.editOn}
           className={classNames(`${base}__group`,{
@@ -141,7 +146,7 @@ export default class Field extends Component<Props, State> {
         >
           <div className={`${base}__main`}>
             {dangerouslySetInnerHTML
-            ? <div dangerouslySetInnerHTML={dangerouslySetInnerHTML}></div>
+            ? <div dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
             : children
               ? children
               : property
@@ -160,29 +165,46 @@ export default class Field extends Component<Props, State> {
           )}
           {typeof property === 'boolean' && (
             <Switch
-              defaultChecked={property}
+              checked={property}
               name={key}
               {...{ onChange }}
             />
           )}
         </Group>
         {typeof property === 'string' && (
-          <Input
-            autoComplete={autoComplete ? autoComplete : key}
-            className={`${base}__input`}
-            type={key.includes('password') ? 'password' : 'text'}
-            name={key}
-            level="light"
-            bordered
-            hidden={!editMode && property !== undefined}
-            getRef={this.inputRef}
-            autoFocus
-            defaultValue={property}
-            onFocus={this.handleFocus}
-            onBlur={this.editOff}
-            placeholder={title}
-            {...{ onChange }}
-          />
+          !isTextBox ? (
+            <Input
+              autoComplete={autoComplete ? autoComplete : key}
+              className={`${base}__input`}
+              type={key.includes('password') ? 'password' : 'text'}
+              name={key}
+              level="light"
+              bordered
+              hidden={!editMode && property !== undefined}
+              getRef={this.inputRef}
+              autoFocus
+              defaultValue={property}
+              onFocus={this.handleFocus}
+              onBlur={this.editOff}
+              placeholder={title}
+              {...{ onChange }}
+            />
+          ) : (
+            <Textarea
+              className={`${base}__textarea`}
+              name={key}
+              level="light"
+              bordered
+              hidden={!editMode && property !== undefined}
+              getRef={this.textareaRef}
+              autoFocus
+              defaultValue={property}
+              onFocus={this.handleFocus}
+              onBlur={this.editOff}
+              placeholder={title}
+              {...{ onChange }}
+            />
+          )
         )}
       </Div>
     );

@@ -3,7 +3,7 @@
   width: 100%;
   box-sizing: border-box;
   border-radius: $border-radius-small;
-  color: $primary;
+  color: $dark;
   transition: color $average;
   overflow: hidden;
   filter: contrast(120%) hue-rotate(-5deg) saturate(110%);
@@ -16,7 +16,7 @@
   &.editable {
     color: $tint-hard-300;
     &.empty {
-      background-color: $highlight;
+      background-color: $light-2;
     }
     &:hover {
       color: $tint-hard-900;
@@ -42,7 +42,7 @@
   }
   &__children {
     &.editable {
-      background-color: $highlight;
+      background-color: $light-2;
       color: $tint-hard-300;
       font-weight: 300;
       &--photo {

@@ -3,11 +3,12 @@
 import { select, call, put, take, all, fork } from 'redux-saga/effects'
 import { organization } from '../services/api';
 import * as actions from '../actions'
-import { IOrganizationDTO, IOrganization, IUserDTO } from '../models';
-import { Message, HasCodeParams, Nullable, MessageReply, ImageType, HasPaginationParams, Pagination } from '../.types/types'
+import { IOrganizationDTO, IOrganization, IUserDTO, OrganizationFilters, IOrganizationDTOExtended } from '../models';
+import { Message, HasCodeParams, Nullable, MessageReply, ImageType, HasPaginationParams, Pagination, IFetchParamsExtended } from '../.types/types'
 import { getType } from 'typesafe-actions';
 import handleErrors from './subroutines/handleErrors';
 import { ServerResponse } from '../services/api/types';
+import { selectOrganizationList, organizationListComparison } from '../selectors/organization-selectors';
 
 function* loadOrganizationData(id: number): Generator {
   try {
@@ -82,6 +83,17 @@ function* loadOrganizationUserList(params: HasPaginationParams): Generator {
     yield put(actions.organizationActions.fetchOrganizationUserList.failure(data));
   }
 }
+function* loadOrganizationList(params: IFetchParamsExtended<OrganizationFilters>): Generator {
+  try {
+    const response = (yield call(organization.fetchOrganizationList, params)) as Nullable<Pagination<IOrganizationDTOExtended>>;
+    const data = (yield select(organizationListComparison, response)) as Nullable<Pagination<IOrganizationDTOExtended>>;
+    yield put(actions.organizationActions.fetchOrganizationList.success(data));
+  } catch ({ response }) {
+    const { status, data } = response as ServerResponse<Message>;
+    yield handleErrors(status)
+    yield put(actions.organizationActions.fetchOrganizationList.failure(data));
+  }
+}
 
 // WATHCERS ------------
 
@@ -121,6 +133,14 @@ function* watchLoadOrganizationUserList() {
     yield fork(loadOrganizationUserList, params);
   }
 }
+function* watchLoadOrganizationList() {
+  while (true) {
+    const { payload: params }: { payload: IFetchParamsExtended<OrganizationFilters> } = yield take(getType(actions.organizationActions.fetchOrganizationList.request));
+    const data = (yield select(selectOrganizationList, params)) as Nullable<Pagination<IOrganizationDTOExtended>>
+    if (data) yield put(actions.organizationActions.fetchOrganizationList.success(data))
+    else yield fork(loadOrganizationList, params);
+  }
+}
 
 
 export default function* () {
@@ -131,6 +151,7 @@ export default function* () {
     fork(watchEditOrganizationData),
     fork(watchUploadOrganizationImage),
     fork(watchLoadOrganizationUserList),
+    fork(watchLoadOrganizationList),
   ])
 }
 // export function* refreshRequestWatcher() {

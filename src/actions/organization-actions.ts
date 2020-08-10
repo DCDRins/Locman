@@ -1,6 +1,6 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { IOrganizationDTO, IOrganization, IUserDTO } from '../models';
-import { Message, HasCodeParams, Nullable, ErrorReply, MessageReply, ImageType, HasPaginationParams, Pagination } from '../.types/types';
+import { IOrganizationDTO, IOrganization, IUserDTO, OrganizationFilters, IOrganizationDTOExtended } from '../models';
+import { Message, HasCodeParams, Nullable, MessageReply, ImageType, HasPaginationParams, Pagination, IFetchParamsExtended, ErrorReply } from '../.types/types';
 
 export const fetchOrganizationData = createAsyncAction(
   '@@organization/fetch/request',
@@ -43,3 +43,10 @@ export const fetchOrganizationUserList = createAsyncAction(
   '@@organization/users/failure',
   '@@organization/users/cancel',
 )<HasPaginationParams, Pagination<IUserDTO>, Message>();
+
+export const fetchOrganizationList = createAsyncAction(
+  '@@organization/list/request',
+  '@@organization/list/success',
+  '@@organization/list/failure',
+  '@@organization/list/cancel',
+)<IFetchParamsExtended<OrganizationFilters>, Nullable<Pagination<IOrganizationDTOExtended>>, ErrorReply>();

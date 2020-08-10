@@ -6,6 +6,7 @@ export const projectName: withLanguage = {
     en: 'Locman',
   }
 }
-export const onPageItemsCount = 12;
+export const previewItemsCount = 12;
 export const cyrillicUppercaseLetters = 1040 // ISO-Latin-1 [1040;1103]
 export const paginationLimit = 50
+export const onPageItemsCount = paginationLimit * 0.5;

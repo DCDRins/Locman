@@ -3,30 +3,25 @@
   position: relative;
   user-select: text;
   overflow: hidden;
-  &:not(:only-child) {
-    margin-right: $margin-default;
-    &.minify {
-      margin-right: $margin;
+  margin-right: $margin-default;
+  @include mobile {
+    margin-right: $margin;
+  }
+  &:first-child {
+    @include tablet {
+      padding-left: $margin-large;
     }
     @include mobile {
-      margin-right: $margin;
+      padding-left: $margin;
     }
-    &:first-child {
-      @include tablet {
-        padding-left: $margin-large;
-      }
-      @include mobile {
-        padding-left: $margin;
-      }
+  }
+  &:last-child {
+    margin-right: 0;
+    @include tablet {
+      padding-right: $margin-large;
     }
-    &:last-child {
-      margin-right: 0;
-      @include tablet {
-        padding-right: $margin-large;
-      }
-      @include mobile {
-        padding-right: $margin;
-      }
+    @include mobile {
+      padding-right: $margin;
     }
   }
   &.isLoading {
@@ -57,6 +52,8 @@
     position: relative;
     max-width: $newsSizeDefault;
     min-width: $newsSizeDefault;
+    background-color: $primary;
+    border-radius: $border-radius-small * 2;
     
     @include mobile {
       max-width: $newsSizeMobile;
@@ -77,10 +74,9 @@
   }
   &__image {
     height: $eventSizeDefault;
-    border-color: $tint-light-100!important;
+    border-radius: $border-radius-small * 2;
     cursor: pointer;
-    @include toned-half('::before', 0);
-    border-radius: 6px;
+    @include toned-full('::before', 0);
     &.isEmpty {
       background-color: $tint-light-100;
     }
@@ -96,14 +92,13 @@
     @include desktop {
       height: $eventSizeDesktop;
     }
-    @include toned-half('::before', .75);
     &:hover {
       @include toned-full('::before', .75);
       #{$parent}__title {
-        color: $tint-light-900;
+        color: $main;
       }
       #{$parent}__subtitle {
-        color: $tint-light-700;
+        color: $main;
       }
       #{$parent}__tags {
         opacity: 1;
@@ -113,24 +108,20 @@
       }
     }
   }
-  &__title, &__subtitle, &__date {
+  &__title, &__subtitle {
     display: block;
     position: relative;
     transition: $average;
+    color: $accent;
   }
   &__title {
     font-size: 12pt;
-    font-weight: 300;
-    color: $tint-light-700;
+    font-weight: 600;
     width: 100%;
   }
   &__subtitle {
     font-size: 10pt;
-    font-weight: 300;
-    height: 60%;
-    color: transparent;
-    overflow: hidden;
-    mask-image: $text-overflow-mask;
+    font-weight: 400;
     @include LTM {
       max-height: 50%;
     }

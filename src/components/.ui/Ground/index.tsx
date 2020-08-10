@@ -11,7 +11,7 @@ type Props = typeof defaultProps
   stretch: boolean;
   fit: boolean;
   layout?: 'top' | 'bottom'; // default center
-  mask?: 'no' | 'both' | 'radial'; // default bottom
+  mask?: 'no' | 'both' | 'radial' | 'dark-left'; // default bottom
   minHeight?: number | 'auto';
   video?: string;
   blur?: boolean;

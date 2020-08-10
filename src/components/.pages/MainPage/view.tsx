@@ -11,14 +11,19 @@ import isSatisfied from '../../../lib/isSatisfied'
 import roles, { insteadOf } from '../../../common/dictionaries/roles'
 import * as actions from '../../../actions'
 import { SliderBaseState, NewsListBaseState } from '../../../reducers/news-reducer'
-import { onPageItemsCount } from '../../../common/constants'
+import { previewItemsCount } from '../../../common/constants'
 import { StockEventListBaseState } from '../../../reducers/event-reducer'
+import { ReactComponent as PatternIcon } from '../../../assets/icons/patterns/pattern.svg'
+import { ReactComponent as NewsIcon } from '../../../assets/icons/news.svg'
 import terms from '../../../common/dictionaries/terms'
-import OmegaImage from '../../../assets/images/omega-group.png'
 import EdunaveImage from '../../../assets/images/edunavi.jpg'
 import Image from '../../.ui/Image'
 import Footer from '../../Footer'
 import cuid from 'cuid'
+import Icon from '../../.ui/Icon'
+import Button from '../../.ui/Button'
+import Div from '../../.ui/Div'
+import { appRoutes } from '../../../common/dictionaries/routes'
 
 export interface DispatchedMainPageProps {
   fetchSliderNews: typeof actions.newsActions.fetchSliderNews.request;
@@ -45,8 +50,8 @@ export default class MainPage extends Component<InjectedProps> {
     const { currentPage: currentEventPage } = { ...eventData }
 
     fetchSliderNews({ });
-    fetchEventStockList({ page: currentEventPage || 1, onPage: onPageItemsCount });
-    fetchNewsList({ page: currentEventPage || 1, onPage: onPageItemsCount });
+    fetchEventStockList({ page: currentEventPage || 1, onPage: previewItemsCount });
+    fetchNewsList({ page: currentEventPage || 1, onPage: previewItemsCount });
   }
 
   render() {
@@ -61,22 +66,35 @@ export default class MainPage extends Component<InjectedProps> {
         isLoading: isNewsLoading,
       },
     } = this.props;
+    const base = "Main-Page";
     const { list: newsList } = { ...newsData };
     const { list: freshList } = { ...freshData };
     return (
-      <UIPage>
+      <UIPage className={base}>
         <Slider actualData={sliderNews} />
-        <Section header="Новые мероприятия">
+        <Section
+          header="Новые мероприятия"
+          type="accent"
+          pattern={<Icon svg={PatternIcon} size={300} noStroke />}
+        >
           <ScrolledContent orientation="horizontal" isContentLoading={isFreshLoading}>
             {isFreshLoading
-              ? [...Array(onPageItemsCount)].map(() => <Event key={cuid()} name="" subtitle="" image="loader" isLoading />)
-              : freshList && freshList.map(({ id, characterCode, image, name, description, location }) => <Event key={id} charCode={characterCode} {...{ name }} subtitle={location} {...{ description }} image={image && image.path} />)
+              ? [...Array(previewItemsCount)].map(() => <Event key={cuid()} name="" subtitle="" image="loader" isLoading />)
+              : freshList && freshList.map(({ id, characterCode, image, name, description, location, startDate }) => <Event key={id} charCode={characterCode} {...{ name }} date={startDate} subtitle={location} {...{ description }} image={image && image.path} />)
             }
           </ScrolledContent>
+          <Group justify="center" content="center" stretched="x" className={`${base}__follow`}>
+            <Button level="tertiary" angular route={appRoutes.EVENT_PAGE}>
+              Все мероприятия
+            </Button>
+          </Group>
         </Section>
-        {isSatisfied([roles.PARTICIPANT, roles.PARENT, roles.TEACHER]) && <CurrentRoute />}
+        {/* {isSatisfied([roles.PARTICIPANT, roles.PARENT, roles.TEACHER]) && <CurrentRoute />} */}
         {!isNewsLoading && newsList && (
-          <Section header={terms.NEWS_VIEWER}>
+          <Section
+            header={terms.NEWS_VIEWER}
+            pattern={<Icon svg={NewsIcon} size={200} noStroke />}
+          >
             <ScrolledContent orientation="horizontal" isContentLoading={isNewsLoading}>
               {newsList.map(news => (
                 <News key={news.characterCode} {...news} />
@@ -84,11 +102,8 @@ export default class MainPage extends Component<InjectedProps> {
             </ScrolledContent>
           </Section>
         )}
-        <Section header={terms.PARTNERS}>
-          <Group justify="start">
-            {/* <a href="https://gkomega.ru/" target="blank">
-              <Image src={OmegaImage} height={100} keepAspectRatio style={{ marginRight: 20 }} />
-            </a> */}
+         <Section header={terms.PARTNERS} type="secondary" unfollow>
+          <Group justify="center">
             <a href="https://edunavi.online/" target="blank">
               <Image src={EdunaveImage} height={100} keepAspectRatio />
             </a>

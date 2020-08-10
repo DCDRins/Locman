@@ -13,7 +13,7 @@ import {
   programListComparison,
 } from '../selectors/catalog-selectors';
 import handleErrors from './subroutines/handleErrors';
-import { onPageItemsCount, paginationLimit } from '../common/constants';
+import { previewItemsCount, paginationLimit } from '../common/constants';
 
 function* fetchTagList(params: HasSearchParams): Generator {
   try {

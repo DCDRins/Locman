@@ -7,25 +7,28 @@
     // background-color: rgba(0, 153, 255, 0.507);
   }
   &__group {
-    background-color: rgba(255,255,255, .05);
+    background-color: $main;
+    color: $dark;
     width: fit-content;
-    border-radius: 2px;
+    border: 2px solid $accent-blue;
+    border-radius: $border-radius;
     & > * {
       display: inline-block;
-      font-size: 10pt;
-      font-weight: 500;
+      font-size: 11pt;
+      font-weight: 600;
+
       &::before {
         content: attr(data-attr);
         display: block;
         font-size: 8pt;
-        color: $tint-light-300;
+        color: $dark-500;
         margin-bottom: 5px;
       }
     }
   }
   &__description {
     position: relative;
-    @extend .simple-text;
+    font-weight: 500;
     height: 55px;
     overflow: hidden;
     &::after {
@@ -81,43 +84,37 @@
         visibility: hidden;
       }
     }
-    // &-text-content {
-    //   position: absolute;
-    //   padding: 10px;
-    //   left: 0;
-    //   bottom: 0;
-    //   max-width: 100%;
-    //   box-sizing: border-box;
-    //   z-index: 1;
-    //   background-color: $dark-100;
-    //   opacity: .75;
-    //   border-radius: 0 10px 0 0;
-    //   & > * {
-    //     display: block;
-    //     width: fit-content;
-    //   }
-    // }
-    &-title {
-      padding: 5px 10px;
-      border-radius: 0 0 10px 10px;
-      opacity: .8;
+    &-text-content {
       box-sizing: border-box;
-      z-index: 1;
-      background-color: $dark;
-      box-shadow: 0 5px 100px 0 $primary;
-      font-size: 18pt;
-      font-weight: 200;
+      position: absolute;
+      max-width: $eventSizeDesktop;
+      left: 0;
+      bottom: 0;
+      margin: $margin;
+      color: $dark;
+      border: 3px solid $primary;
+      border-radius: 3px;
+      background-color: $primary;
+    }
+    &-title {
+      font-size: 12pt;
+      font-weight: 600;
+      color: $accent;
+      padding: $margin;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      background-color: rgba($main, .65);
     }
     &-description {
-      padding: 5px 10px;
-      border-radius: 10px 10px 0 0;
-      opacity: .8;
-      box-sizing: border-box;
-      z-index: 1;
-      background-color: $dark;
-      box-shadow: 0 5px 80px -10px $primary;
-      font-size: 10pt;
-      font-weight: 400;
+      @extend .simple-text;
+      color: $highlight;
+      font-weight: 500;
+      padding: 2px $margin;
+      background-color: rgba($main, .65);
+      &:last-child {
+        padding-bottom: $margin;
+      }
     }
   }
 }

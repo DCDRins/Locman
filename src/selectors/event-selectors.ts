@@ -1,5 +1,4 @@
 import Types from 'MyTypes'
-import { onPageItemsCount } from '../common/constants';
 import { getValidData } from './subroutines/getValidData';
 import { paginationComparison } from './subroutines/paginationComparison';
 import { Pagination } from '../.types/types';
@@ -23,6 +22,8 @@ export const selectEvent = ({ event }: Types.RootState, charCode) => {
     e => e.characterCode === charCode
   )
 }
+
+export const selectClosestEvent = ({ event: { closest: { data } } }: Types.RootState) => data
 
 export const selectManagedEventList = ({ event: { managedList: { data } } }: Types.RootState, params) => getValidData(data, params)
 export const selectStockEventList = ({ event: { stockList: { data } } }: Types.RootState, params) => getValidData(data, params)

@@ -29,18 +29,25 @@
       border: 1px solid $highlight-2;
     }
   }
-  &.level-default {
-    color: $primary;
-    background-color: $dark-200;
+  // &.level-default { }
+  &.level-light {
+    color: $dark;
+    background-color: $main;
+    .Icon {
+      fill: $dark;
+    }
     ::-webkit-input-placeholder {
-      color: $dark-500;
+      color: $tint-hard-600;
     }
   }
-  &.level-light {
+  &.level-default {
     color: $main;
-    background-color: $primary;
+    background-color: $dark-200;
     .Icon {
-      fill: $highlight;
+      fill: $main;
+    }
+    ::-webkit-input-placeholder {
+      color: $tint-light-600;
     }
   }
 }

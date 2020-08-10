@@ -1,13 +1,13 @@
 .Minified-Event-Tile {
   position: relative;
   width: 100%;
-  border: 1px solid $highlight;
+  border: 1px solid $light-2;
   box-sizing: border-box;
   &:nth-child(odd) {
     background-color: $highlight-2;
   }
   &:hover {
-    background-color: $highlight;
+    background-color: $light-2;
   }
   &__group {
     width: 85%;

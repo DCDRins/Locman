@@ -1,5 +1,5 @@
-import { HasPaginationParams, Pagination, Nullable } from '../../.types/types';
-import { onPageItemsCount } from '../../common/constants';
+import { HasPaginationParams, Pagination, Nullable, NeedRestore } from '../../.types/types';
+import { previewItemsCount } from '../../common/constants';
 /**
  * 
  * @param data 
@@ -8,18 +8,12 @@ import { onPageItemsCount } from '../../common/constants';
  * functions for pagination data
  */
 
-export const getValidData = (data: Nullable<Pagination<any>>, { page = 1 }: HasPaginationParams, count: number = onPageItemsCount): Nullable<Pagination<any>> => {
-  count <= 0 && (
-    count = 1
-  );
+export const getValidData = (data: Nullable<Pagination<any>>, { page = 1, resetStore = false }: HasPaginationParams & NeedRestore): Nullable<Pagination<any>> => {
 
-  if (!data) return null;
+  if (!data || resetStore) return null;
   const { currentPage } = data
 
-  return currentPage && page <= currentPage
+  return currentPage && page <= currentPage && page !== -1
     ? { ...data, list: [] }
     : null;
-    // data.list.length < count
-    //   ? null
-    //   : data;
 }

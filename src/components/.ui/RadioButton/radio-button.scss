@@ -11,7 +11,7 @@
   &::before {
     content: '';
     display: block;
-    background-color: $highlight;
+    background-color: $light-2;
     border-radius: 10px;
     width: 20px;
     height: 20px;
@@ -23,7 +23,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: $primary;
+    background-color: $main;
     margin: 10px;
     width: 0;
     height: 0;
