@@ -29,8 +29,8 @@ export interface DispatchedEventTileProps {
   uploadImage: typeof actions.eventActions.uploadImageAsync.request;
   uploadImageRange: typeof actions.eventActions.uploadImageRangeAsync.request;
   deleteImageFromRange: typeof actions.eventActions.deleteImageFromRangeAsync.request;
-  fetchEventFormatList: typeof actions.catalogActions.fetchEventFormatList.request;
-  fetchEventLevelList: typeof actions.catalogActions.fetchEventLevelList.request;
+  openModal: typeof actions.systemActions.openModal;
+  closeModal: typeof actions.systemActions.closeModal;
 }
 export interface StoredEventTileProps {
   catalog: {
@@ -38,14 +38,12 @@ export interface StoredEventTileProps {
     event: EventCatalogBaseState;
   }
 }
-type Props = typeof defaultProps
-& DispatchedEventTileProps
-& StoredEventTileProps
-& HasRef<HTMLDivElement>
-& {
+export type EventTileProps = typeof defaultProps & HasRef<HTMLDivElement> & {
   data: IEventDTO;
 }
 const defaultProps = Object.freeze({ })
+
+interface InjectedProps extends DispatchedEventTileProps, StoredEventTileProps, EventTileProps { }
 
 type State = typeof initialState & {
   data: IEventDTO,
@@ -53,7 +51,7 @@ type State = typeof initialState & {
 const initialState = Object.freeze({
   optionalClosed: true,
 })
-export default class EventTile extends Component<Props, State> {
+export default class EventTile extends Component<InjectedProps, State> {
   readonly state: State = {
     ...initialState,
     data: this.props.data,
@@ -186,6 +184,7 @@ export default class EventTile extends Component<Props, State> {
   render() {
     const base = "Event-Tile"
     const {
+      getRef,
       deleteEvent,
       editEvent,
       deleteImageFromRange,
@@ -200,6 +199,8 @@ export default class EventTile extends Component<Props, State> {
         },
       },
       fetchTagList,
+      openModal,
+      closeModal,
     } = this.props
     const { list: tagList } = { ...tagData }
     const {
@@ -231,7 +232,7 @@ export default class EventTile extends Component<Props, State> {
       },
     } = this.state;
     return (
-      <Group className={base} content="stretch">
+      <Group className={base} content="stretch" {...{ getRef }}>
         <div className={`${base}__main`}>
           <Image
             src={image && image.path}
@@ -368,11 +369,15 @@ export default class EventTile extends Component<Props, State> {
               title="Начало"
               field={{ startDate }}
               handleChange={this.handleFieldChange}
+              {...{ openModal }}
+              {...{ closeModal }}
             />
             <DateField
               title="Конец"
               field={{ finishDate }}
               handleChange={this.handleFieldChange}
+              {...{ openModal }}
+              {...{ closeModal }}
             />
             <Field
               justify="space-between"
@@ -388,11 +393,15 @@ export default class EventTile extends Component<Props, State> {
                   title="Начало приема заявок"
                   field={{ requestStartDate }}
                   handleChange={this.handleFieldChange}
+                  {...{ openModal }}
+                  {...{ closeModal }}
                 />
                 <DateField
                   title="Конец приема заявок"
                   field={{ requestFinishDate }}
                   handleChange={this.handleFieldChange}
+                  {...{ openModal }}
+                  {...{ closeModal }}
                 />
               </>
             )}

@@ -21,7 +21,6 @@ import { appRoutes } from '../../../common/dictionaries/routes';
 type Props = {
   data: IEventDTO
   deleteEvent: typeof actions.eventActions.deleteEventAsync.request,
-  editEvent: typeof actions.eventActions.editEventAsync.request,
   // showRequests: typeof actions.eventActions.editEventAsync.request,
 }
 type State = typeof initialState & { }
@@ -35,7 +34,7 @@ export default class MinifiedEventTile extends Component<Props, State> {
 
   render() {
     const base = "Minified-Event-Tile"
-    const { deleteEvent, editEvent } = this.props
+    const { deleteEvent } = this.props
     const { showRequests } = this.state
     const {
       data: {

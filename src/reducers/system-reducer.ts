@@ -3,10 +3,11 @@ import { ActionType, getType } from 'typesafe-actions';
 import { ErrorReply, Message, Nullable } from '../.types/types';
 import { systemActions } from '../actions';
 import { combineReducers } from 'redux';
-import { IContext } from '../models/system';
+import { IContext, IModal } from '../models/system';
 
 export interface ContextBaseState {
-  data: Nullable<IContext>;
+  menu: Nullable<IContext>;
+  modal: Nullable<IModal>;
 }
 export interface LoaderBaseState extends Message {
   isLoading: boolean;
@@ -18,13 +19,13 @@ export interface SystemState {
   readonly context: ContextBaseState;
 };
 
-
 const initialLoaderState = Object.freeze({
   message: '',
   isLoading: false,
 })
 const initialContextState = Object.freeze({
-  data: null,
+  menu: null,
+  modal: null,
 })
 
 export type SystemAction = ActionType<typeof systemActions>;
@@ -59,10 +60,28 @@ export default combineReducers<SystemState, SystemAction>({
     switch (action.type) {
 
       case getType(systemActions.openContext):
-        return { data: action.payload }
+        return {
+          ...initialContextState,
+          menu: action.payload
+        }
 
       case getType(systemActions.closeContext):
-        return { data: null }
+        return {
+          ...initialContextState,
+          menu: null
+        }
+
+      case getType(systemActions.openModal):
+        return {
+          ...initialContextState,
+          modal: action.payload
+        }
+
+      case getType(systemActions.closeModal):
+        return {
+          ...initialContextState,
+          modal: null
+        }
 
       default:
         return state;

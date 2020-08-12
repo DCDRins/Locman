@@ -6,7 +6,8 @@ import { HasChildren } from "../.types/props";
 
 export interface HasMetaBoundings {
   meta: {
-    boundings: DOMRect;
+    boundings?: DOMRect;
+    pinned?: boolean;
   };
 }
 
@@ -19,7 +20,6 @@ export interface IContextMenu extends Array<{
 export interface IContext extends HasMetaBoundings {
   fields: IContextMenu;
   user?: IUserDTO;
-  pinned?: boolean;
   // additionals?: Array<Field>;
 }
 

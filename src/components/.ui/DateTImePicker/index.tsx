@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, HTMLAttributes } from 'react';
+import ReactDOM from 'react-dom';
 import Calendar from './calendar';
 import Time from './time';
 import classNames from '../../../lib/classNames';
@@ -8,58 +9,61 @@ import { ReactComponent as DateIcon } from '../../../assets/icons/date.svg';
 import Icon from '../Icon';
 import Group from '../Group';
 import Div from '../Div';
+import { HasClassName, HasStyleObject } from '../../../.types/props';
+import { Moment } from 'moment';
+import * as actions from '../../../actions';
+import { ContextBaseState } from '../../../reducers/system-reducer';
 
-export default class DateTimePicker extends Component {
-  static defaultProps = {
-    minStep: 1,
-    hourStep: 1
-  };
+export type InjectedProps = typeof defaultProps
+& HTMLAttributes<HTMLDivElement>
+& HasClassName
+& {
+  // onSave: () => void;
+  moment: Moment;
+}
 
-  state = {
-    tab: 0
-  };
+const defaultProps = Object.freeze({
+  minStep: 1,
+  hourStep: 1
+})
+
+type DatePickerState = typeof initialState & HasStyleObject;
+
+const initialState = Object.freeze({
+  tab: 0,
+})
+
+export default class DateTimePicker extends Component<InjectedProps, DatePickerState> {
+  static readonly defaultProps = defaultProps;
+  readonly state: DatePickerState = initialState
+
 
   handleClickTab = (e, tab) => {
     e.preventDefault();
     this.setState({ tab: tab });
   };
 
-  handleSave = e => {
-    e.preventDefault();
-    const { onSave } = this.props
-    onSave && onSave();
-  };
+  // handleSave = e => {
+  //   e.preventDefault();
+  //   const { onSave } = this.props
+  //   onSave && onSave();
+  // };
 
   render() {
     const base = 'Date-Time-Picker';
     const { tab } = this.state;
     const {
       moment,
-      className,
-      prevMonthIcon,
-      nextMonthIcon,
       minStep,
       hourStep,
-      onClose,
+      className = '',
       onChange,
-      isClosed,
       ...props
     } = this.props;
     return (
       <Div both className={classNames(base, className, {
-        'closed': isClosed,
+        // 'closed': isClosed,
       })} {...props}>
-        {onClose && (
-          <Button
-            level="office-tertiary"
-            size="s"
-            angular
-            stretched="x"
-            onClick={onClose}
-          >
-            Закрыть
-          </Button>
-        )}
         <Group content="stretch" justify="center">
           <Div both>
             <Button

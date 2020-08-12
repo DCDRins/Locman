@@ -73,9 +73,9 @@ export default class News extends Component<InjectedProps, {}> {
                 e.preventDefault();
                 closeContext();
                 openContext({
-                  pinned: true,
                   fields: this.contextMenu,
                   meta: {
+                    pinned: true,
                     boundings: e.currentTarget.getBoundingClientRect() 
                   }
                 });

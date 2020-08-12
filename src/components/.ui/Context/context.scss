@@ -5,6 +5,7 @@
   background-color: $dark-100;
   box-sizing: border-box;
   color: $main;
+  z-index: z('overoverlay');
   
   &.pinned {
     position: absolute!important;

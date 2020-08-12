@@ -9,17 +9,29 @@ import 'moment/locale/ru';
 import Input from '../../Input';
 import Group from '../../Group';
 import Switch from '../../Switch';
+import * as actions from '../../../../actions';
+import { IModal } from '../../../../models/system';
+import cuid from 'cuid';
 
-type Props = typeof defaultProps & HTMLAttributes<HTMLDivElement> & {
-  title?: string;
-  readonly?: boolean;
-  required?: boolean;
-  dateFormat?: string;
-  field: {
-    [key: string]: string | undefined
-  }
-  handleChange: (field: string, value?: string) => void
+export interface DispatchedDateFieldProps {
+  openModal: typeof actions.systemActions.openModal;
+  closeModal: typeof actions.systemActions.closeModal;
 }
+
+type Props = typeof defaultProps
+  & HTMLAttributes<HTMLDivElement>
+  & DispatchedDateFieldProps
+  & {
+    title?: string;
+    readonly?: boolean;
+    required?: boolean;
+    dateFormat?: string;
+    field: {
+      [key: string]: string | undefined
+    }
+    handleChange: (field: string, value?: string) => void;
+  }
+
 const defaultProps = Object.freeze({
   dateFormat: 'DD.MM.YYYY HH:mm',
 })
@@ -72,10 +84,10 @@ export default class DateField extends Component<Props, State> {
 
   render() {
     const base = 'Date-Field';
-    const { field, title, required, dateFormat } = this.props;
+    const { field, title, required, dateFormat, openModal } = this.props;
     const { m, datePickerClosed, enabled } = this.state;
     const key = Object.keys(field)[0]
-    return (  
+    return (
       <Div both className={base}>
         <Group justify="space-between" content="center">
           <Div className={`${base}__title`}>
@@ -99,19 +111,25 @@ export default class DateField extends Component<Props, State> {
           stretched="x"
           level={datePickerClosed ? 'office-tertiary' : 'office-primary'}
           before={<Icon svg={DateIcon} />}
-          onClick={this.datePickerTrigger}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            const boundings = e.currentTarget.getBoundingClientRect();
+            openModal({
+              children: m && (
+                <DateTimePicker
+                  onChange={this.handleMomentChange}
+                  moment={m.locale('ru')}
+                  minStep={5}
+                />
+              ),
+              meta: {
+                boundings,
+                pinned: true,
+              },
+            })
+          }}
         >
           {m && m.format(dateFormat)}
         </Button>
-        {m && (
-          <DateTimePicker
-            onChange={this.handleMomentChange}
-            className={`${base}__date-picker`}
-            moment={m.locale('ru')}
-            minStep={5}
-            isClosed={datePickerClosed}
-          />
-        )}
       </Div>
     )
   }

@@ -13,6 +13,7 @@ import Preloader from '../Preloader'
 import { ContextBaseState } from '../../../reducers/system-reducer'
 import * as actions from '../../../actions'
 import { closeContext } from '../../../actions/system-actions'
+import createContextEnv from '../../../lib/createContextEnv'
 
 export interface DispatchedContextProps {
   openContext: typeof actions.systemActions.openContext;
@@ -30,29 +31,23 @@ class Context extends Component<InjectedProps, ContextState> {
   state: ContextState = initialState
 
   componentDidUpdate(prevProps) {
-    const { context: { data }, closeContext } = this.props
-    const { context: { data: prevData }} = prevProps
-    if (data === prevData) return false;
-    if (data) {
-      const { meta: { boundings }, pinned } = data;
-      const style: React.CSSProperties = {};
-      document.addEventListener('click', this._handleOutsideClick)
-      window.addEventListener('resize', closeContext)
-      
-      const node = ReactDOM.findDOMNode(this);
-      if (node instanceof Element) {
-        const { width, height } = node.getBoundingClientRect();
-        const { offsetWidth, offsetHeight, scrollTop } = document.documentElement;
-        // style.top = boundings.top + boundings.height;
-        const eps = pinned ? scrollTop : 0;
-        style.top = offsetHeight - eps < boundings.bottom + height - eps ? boundings.top - height + eps : boundings.top + boundings.height + eps;
-        style.left = offsetWidth < boundings.left + width ? boundings.right - width : boundings.left;
-        this.setState({ style });
-      }
-    } else {
-      document.removeEventListener('click', this._handleOutsideClick, false)
-      window.removeEventListener('resize', closeContext, false)
+    const { context: { menu }, closeContext } = this.props
+    const { context: { menu: prevData }} = prevProps
+    if (menu === prevData) return;
+
+    if (!menu) {
+      document.removeEventListener('click', this._handleOutsideClick, false);
+      window.removeEventListener('resize', closeContext, false);
+      return;
     }
+
+    createContextEnv(this, menu,
+      () => {
+        document.addEventListener('click', this._handleOutsideClick)
+        window.addEventListener('resize', closeContext)
+      },
+      state => this.setState(state)
+    );
   }
 
   _handleOutsideClick = e => {
@@ -67,12 +62,14 @@ class Context extends Component<InjectedProps, ContextState> {
     } = this.state;
     const {
       context: {
-        data,
+        menu,
       },
       closeContext,
     } = this.props
-    const { user, fields, pinned } = { ...data }
-    return data && fields && (
+    const { user, fields, meta } = { ...menu }
+    const { pinned } = { ...meta };
+
+    return menu && fields && (
       <div
         {...{ style }}
         className={classNames(base, {

@@ -83,9 +83,9 @@ export default class Museum extends Component<InjectedMuseumProps, {}> {
                   e.preventDefault();
                   closeContext();
                   openContext({
-                    pinned: true,
                     fields: this.contextMenu,
                     meta: {
+                      pinned: true,
                       boundings: e.currentTarget.getBoundingClientRect() 
                     }
                   });

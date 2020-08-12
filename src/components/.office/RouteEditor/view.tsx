@@ -117,9 +117,9 @@ export default class RouteEditor extends Component<InjectedProps, State> {
                   e.preventDefault();
                   closeContext();
                   openContext({
-                    pinned: true,
                     fields: this.contextMenu,
                     meta: {
+                      pinned: true,
                       boundings: e.currentTarget.getBoundingClientRect() 
                     },
                   });

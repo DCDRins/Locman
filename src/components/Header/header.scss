@@ -7,6 +7,7 @@
   height: $headerHeight;
   background: linear-gradient(to left, $dark, $accent, $dark);
   transition: background-color $slow;
+  z-index: z('overlay');
   &::after {
     content: '';
     display: block;

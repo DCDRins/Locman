@@ -5,28 +5,21 @@
 
 
 .Date-Time-Picker {
-  &.closed {
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-  }
-  z-index: z('overlay');
-  // box-shadow: 0 5px 25px -20px $dark;
+
+  z-index: z('overoverlay');
   border: 1px solid $highlight-2;
   transition: $slow;
   display: block;
-  position: relative;
+  // position: relative;
   box-sizing: border-box;
-  width: 100%;
   border-radius: 3px;
-  background-color: $primary;
+  background-color: $main;
   &__tabs {
     margin-bottom: $margin-default;
   }
   &__tab {
     display: none;
     box-sizing: border-box;
-    // height: 310px;
     &.active {
       display: block;
     }

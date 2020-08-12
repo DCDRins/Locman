@@ -15,16 +15,22 @@ import getHashCode from '../../../../lib/getHashCode';
 import Button from '../../../.ui/Button';
 import Div from '../../../.ui/Div';
 import Field from '../../../.ui/.office/Field';
-import { StoredEventTileProps, DispatchedEventTileProps } from '../../EventTile';
 import classNames from '../../../../lib/classNames';
 import { previewItemsCount } from '../../../../common/constants';
+import { TagsBaseState, EventCatalogBaseState } from '../../../../reducers/catalog-reducer';
 
-export interface DispatchedEventViewProps extends DispatchedEventTileProps {
+export interface DispatchedEventViewProps {
   fetchUserEvents: typeof actions.eventActions.fetchManagedEventListAsync.request;
   createEvent: typeof actions.eventActions.createEventAsync.request;
+  fetchEventFormatList: typeof actions.catalogActions.fetchEventFormatList.request;
+  fetchEventLevelList: typeof actions.catalogActions.fetchEventLevelList.request;
+  deleteEvent: typeof actions.eventActions.deleteEventAsync.request;
 }
-export interface StoredEventViewProps extends StoredEventTileProps {
+export interface StoredEventViewProps {
   eventList: ManagedEventListBaseState;
+  catalog: {
+    event: EventCatalogBaseState;
+  }
 }
 export type InjectedEventViewProps = DispatchedEventViewProps
 & StoredEventViewProps
@@ -39,12 +45,10 @@ export class EventView extends Component<InjectedEventViewProps, State> {
   componentDidMount() {
     const {
       fetchUserEvents,
-      fetchTagList,
       fetchEventFormatList,
       fetchEventLevelList,
     } = this.props;
     fetchUserEvents({ page: 1, onPage: previewItemsCount })
-    fetchTagList({ })
     fetchEventFormatList({ })
     fetchEventLevelList({ })
   }
@@ -59,13 +63,6 @@ export class EventView extends Component<InjectedEventViewProps, State> {
       catalog,
       createEvent,
       deleteEvent,
-      editEvent,
-      fetchTagList,
-      uploadImage,
-      uploadImageRange,
-      fetchEventFormatList,
-      fetchEventLevelList,
-      deleteImageFromRange,
     } = this.props;
     const { list: eventList } =  { ...data };
     // const { started } = this.state;
@@ -76,7 +73,7 @@ export class EventView extends Component<InjectedEventViewProps, State> {
       }
     } = { ...catalog }
     return (
-      <Section className={base}>
+      <Section className={base} align="align-center">
         <Div>
           <Group stretched="x" content="center" justify="start">
             <Button
@@ -112,15 +109,6 @@ export class EventView extends Component<InjectedEventViewProps, State> {
               <EventTile
                 key={item.characterCode}
                 data={Event.deserialize(item)}
-                {...{ deleteEvent }}
-                {...{ editEvent }}
-                {...{ fetchTagList }}
-                {...{ uploadImage }}
-                {...{ uploadImageRange }}
-                {...{ fetchEventFormatList }}
-                {...{ fetchEventLevelList }}
-                {...{ deleteImageFromRange }}
-                {...{ catalog }}
               />
             ))}
           </ScrolledContent>
@@ -132,7 +120,6 @@ export class EventView extends Component<InjectedEventViewProps, State> {
                 key={item.characterCode}
                 data={Event.deserialize(item)}
                 {...{ deleteEvent }}
-                {...{ editEvent }}
               />
             ))}
           </ScrolledContent>

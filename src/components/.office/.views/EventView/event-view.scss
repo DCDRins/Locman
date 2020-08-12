@@ -1,8 +1,6 @@
 .Event-View {
-
   animation: fadeInWithTransform $slowly forwards;
-  // &.isEmpty { }
-
+  
   &__isEmpty {
     &-string {
       @extend .header-3;

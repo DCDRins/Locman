@@ -8,7 +8,6 @@ import Side, { SideProps } from '../Side'
 import { appRoutes } from '../../../common/dictionaries/routes'
 import Button from '../Button'
 import Div from '../Div'
-import Context from '../Context'
 import Icon from '../Icon'
 import terms from '../../../common/dictionaries/terms'
 import Image from '../Image'
@@ -104,9 +103,9 @@ export default class Event extends Component<InjectedProps, {}> {
                     e.preventDefault();
                     closeContext();
                     openContext({
-                      pinned: true,
                       fields: this.contextMenu,
                       meta: {
+                        pinned: true,
                         boundings: e.currentTarget.getBoundingClientRect() 
                       }
                     });

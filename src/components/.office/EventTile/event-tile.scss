@@ -29,7 +29,7 @@
     width: $eventSize;
     height: fit-content;
     flex-shrink: 1;
-    .Image {
+    & > .Image {
       border-radius: 8px 8px 3px 3px;
     }
   }
