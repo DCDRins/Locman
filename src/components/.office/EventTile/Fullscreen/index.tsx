@@ -25,6 +25,8 @@ import { TagsBaseState, EventCatalogBaseState } from '../../../../reducers/catal
 import { HasRef } from '../../../../.types/props';
 import { officeAppRoutes } from '../../../../common/dictionaries/routes';
 import history from '../../../../services';
+import { ContextBaseState } from '../../../../reducers/system-reducer';
+import Section from '../../../.ui/Section';
 
 export interface DispatchedEventTileFullscreenProps {
   editEvent: typeof actions.eventActions.editEventAsync.request;
@@ -33,33 +35,35 @@ export interface DispatchedEventTileFullscreenProps {
   uploadImage: typeof actions.eventActions.uploadImageAsync.request;
   uploadImageRange: typeof actions.eventActions.uploadImageRangeAsync.request;
   deleteImageFromRange: typeof actions.eventActions.deleteImageFromRangeAsync.request;
+  openModal: typeof actions.systemActions.openModal,
+  closeModal: typeof actions.systemActions.closeModal,
 }
 export interface StoredEventTileFullscreenProps {
   catalog: {
     tags: TagsBaseState;
     event: EventCatalogBaseState;
-  }
+  },
 }
 type Props = typeof defaultProps
-& DispatchedEventTileFullscreenProps
-& StoredEventTileFullscreenProps
-& HasRef<HTMLDivElement>
-& {
-  data: IEventDTO;
-}
-const defaultProps = Object.freeze({ })
+  & DispatchedEventTileFullscreenProps
+  & StoredEventTileFullscreenProps
+  & HasRef<HTMLDivElement>
+  & {
+    data: IEventDTO;
+  }
+const defaultProps = Object.freeze({})
 type State = typeof initialState & {
   data: IEventDTO,
 }
-const initialState = Object.freeze({ })
+const initialState = Object.freeze({})
 export default class EventTile extends Component<Props, State> {
   readonly state: State = {
     ...initialState,
     data: this.props.data,
   }
-  
+
   componentDidMount() {
-    const { data }= this.props
+    const { data } = this.props
     this.setState(prevState => ({
       ...prevState,
       data,
@@ -67,11 +71,11 @@ export default class EventTile extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps) {
-    const { data }= this.props
+    const { data } = this.props
     if (prevProps.data && prevProps.data.characterCode !== data.characterCode) {
       history.push(`${officeAppRoutes.OFFICE_EVENT_PAGE.absolutePath}/${data.characterCode}`)
     }
-    if (prevProps.data  && prevProps.data.images !== data.images) {
+    if (prevProps.data && prevProps.data.images !== data.images) {
       this.setState(prevState => ({
         ...prevState,
         data: {
@@ -81,7 +85,7 @@ export default class EventTile extends Component<Props, State> {
       }))
     }
   }
-  
+
   handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, checked, value } = e.currentTarget;
     const type = typeof this.state.data[name];
@@ -164,6 +168,8 @@ export default class EventTile extends Component<Props, State> {
       deleteEvent,
       editEvent,
       deleteImageFromRange,
+      openModal,
+      closeModal,
       catalog: {
         event: {
           formatList,
@@ -202,199 +208,203 @@ export default class EventTile extends Component<Props, State> {
       // ---
     } = this.state;
     return (
-      <Group className={base} content="center" justify="center">
-        <Group className={`${base}__content`} content="stretch" orientation="vertical" stretched="x">
-          <Image
-            className={`${base}__image`}
-            src={image && image.path}
-            height={200}
-            editable
-            onChange={this.selectImage}
-          >
-            {image ? 'Изменить изображение' : 'Добавить изображение'}
-          </Image>
-          <Div both>
-            <Div half>
-              <Image
-                editable
-                multiple
-                onChange={this.selectImageRange}
+      <Section
+        side={(
+          <div className={`${base}__content`}>
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <Field
+                justify="space-between"
+                field={{ needApprove }}
+                onChange={this.handleApproveChange}
               >
-                <Button
-                  level="office-secondary"
-                  angular
-                  stretched="x"
-                  before={<Icon noStroke svg={AddIcon} />}
-                >
-                  Добавить изображение
-                </Button>
-              </Image>
-            </Div>
-            <ScrolledContent
-              orientation="horizontal"
-              stretched
-              className={`${base}__image-list`}
-              buttonProps={{
-                level: "primary"
-              }}
-            >
-              {images.length > 0 ? (
-                images.map(({ id, path }) => (
-                  <Image key={id} src={path}>
-                    <Group stretched content="end" justify="end">
-                      <Button
-                        level="simple"
-                        size="s"
-                        angular
-                        before={<Icon svg={TrashIcon} size={15} />}
-                        onClick={() => deleteImageFromRange({ code: characterCode, data: id })}
-                      />
-                    </Group>
-                  </Image>
-                ))
-              ) : [...Array(8)].map((_, idx) => <Image key={idx} editable multiple onChange={this.selectImageRange} />)
-            }
-            </ScrolledContent>
-          </Div>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              justify="space-between"
-              field={{ published }}
-              onChange={this.handleChange}
-            >
-              Опубликовать
-            </Field>
-            <Field
-              justify="space-between"
-              field={{ needApprove }}
-              onChange={this.handleApproveChange}
-            >
-              Только по записи
-            </Field>
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              showTitle
-              justify="space-between"
-              field={{ name }}
-              onChange={this.handleChange}
-              title="Название"
-            />
-            <Field
-              title="Местоположение"
-              showTitle
-              field={{ location }}
-              justify="space-between"
-              onChange={this.handleChange}
+                Только по записи
+              </Field>
+            </Group>
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <Field
+                showTitle
+                justify="space-between"
+                field={{ name }}
+                onChange={this.handleChange}
+                title="Название"
               />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <ISelect
-              title="Формат мероприятия"
-              name="format"
-              onChange={this.handleSelect}
-              options={formatList.data.map(({ id, name }) => ({ value: id, label: name }))}
-              isSearchable
-              isLoading={formatList.isLoading}
-              defaultValue={(({ id, name }) => ({ value: id, label: name }))(format)}
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <ISelect
-              title="Уровень мероприятия"
-              name={`level`}
-              onChange={this.handleSelect}
-              options={levelList.data.map(({ id, name }) => ({ value: id, label: name }))}
-              isSearchable
-              isLoading={levelList.isLoading}
-              defaultValue={(({ id, name }) => ({ value: id, label: name }))(level)}
-            />
-            <ISelect
-              title="Тэги"
-              onChange={this.handleTagSelect}
-              options={tagList && tagList.map(({ id, name }) => ({ value: id, label: name }))}
-              isMulti
-              isLoading={isTagsLoading}
-              defaultValue={tags.map(({ id, name }) => ({ value: id, label: name }))}
-            />
-          </Group>
-          <Group justify="center" content="start" rotateOnMedia stretched>
-            <DateField
-              required
-              title="Начало"
-              field={{ startDate }}
-              handleChange={this.handleFieldChange}
-            />
-            <DateField
-              title="Конец"
-              field={{ finishDate }}
-              handleChange={this.handleFieldChange}
-            />
-          </Group>
-          {needApprove && (
-            <Group justify="center" content="start" rotateOnMedia stretched>
+              <Field
+                title="Местоположение"
+                showTitle
+                field={{ location }}
+                justify="space-between"
+                onChange={this.handleChange}
+              />
+            </Group>
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <ISelect
+                title="Формат мероприятия"
+                name="format"
+                onChange={this.handleSelect}
+                options={formatList.data.map(({ id, name }) => ({ value: id, label: name }))}
+                isSearchable
+                isLoading={formatList.isLoading}
+                defaultValue={(({ id, name }) => ({ value: id, label: name }))(format)}
+              />
+            </Group>
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <ISelect
+                title="Уровень мероприятия"
+                name={`level`}
+                onChange={this.handleSelect}
+                options={levelList.data.map(({ id, name }) => ({ value: id, label: name }))}
+                isSearchable
+                isLoading={levelList.isLoading}
+                defaultValue={(({ id, name }) => ({ value: id, label: name }))(level)}
+              />
+              <ISelect
+                title="Тэги"
+                onChange={this.handleTagSelect}
+                options={tagList && tagList.map(({ id, name }) => ({ value: id, label: name }))}
+                isMulti
+                isLoading={isTagsLoading}
+                defaultValue={tags.map(({ id, name }) => ({ value: id, label: name }))}
+              />
+            </Group>
+            <Group justify="start" content="start" rotateOnMedia stretched>
               <DateField
                 required
-                title="Начало приема заявок"
-                field={{ requestStartDate }}
+                title="Начало"
+                field={{ startDate }}
                 handleChange={this.handleFieldChange}
+                {...{ openModal }}
+                {...{ closeModal }}
               />
               <DateField
-                title="Конец приема заявок"
-                field={{ requestFinishDate }}
+                title="Конец"
+                field={{ finishDate }}
                 handleChange={this.handleFieldChange}
+                {...{ openModal }}
+                {...{ closeModal }}
               />
             </Group>
-          )}
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              title="Описание"
-              showTitle
-              field={{ description }}
-              justify="space-between"
-              onChange={this.handleChange}
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              title="Сайт"
-              showTitle
-              field={{ wwwLink }}
-              justify="space-between"
-              onChange={this.handleChange}
-            />
-          </Group>
-          <Group justify="center" content="center" rotateOnMedia stretched>
-            <Field
-              title="Стоимость"
-              showTitle
-              field={{ costPerson }}
-              justify="space-between"
-              onChange={this.handleChange}
-            />
-          </Group>
-          <Div>
-            <Group stretched justify="center" content="center">
-              <Div both>
-                <Button
-                  stretched="x"
-                  level="office-alert"
-                  before={<Icon noStroke svg={TrashIcon} />}
-                  onClick={() => deleteEvent(characterCode)}
+            {needApprove && (
+              <Group justify="start" content="start" rotateOnMedia stretched>
+                <DateField
+                  required
+                  title="Начало приема заявок"
+                  field={{ requestStartDate }}
+                  handleChange={this.handleFieldChange}
+                  {...{ openModal }}
+                  {...{ closeModal }}
                 />
-              </Div>
-              <Div both>
-                <Button
-                  level="office-primary"
-                  onClick={() => editEvent(Event.deserialize(this.state.data).serialize())}
-                >
-                  Сохранить
-                </Button>
-              </Div>
+                <DateField
+                  title="Конец приема заявок"
+                  field={{ requestFinishDate }}
+                  handleChange={this.handleFieldChange}
+                  {...{ openModal }}
+                  {...{ closeModal }}
+                />
+              </Group>
+            )}
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <Field
+                title="Сайт"
+                showTitle
+                field={{ wwwLink }}
+                justify="space-between"
+                onChange={this.handleChange}
+              />
             </Group>
-          </Div>
-        </Group>
-      </Group>
+            <Group justify="start" content="center" rotateOnMedia stretched>
+              <Field
+                title="Стоимость"
+                showTitle
+                field={{ costPerson }}
+                justify="space-between"
+                onChange={this.handleChange}
+              />
+            </Group>
+            <Div both className={`${base}__save`}>
+              <Button
+                level="office-primary"
+                angular
+                onClick={() => editEvent(Event.deserialize(this.state.data).serialize())}
+              >
+                Сохранить
+              </Button>
+            </Div>
+            <Div both className={`${base}__delete`}>
+              <Button
+                angular
+                level="office-alert"
+                before={<Icon noStroke svg={TrashIcon} />}
+                onClick={() => deleteEvent(characterCode)}
+              />
+            </Div>
+          </div>
+        )}
+      >
+        <Image
+          className={`${base}__image`}
+          src={image && image.path}
+          height={200}
+          editable
+          onChange={this.selectImage}
+        >
+          {image ? 'Изменить изображение' : 'Добавить изображение'}
+        </Image>
+        <Field
+          justify="space-between"
+          field={{ published }}
+          onChange={this.handleChange}
+        >
+          Опубликовать
+        </Field>
+        <Image
+          editable
+          multiple
+          onChange={this.selectImageRange}
+          className={`${base}__add-image`}
+        >
+          <Button
+            level="office-secondary"
+            angular
+            stretched="x"
+            before={<Icon noStroke svg={AddIcon} />}
+          >
+            Добавить изображение
+          </Button>
+        </Image>
+        <ScrolledContent
+          orientation="horizontal"
+          stretched
+          className={`${base}__image-list`}
+          buttonProps={{
+            level: "primary"
+          }}
+        >
+          {images.length > 0 ? (
+            images.map(({ id, path }) => (
+              <Image key={id} src={path}>
+                <Group stretched content="end" justify="end">
+                  <Button
+                    level="simple"
+                    size="s"
+                    angular
+                    before={<Icon svg={TrashIcon} size={15} />}
+                    onClick={() => deleteImageFromRange({ code: characterCode, data: id })}
+                  />
+                </Group>
+              </Image>
+            ))
+          ) : [...Array(4)].map((_, idx) => <Image key={idx} editable multiple onChange={this.selectImageRange} />)
+          }
+        </ScrolledContent>
+        <Field
+          title="Описание"
+          showTitle
+          field={{ description }}
+          justify="space-between"
+          isTextBox
+          onChange={this.handleChange}
+        />
+      </Section>
     )
   };
 }

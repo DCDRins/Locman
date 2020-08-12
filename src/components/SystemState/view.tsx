@@ -46,6 +46,7 @@ export default class SystemState extends Component<Props, State> {
     return (
       <Div both half className={classNames(base, {
           'active': !done,
+          'error': errorMessage !== undefined,
         })}
       >
         <Group content="center" justify="space-between">

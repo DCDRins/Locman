@@ -267,6 +267,16 @@ export const officeAppRoutes: RouteDictionary = {
       en: 'Education programs',
     }
   },
+  OFFICE_FAVOURITES_PAGE: {
+    absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/favourites`,
+    component: connectedViews.FavouritesView,
+    credentials: [roles.TEACHER, roles.PARTICIPANT],
+    visibleInHeader: true,
+    lang: {
+      ru: 'Интересы',
+      en: 'Favourites',
+    }
+  },
   OFFICE_PUPILS_PAGE: {
     absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/users`,
     component: connectedViews.OrganizationUserView,

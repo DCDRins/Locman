@@ -2,9 +2,9 @@
   display: block;
   user-select: none;
   border-radius: $border-radius-small;
-  background-color: $main;
+  // background-color: $main;
   box-sizing: border-box;
-  color: $dark;
+  // color: $dark;
   z-index: z('foreground');
   
   &.pinned {

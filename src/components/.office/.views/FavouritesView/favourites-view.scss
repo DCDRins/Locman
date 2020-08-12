@@ -1,0 +1,28 @@
+.Event-View {
+  animation: fadeInWithTransform $slowly forwards;
+  
+  &__isEmpty {
+    &-string {
+      @extend .header-3;
+      color: $highlight;
+      animation: fadeInWithTransform $slowly forwards;
+    }
+  }
+  &__list {
+    height: 502px;
+    margin-top: 50px;
+    margin-bottom: 150px;
+    padding-bottom: 150px;
+    mask-image: $text-overflow-mask;
+    opacity: .65;
+    transition: $fast;
+    overflow: hidden;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $dark;
+    border-radius: 5px;
+  }
+}

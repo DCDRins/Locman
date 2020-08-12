@@ -4,9 +4,12 @@
   right: 20px;
   background-color: $main;
   border-radius: $border-radius;
-  border: 1px solid $highlight-2;
+  border: 1px solid $primary;
   z-index: z('overoverlay');
   transition: bottom $slow;
+  &.error {
+    color: $accent;
+  }
   &.active {
     bottom: 20px;
   }

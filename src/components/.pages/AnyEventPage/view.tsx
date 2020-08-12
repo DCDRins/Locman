@@ -1,14 +1,11 @@
 import React from 'react'
 import Ground from '../../.ui/Ground'
-import ClosestEvent from '../../ClosestEvent'
 import UIPage from '../../.ui/UIPage'
-import StockContentViewer from '../../StockContentViewer'
 import Section from '../../.ui/Section'
 import ScrolledContent from '../../.ui/ScrolledContent'
 import * as actions from '../../../actions'
 import { CurrentEventBaseState } from '../../../reducers/event-reducer'
 import { HasRouterProps } from '../../../.types/props'
-import Img from '../../../assets/images/museum-flat-wallpaper-1.jpg'
 import { ReactComponent as AddIcon } from '../../../assets/icons/add.svg'
 import { ReactComponent as SuccessIcon } from '../../../assets/icons/success.svg'
 import { ReactComponent as DisagreeIcon } from '../../../assets/icons/disagree.svg'
@@ -17,7 +14,7 @@ import { ReactComponent as InfiniteIcon } from '../../../assets/icons/infinite.s
 import Group from '../../.ui/Group'
 import Button from '../../.ui/Button'
 import Icon from '../../.ui/Icon'
-import { IEventDTO } from '../../../models'
+import { IEventDTO, Route } from '../../../models'
 import Museum from '../../.ui/Museum'
 import Image from '../../.ui/Image'
 import classNames from '../../../lib/classNames'
@@ -26,21 +23,24 @@ import 'moment/locale/ru'
 import Div from '../../.ui/Div'
 import Field from '../../.ui/.office/Field'
 import GMap from '../../.ui/GMap'
+import isSatisfied from '../../../lib/isSatisfied'
+import roles from '../../../common/dictionaries/roles'
+import { initialUserRouteListState } from '../../../reducers/route-reducer'
 
 export interface DispatchedAnyEventPageProps {
   fetchEvent: typeof actions.eventActions.fetchEventAsync.request;
   createRoute: typeof actions.routeActions.createRoute.request;
+  openModal: typeof actions.systemActions.openModal;
+  closeModal: typeof actions.systemActions.closeModal;
 }
 export interface StoredAnyEventPageProps {
   event: CurrentEventBaseState;
 }
-type OwnProps = HasRouterProps & { }
+type OwnProps = HasRouterProps & {}
 export interface InjectedAnyEventPageProps extends DispatchedAnyEventPageProps, StoredAnyEventPageProps, OwnProps { }
 
-type State = typeof initialState & { }
-const initialState = Object.freeze({
-  isVisibleDescription: false,
-})
+type State = typeof initialState & {}
+const initialState = Object.freeze({})
 
 export default class AnyEventPage extends React.Component<InjectedAnyEventPageProps, State> {
   readonly state: State = initialState
@@ -52,17 +52,18 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
     fetchEvent(id);
   }
 
-  toggleDesc = () => this.setState(({ isVisibleDescription }) => ({ isVisibleDescription: !isVisibleDescription }))
-
   render() {
     const base = "Any-Event-Page"
-    const { isVisibleDescription } = this.state
     const {
       event: {
         data,
       },
+      createRoute,
+      openModal,
+      closeModal,
     } = this.props
     const {
+      id,
       characterCode,
       name,
       description,
@@ -72,7 +73,9 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
       status,
       startDate,
       finishDate,
+      eventDuration,
       tags,
+      costPerson,
       needApprove,
       requestStartDate,
       requestFinishDate,
@@ -98,7 +101,7 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
                 {name}
               </div>
               <Div className={`${base}__date`}>
-                {moment(startDate, 'HH:mm:ss DD.MM.YYYY').format('DD.MM.YYYY HH:mm')} — 
+                {moment(startDate, 'HH:mm:ss DD.MM.YYYY').format('DD.MM.YYYY HH:mm')} —
                 {finishDate
                   ? moment(finishDate, 'HH:mm:ss DD.MM.YYYY').format('DD.MM.YYYY HH:mm')
                   : <Icon svg={InfiniteIcon} size={50} />
@@ -113,26 +116,42 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
                   </div>
                 )} */}
               </Div>
-              <Group justify="start" className={`${base}__buttons`}>
+              {eventDuration && (
+                <Div className={`${base}__duration`}>{`Длительность: ${eventDuration}`}</Div>
+              )}
+              {isSatisfied([roles.TEACHER, roles.PARTICIPANT, roles.PARENT]) && (
                 <Button
                   showIcon
                   allowMedia
                   before={<Icon svg={AddIcon} />}
                   level="primary"
                   angular
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    const boundings = e.currentTarget.getBoundingClientRect();
+                    openModal({
+                      children: (
+                        <div className={`${base}__modal`}>
+                          <Button
+                            stretched="x"
+                            angular
+                            level="primary"
+                            onClick={() => createRoute(Route.new(data).serialize())}
+                          >
+                            Создать новый
+                          </Button>
+                        </div>
+                      ),
+                      meta: {
+                        boundings,
+                        pinned: true,
+                        stretch: true,
+                      },
+                    })
+                  }}
                 >
                   Добавить в маршрут
                 </Button>
-                <Button
-                  showIcon
-                  allowMedia
-                  before={<Icon svg={DisagreeIcon} />}
-                  level="alert"
-                  angular
-                >
-                  Удалить из всех маршрутов
-                </Button>
-              </Group>
+              )}
             </Section>
           )}
         </Ground>
@@ -173,29 +192,8 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
           </Section>
         )} */}
         {description && (
-          <Section
-            header="Описание"
-            unfollow
-            className={`${base}__description`}
-          >
-            <div className={classNames(`${base}__description__text`, {
-                'isVisible': isVisibleDescription,
-                'large-text': description.length > 200,
-              })}
-            >
-              {description}
-            </div>
-            <Button
-              className={classNames({
-                'rotated': isVisibleDescription,
-              })}
-              stretched="x"
-              angular
-              align="center"
-              level="tertiary"
-              before={<Icon svg={DownIcon} noFill />}
-              onClick={this.toggleDesc}
-            />
+          <Section className={`${base}__description`}>
+            {description}
           </Section>
         )}
         {images && images.length > 0 && (
@@ -212,52 +210,61 @@ export default class AnyEventPage extends React.Component<InjectedAnyEventPagePr
             </ScrolledContent>
           </Section>
         )}
+        {costPerson && (
+          <Section
+            header="Стоимость посещения:"
+            unfollow
+            before={(
+              <Div both className={`${base}__cost`}>{costPerson}</Div>
+            )}
+          />
+        )}
         {organization && (
           <Section
             align="align-center"
             key={organization.id}
             header="Организатор"
             side={
-             <div className={`${base}__side`}>
-               {organization.city && (
-                 <Field
-                   readonly
-                   title="Город"
-                   showTitle
-                   field={{ city: organization.city.name }}
-                 />
-               )}
-               {organization.category && (
-                 <Field
-                   readonly
-                   title="Категория организации"
-                   showTitle
-                   field={{ category: organization.category.name }}
-                 />
-               )}
-               {organization.phone && (
-                 <Field
-                   readonly
-                   title="Телефон"
-                   showTitle
-                   field={{ phone: `${organization.phone}` }}
-                 />
-               )}
-             </div>
-           }
-           after={organization.latitude && organization.longitude && (
-            <Group stretched="x" className={`${base}__map`}>
-              <GMap latitude={organization.latitude} longitude={organization.longitude} />
-            </Group>
-           )}
-         >
-           <Museum
-            data={{
-              ...organization,
-              organization: organization,
-             }}
+              <div className={`${base}__side`}>
+                {organization.city && (
+                  <Field
+                    readonly
+                    title="Город"
+                    showTitle
+                    field={{ city: organization.city.name }}
+                  />
+                )}
+                {organization.category && (
+                  <Field
+                    readonly
+                    title="Категория организации"
+                    showTitle
+                    field={{ category: organization.category.name }}
+                  />
+                )}
+                {organization.phone && (
+                  <Field
+                    readonly
+                    title="Телефон"
+                    showTitle
+                    field={{ phone: `${organization.phone}` }}
+                  />
+                )}
+              </div>
+            }
+            after={organization.latitude && organization.longitude && (
+              <Group stretched="x" className={`${base}__map`}>
+                <GMap latitude={organization.latitude} longitude={organization.longitude} />
+              </Group>
+            )}
+          >
+            <Museum
+              data={{
+                ...organization,
+                organization: organization,
+              }}
             />
-         </Section>
+          </Section>
         )}
       </UIPage>
     )

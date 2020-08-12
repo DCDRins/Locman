@@ -105,7 +105,7 @@
     }
   }
   &__content {
-    width: 40%;
+    width: 30%;
     @include mobile {
       width: 100%;
     }
@@ -132,7 +132,7 @@
     }
   }
   &__side {
-    width: 60%;
+    width: 70%;
     padding-left: $margin-large;
     box-sizing: border-box;
     z-index: 1000;

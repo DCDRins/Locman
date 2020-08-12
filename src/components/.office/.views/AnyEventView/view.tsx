@@ -61,6 +61,8 @@ class _AnyEventView extends Component<InjectedAnyEventViewProps, {}> {
         isLoading,
       },
       catalog,
+      openModal,
+      closeModal,
       deleteEvent,
       editEvent,
       fetchTagList,
@@ -80,6 +82,8 @@ class _AnyEventView extends Component<InjectedAnyEventViewProps, {}> {
             {...{ uploadImageRange }}
             {...{ deleteImageFromRange }}
             {...{ catalog }}
+            {...{ openModal }}
+            {...{ closeModal }}
           />
         )}
         <Preloader {...{ isLoading }} size={50} />

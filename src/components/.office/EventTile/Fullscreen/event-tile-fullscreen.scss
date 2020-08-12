@@ -2,22 +2,15 @@
   animation: fadeInWithTransform $slowly forwards;
 
   &__image {
-    border-radius: $border-radius-large $border-radius-large 0 0;
+    border-radius: $border-radius;
   }
   &__content {
     position: relative;
-    max-width: $laptop;
-    background: $primary;
-    border: 1px solid $highlight;
-    border-radius: $border-radius-large;
-
+    background: $main;
     .Field, .ISelect, .Date-Field, .Numeric-Up-Down {
-      max-width: 350px;
+      max-width: 50%;
       @include mobile {
         max-width: unset;
-      }
-      &:only-child {
-        max-width: 700px;
       }
     }
   }
@@ -30,17 +23,39 @@
       }
     }
   }
-
+  &__add-image {
+    margin: $margin 0;
+  }
   &__image-list {
     .Image {
-      $count: 8;
-      $size: ($laptop - $margin-default * ($count - 1)) / $count;
+      $count: 4;
+      $size: (($laptop * .34) - $margin * ($count - 1)) / $count;
       width: $size;
       height: $size;
-      margin-right: $margin-default;
+      margin-right: $margin;
       &:last-child {
         margin: 0;
       }
     }
+  }
+  &__save {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(to left, $main, $light-2);
+    opacity: .85;
+    $border: 3px;
+    background-clip: padding-box;
+    border: $border solid transparent;
+    border-radius: $border-radius;
+  }
+  &__delete {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(to left, $tint-red-300, $main);
+    opacity: .85;
+    $border: 3px;
+    background-clip: padding-box;
+    border: $border solid transparent;
+    border-radius: $border-radius;
   }
 }
