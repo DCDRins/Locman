@@ -29,8 +29,8 @@ export interface StoredEduProgramViewProps {
   tagList: TagsBaseState;
 }
 export type InjectedEduProgramViewProps = DispatchedEduProgramViewProps
-& StoredEduProgramViewProps
-& { }
+  & StoredEduProgramViewProps
+  & {}
 
 interface State {
   program: EducationProgram;
@@ -69,7 +69,7 @@ export default class EduProgramView extends Component<InjectedEduProgramViewProp
     fetchUserEduProgramList({ page: 1, onPage: paginationLimit })
     fetchTagList({ search: '' });
   }
-  
+
   componentWillUnmount() {
     this._isMounted = false;
     this._intervalId && clearInterval(this._intervalId)
@@ -95,7 +95,7 @@ export default class EduProgramView extends Component<InjectedEduProgramViewProp
       }
     }))
   };
-  
+
   handleClassSelect = ({ value }) => this.setState(({ program }) => ({
     program: {
       ...program,
@@ -184,21 +184,9 @@ export default class EduProgramView extends Component<InjectedEduProgramViewProp
             </Button>
             {/* <Preloader {...{ isLoading }} size={30} /> */}
           </Group>
-          <Group className={`${base}__form`} content="start" justify="start" rotateOnMedia>
-            <Field
-              field={{ name }}
-              title="Название"
-              showTitle
-              onChange={this.handleChange}
-              error={errors && errors['name']}
-            />
-            <Field
-              field={{ description }}
-              title="Описание"
-              showTitle
-              onChange={this.handleChange}
-              error={errors && errors['description']}
-            />
+        </Div>
+        <Div className={`${base}__form`}>
+          <Group content="start" justify="start" rotateOnMedia>
             <ISelect
               title="Предмет"
               name="subject"
@@ -209,12 +197,42 @@ export default class EduProgramView extends Component<InjectedEduProgramViewProp
               onChange={this.handleSelect}
             />
             <ISelect
-              title="Параллель"
+              title="Класс"
               showTitle
               name="class"
               options={[...Array(11)].map((_, idx) => ({ value: idx + 1, label: idx + 1 }))}
               onChange={this.handleClassSelect}
               defaultValue={{ value: 1, label: 1 }}
+            />
+            <Field
+              field={{ name }}
+              title="Название"
+              showTitle
+              onChange={this.handleChange}
+              error={errors && errors['name']}
+            />
+          </Group>
+          <Group content="start" justify="start" rotateOnMedia>
+            <Field
+              field={{ description }}
+              title="Раздел"
+              showTitle
+              onChange={this.handleChange}
+              error={errors && errors['description']}
+            />
+            <Field
+              field={{ name }}
+              title="Тема"
+              showTitle
+              onChange={this.handleChange}
+              error={errors && errors['name']}
+            />
+            <Field
+              field={{ description }}
+              title="Подтема"
+              showTitle
+              onChange={this.handleChange}
+              error={errors && errors['description']}
             />
             <ISelect
               title="Тэги"
@@ -227,53 +245,55 @@ export default class EduProgramView extends Component<InjectedEduProgramViewProp
             />
           </Group>
         </Div>
-        {!list && !isLoading && (
-          <Div className={`${base}__isEmpty-string`}>
-            Вы пока не добавили ни одной образовательной программы
-          </Div>
-        )}
-        {list && (
-          list.map(({ id, name, subject, description, class: _class, tags }) => (
-            <div key={id} className={`${base}__program`}>
-              <Field
-                className={`${base}__program-title`}
-                field={{ name }}
-                title="Название"
-                showTitle
-                readonly
-              />
-              <Field
-                field={{ description }}
-                title="Описание"
-                showTitle
-                readonly
-              />
-              <Field
-                field={{ subject: subject.name }}
-                title="Предмет"
-                showTitle
-                readonly
-              />
-              <Field
-                field={{ _class: `${_class}` }}
-                title="Класс"
-                showTitle
-                readonly
-              />
-              {tags && tags.map(({ id, name }) => (
-                <Button
-                  key={id}
-                  before="#"
-                  level="tag"
-                  size="s"
-                  angular
-                >
-                  {name}
-                </Button>
-              ))}
-            </div>
-          ))
-        )}
+        <Div className={`${base}__content`}>
+          {!list && !isLoading && (
+            <Div className={`${base}__isEmpty-string`}>
+              Вы пока не добавили ни одной образовательной программы
+            </Div>
+          )}
+          {list && (
+            list.map(({ id, name, subject, description, class: _class, tags }) => (
+              <div key={id} className={`${base}__program`}>
+                <Field
+                  className={`${base}__program-title`}
+                  field={{ name }}
+                  title="Название"
+                  showTitle
+                  readonly
+                />
+                <Field
+                  field={{ description }}
+                  title="Описание"
+                  showTitle
+                  readonly
+                />
+                <Field
+                  field={{ subject: subject.name }}
+                  title="Предмет"
+                  showTitle
+                  readonly
+                />
+                <Field
+                  field={{ _class: `${_class}` }}
+                  title="Класс"
+                  showTitle
+                  readonly
+                />
+                {tags && tags.map(({ id, name }) => (
+                  <Button
+                    key={id}
+                    before="#"
+                    level="tag"
+                    size="s"
+                    angular
+                  >
+                    {name}
+                  </Button>
+                ))}
+              </div>
+            ))
+          )}
+        </Div>
       </Section>
     )
   }

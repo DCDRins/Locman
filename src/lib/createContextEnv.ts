@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import { HasStyleObject } from "../.types/props";
 
 export default function createContextEnv(contextElement, metaObj: HasMetaBoundings, createListeners: () => void, changeState: ({ style }: HasStyleObject) => void) {
-    const { meta: { boundings, pinned } } = metaObj;
+    const { meta: { boundings, pinned, stretch } } = metaObj;
     if (!boundings) return;
 
     const style: React.CSSProperties = {};
@@ -20,5 +20,7 @@ export default function createContextEnv(contextElement, metaObj: HasMetaBoundin
     const eps = pinned ? scrollTop : 0;
     style.top = offsetHeight - eps < boundings.bottom + height - eps ? boundings.top - height + eps : boundings.top + boundings.height + eps;
     style.left = offsetWidth < boundings.left + width ? boundings.right - width : boundings.left;
+    style.width = stretch ? boundings.width : 'auto';
+    
     changeState({ style })
 }

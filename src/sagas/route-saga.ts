@@ -63,13 +63,17 @@ function* loadUserRouteList(params: IFetchParams): Generator {
 }
 function* createRoute(params: IRoute): Generator {
   try {
+    yield put(actions.systemActions.somethingIsLoading())
     const response = (yield call(api.createRoute, params)) as MessageReply<IRouteDTO>;
-    // yield put(actions.eventActions.fetchManagedEventListAsync.request({ onPage: previewItemsCount }));
     yield put(actions.routeActions.createRoute.success(response));
+    yield put(actions.systemActions.closeModal());
+    yield put(actions.systemActions.somethingIsSuccessfullyLoaded(response));
   } catch ({ response }) {
     const { status, data } = response as ServerResponse<ErrorReply>
     handleErrors(status);
     yield put(actions.routeActions.createRoute.failure(data));
+    yield put(actions.systemActions.closeModal());
+    yield put(actions.systemActions.somethingIsThrowException(data));
   }
 }
 function* editRoute(params: IRoute): Generator {

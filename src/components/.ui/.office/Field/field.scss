@@ -6,6 +6,7 @@
   width: 100%;
   // max-width: 400px;
   &.textbox {
+    font-weight: 400;
     white-space: unset;
     border-bottom: 1px solid $tint-hard-100;
   }

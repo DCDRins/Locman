@@ -27,7 +27,7 @@ export interface IRoute {
   charCode: string;
   name: string;
   description?: string;
-  events: IEventDTO[];
+  events: number[];
 }
 
 export class Route implements IRouteDTO {
@@ -57,8 +57,8 @@ export class Route implements IRouteDTO {
     return model;
   }
 
-  static new = () => {
-    return new Route(`Маршрут-${uid()}`, true, [], []);
+  static new = event => {
+    return new Route(`Маршрут-${uid()}`, true, [], [event]);
   }
   
   serialize(): IRoute {
@@ -67,7 +67,7 @@ export class Route implements IRouteDTO {
       charCode: this.characterCode,
       name: this.name,
       description: this.description,
-      events: this.events,
+      events: this.events.map(e => e.id),
     };
   }
 }

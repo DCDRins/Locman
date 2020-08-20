@@ -329,8 +329,10 @@ export default class Organization extends Component<InjectedProps, State> {
                 title="Долгота"
               />
             </Group>
-            <div className="simple-text">Эти параметры необходимы для отображения организации на карте</div>
-            <a className="simple-text green-link" href="https://www.latlong.net/" target="_blank">Как узнать эти параметры?</a>
+            <Div both>
+              <div className="simple-text">Эти параметры необходимы для отображения организации на карте</div>
+              <a className="simple-text green-link" href="https://www.latlong.net/" target="_blank">Как узнать эти параметры?</a>
+            </Div>
           </Group>
         </Div>
       </Section>

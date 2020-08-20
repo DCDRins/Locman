@@ -8,6 +8,7 @@ export interface HasMetaBoundings {
   meta: {
     boundings?: DOMRect;
     pinned?: boolean;
+    stretch?: boolean;
   };
 }
 
