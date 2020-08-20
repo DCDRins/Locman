@@ -2,6 +2,7 @@ import uid from 'uid'
 import cuid from 'cuid';
 import { IEventDTO } from './event';
 import { Tag } from './catalog';
+import { ImageType } from '../.types/types';
 
 export interface RouteFilters { }
 
@@ -16,7 +17,7 @@ export interface IRouteDTO {
   events: IEventDTO[];
   description?: string;
   finishDate?: string;
-  image?: string;
+  image?: ImageType;
   minClass?: number;
   maxClass?: number;
 }
@@ -36,7 +37,7 @@ export class Route implements IRouteDTO {
   constructor(public name: string, public isOwner: boolean, public tags: Tag[], public events: IEventDTO[],
     public startDate?: string, public allParticipants?: number,
     public description?: string, public finishDate?: string,
-    public image?: string, public minClass?: number, public maxClass?: number) { }
+    public image?: ImageType, public minClass?: number, public maxClass?: number) { }
 
   static deserialize(dto: IRouteDTO): Route {
     const model = new Route(

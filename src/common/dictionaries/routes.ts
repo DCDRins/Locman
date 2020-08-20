@@ -277,4 +277,14 @@ export const officeAppRoutes: RouteDictionary = {
       en: 'Users',
     }
   },
+  OFFICE_REQUESTS_PAGE: {
+    absolutePath: `${appRoutes.OFFICE_PAGE.absolutePath}/requests`,
+    component: connectedViews.RequestView,
+    credentials: [roles.PARTICIPANT],
+    visibleInHeader: true,
+    lang: {
+      ru: 'Заявки',
+      en: 'Requests',
+    }
+  },
 }

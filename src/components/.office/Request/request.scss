@@ -1,0 +1,21 @@
+.Request {
+  animation: fadeInWithTransform $slowly forwards;
+  &__content {
+    border: 1px solid $light-2;
+    border-radius: $border-radius;
+
+  }
+  &__image {
+    margin-left: $margin;
+  }
+  &__agree {
+    .Icon {
+      stroke: lightgreen;
+    }
+  }
+  &__disagree {
+    .Icon {
+      fill: $red;
+    }
+  }
+}
